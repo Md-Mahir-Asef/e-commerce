@@ -1,0 +1,9 @@
+# Root
+.vscode
+
+# Client
+dist
+client/node_modules
+
+# Server
+server/node_modules
