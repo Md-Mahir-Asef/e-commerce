@@ -1,12 +1,17 @@
 import { Analytics } from "@vercel/analytics/react";
+import Landing from "./pages/Landing";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-  return (
-    <>
-      <h1 className="text-9xl text-amber-950">Hello World</h1>
-      <Analytics />
-    </>
-  );
+    return (
+        <>
+            <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/home" element={<Landing />} />
+            </Routes>
+            <Analytics />
+        </>
+    );
 }
 
 export default App;
