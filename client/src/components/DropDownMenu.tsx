@@ -1,0 +1,66 @@
+import { useState, useRef, useEffect } from "react";
+import { ChevronDown } from "lucide-react";
+
+const DropdownMenu = ({
+    options,
+    width,
+}: {
+    options: string[];
+    width: number;
+}) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [selected, setSelected] = useState<string | null>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(e.target as Node)
+            ) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const toggleDropdown = () => setIsOpen((prev) => !prev);
+    const handleSelect = (option: string) => {
+        setSelected(option);
+        setIsOpen(false);
+    };
+
+    return (
+        <div className={`relative w-[${width}px]`} ref={dropdownRef}>
+            <button
+                onClick={toggleDropdown}
+                className="w-full px-4 py-2 rounded text-left flex flex-row font-bold cursor-pointer"
+            >
+                {selected || options[0]}
+                <ChevronDown
+                    className={`pt-1 transform transition-transform duration-150 ${
+                        isOpen ? "rotate-180" : ""
+                    }`}
+                />
+            </button>
+
+            {isOpen && (
+                <div className="absolute top-full left-0 w-full mt-1 border border-gray-300 rounded bg-white">
+                    {options.map((option) => (
+                        <div
+                            key={option}
+                            onClick={() => handleSelect(option)}
+                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        >
+                            {option}
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default DropdownMenu;
