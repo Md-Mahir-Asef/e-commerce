@@ -4,3 +4,15 @@
 body {
     font-family: "Quicksand", sans-serif;
 }
+
+*,
+*::after,
+*::before,
+html,
+html::after,
+html::before,
+body,
+body::after,
+body::before {
+    box-sizing: border-box;
+}

@@ -33,10 +33,14 @@ const DropdownMenu = ({
     };
 
     return (
-        <div className={`relative w-[${width}px]`} ref={dropdownRef}>
+        <div
+            style={{ width: `${width}px`, minWidth: `${width}px` }}
+            className={`relative box-border`}
+            ref={dropdownRef}
+        >
             <button
                 onClick={toggleDropdown}
-                className="w-full px-4 py-2 rounded text-left flex flex-row font-bold cursor-pointer"
+                className="w-full px-4 py-2 rounded text-left flex flex-row font-bold cursor-pointer box-border whitespace-nowrap"
             >
                 {selected || options[0]}
                 <ChevronDown
@@ -47,7 +51,7 @@ const DropdownMenu = ({
             </button>
 
             {isOpen && (
-                <div className="absolute top-full left-0 w-full mt-1 border border-gray-300 rounded bg-white">
+                <div className="absolute top-full left-0 w-full mt-1 border border-gray-300 rounded bg-white box-border whitespace-nowrap">
                     {options.map((option) => (
                         <div
                             key={option}

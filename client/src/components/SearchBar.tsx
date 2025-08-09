@@ -24,10 +24,14 @@ export default function SearchBar() {
                     type="text"
                     name="search"
                     id="search"
-                    className="px-10 pr-32 text-lg outline-none"
+                    className="px-10 pr-10 text-lg outline-none w-[400px]"
                     placeholder="Search for items..."
                 />
-                <Search className="opacity-75 pt-2 text-lg my-auto mb-3" />
+                <Search
+                    className="opacity-75 pt-2 text-lg my-auto mb-3 cursor-pointer"
+                    width={30}
+                    height={30}
+                />
             </div>
         </div>
     );
