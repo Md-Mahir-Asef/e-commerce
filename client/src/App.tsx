@@ -1,6 +1,9 @@
 import { Analytics } from "@vercel/analytics/react";
 import Landing from "./pages/Landing";
 import { Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import NotFound from "./pages/NotFound";
 
 function App() {
     return (
@@ -8,6 +11,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route path="/home" element={<Landing />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
             <Analytics />
         </>

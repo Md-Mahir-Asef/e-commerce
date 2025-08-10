@@ -4,7 +4,7 @@ import UtilMenu from './UtilMenu';
 
 export default function Header() {
     return (
-        <section className="p-10 border border-transparent border-b-gray-300 flex flex-row py-5 relative">
+        <section className="px-10 py-5 border border-transparent border-b-gray-300 flex flex-row relative">
             <Link className="flex flex-row ml-44" to={"/"}>
                 <img src="/logo.png" alt="logo" width={50} height={50} />
                 <h2 className="text-4xl pt-3 text-[#3BB77E] font-extrabold">

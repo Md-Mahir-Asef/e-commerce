@@ -1,4 +1,5 @@
 import { Heart, ShoppingCart, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function UtilMenu() {
     return (
@@ -9,9 +10,9 @@ export default function UtilMenu() {
             <div className="flex flex-row p-3">
                 <ShoppingCart /> <p>Cart</p>
             </div>
-            <div className="flex flex-row p-3">
+            <Link to="/login" className="flex flex-row p-3">
                 <User /> <p>Account</p>
-            </div>
+            </Link>
         </div>
     );
 }
