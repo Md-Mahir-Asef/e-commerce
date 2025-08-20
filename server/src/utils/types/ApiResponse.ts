@@ -1,6 +1,6 @@
-interface ApiResponse<T> {
+export interface ApiResponse<TData = void, TError = void> {
     success: boolean;
     message?: string;
-    data?: T;
-    error?: string;
+    data?: TData;
+    error?: TError;
 }
