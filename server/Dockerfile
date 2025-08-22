@@ -1,47 +1,63 @@
-# ----------------------------
-# Stage 1: Build
-# ----------------------------
-FROM node:20-alpine AS builder
+# syntax=docker/dockerfile:1
 
-# Set working directory
+################################
+# Stage: dev (for local dev)
+################################
+FROM node:22-slim AS dev
 WORKDIR /app
 
-# Install dependencies
+# Copy package files first to use Docker cache for deps
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
 
-# Copy source code
-COPY tsconfig.json ./
-COPY prisma ./prisma
-COPY src ./src
+# Install all deps (including dev)
+RUN npm ci
 
-# Build TypeScript
-RUN npx tsc
+# Copy source
+COPY . .
 
-# ----------------------------
-# Stage 2: Production image
-# ----------------------------
-FROM node:20-alpine AS production
+# Generate Prisma client (so imports work)
+RUN npx prisma generate || true
 
+# Expose port (informational)
+EXPOSE 4000
+
+# Default command for development (expects "dev" script)
+CMD ["npm", "run", "dev"]
+
+
+################################
+# Stage: builder
+# (compile TypeScript)
+################################
+FROM node:22-slim AS builder
 WORKDIR /app
 
-# Copy built JS files and Prisma schema
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY . .
+
+# Make Prisma client available at build time (if you import it)
+RUN npx prisma generate || true
+
+# Build TypeScript to dist/
+RUN npm run build
+
+
+################################
+# Stage: prod (final image)
+################################
+FROM node:22-slim AS prod
+WORKDIR /app
+
+# Copy only what we need from builder
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+# If your app uses prisma/runtime or migration files at runtime, copy prisma folder
 COPY --from=builder /app/prisma ./prisma
-COPY package.json package-lock.json ./
 
-# Install only production dependencies
-RUN npm ci --omit=dev
-
-# Set environment variables (can be overridden via .env)
-ENV NODE_ENV=production
-ENV DATABASE_URL="postgresql://USER:PASSWORD@YOUR_SUPABASE_HOST:5432/DB_NAME"
-
-# Expose app port
 EXPOSE 3000
 
-# Run Prisma generate (for runtime client)
-RUN npx prisma generate
-
-# Start the server
-CMD ["node", "dist/index.js"]
+# Start the app (expects "start" script -> node dist/index.js)
+CMD ["npm", "run", "start"]
