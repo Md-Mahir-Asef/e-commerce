@@ -7,7 +7,10 @@ import { responseWrapper } from "./middlewares/responseWrapper.middleware";
 
 const app = express();
 
-app.use(cors({ origin: process.env.SERVER_CLIENT_ORIGIN, credentials: true }));
+app.use(cors({
+  origin: (origin, callback) => callback(null, true), // reflect request origin
+  credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(responseWrapper);

@@ -21,4 +21,5 @@ model User {
   email String @unique
   password String
   created_at DateTime @default(now())
+  spent BigInt @default(0)
 }

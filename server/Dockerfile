@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 ################################
 # Stage: dev (for local dev)
 ################################
@@ -19,7 +17,7 @@ COPY . .
 RUN npx prisma generate || true
 
 # Expose port (informational)
-EXPOSE 4000
+EXPOSE 3000
 
 # Default command for development (expects "dev" script)
 CMD ["npm", "run", "dev"]
