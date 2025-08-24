@@ -14,7 +14,7 @@ RUN npm ci
 COPY . .
 
 # Generate Prisma client (so imports work)
-RUN npx prisma generate || true
+RUN npx prisma generate
 
 # Expose port (informational)
 EXPOSE 3000
@@ -36,7 +36,7 @@ RUN npm ci
 COPY . .
 
 # Make Prisma client available at build time (if you import it)
-RUN npx prisma generate || true
+RUN npx prisma generate
 
 # Build TypeScript to dist/
 RUN npm run build

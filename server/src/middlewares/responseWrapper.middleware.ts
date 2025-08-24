@@ -19,13 +19,17 @@ export const responseWrapper = (
     res: Response,
     next: NextFunction
 ) => {
-    res.sendApi = <TData = void>(data?: TData, message?: string) => {
+    res.sendApi = <TData = void>(
+        data?: TData,
+        message?: string,
+        statusCode: number = 200
+    ) => {
         const response: ApiResponse<TData> = {
             success: true,
             data,
             message,
         };
-        res.json(response);
+        res.status(statusCode).json(response);
     };
 
     res.sendErr = <TError = string>(
