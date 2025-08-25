@@ -8,10 +8,15 @@ export const healthCheck = async (req: Request, res: Response) => {
         timeStamp: new Date().toISOString(),
     };
     try {
-        await prisma.$queryRaw`SELECT 1`;
+        const result = await prisma.$queryRaw<
+            { db_name: string }[]
+        >`SELECT current_database() as db_name`;
         logger.info("Health check successful.");
         res.sendApi(
-            { ...base, availability: { database: true } },
+            {
+                ...base,
+                availability: { database: { ...result[0], available: true } },
+            },
             "Everything is Ok."
         );
     } catch (err) {

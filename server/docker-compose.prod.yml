@@ -1,0 +1,13 @@
+services:
+    api:
+        build:
+            context: .
+            target: prod
+        container_name: ecom-api-prod
+        ports:
+            - "3000:3000"
+        env_file: .env
+        environment:
+            NODE_ENV: production
+        volumes:
+            - ./logs:/app/logs

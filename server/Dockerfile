@@ -5,6 +5,7 @@ FROM node:22-slim AS dev
 WORKDIR /app
 
 # Copy package files first to use Docker cache for deps
+RUN apt-get update && apt-get install -y openssl
 COPY package.json package-lock.json ./
 
 # Install all deps (including dev)
