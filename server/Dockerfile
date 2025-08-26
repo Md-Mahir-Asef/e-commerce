@@ -3,9 +3,9 @@
 ################################
 FROM node:22-slim AS dev
 WORKDIR /app
+RUN apt-get update && apt-get install -y openssl libssl-dev
 
 # Copy package files first to use Docker cache for deps
-RUN apt-get update && apt-get install -y openssl
 COPY package.json package-lock.json ./
 
 # Install all deps (including dev)
@@ -30,6 +30,7 @@ CMD ["npm", "run", "dev"]
 ################################
 FROM node:22-slim AS builder
 WORKDIR /app
+RUN apt-get update && apt-get install -y openssl libssl-dev
 
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -49,6 +50,7 @@ RUN npm run build
 FROM node:22-slim AS prod
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y openssl libssl-dev
 # Copy only what we need from builder
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules

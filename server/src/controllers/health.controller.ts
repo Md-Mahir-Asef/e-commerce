@@ -9,8 +9,9 @@ export const healthCheck = async (req: Request, res: Response) => {
     };
     try {
         const result = await prisma.$queryRaw<
-            { db_name: string }[]
-        >`SELECT current_database() as db_name`;
+            { size: string }[]
+        >`SELECT pg_size_pretty(pg_database_size(current_database())) as size`;
+        console.log(result);
         logger.info("Health check successful.");
         res.sendApi(
             {

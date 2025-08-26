@@ -16,10 +16,13 @@ const prisma = new PrismaClient({
 });
 const connectionCheck = async () => {
     try {
-        const result =
-            await prisma.$queryRaw<{db_name: string}[]>`SELECT current_database() as db_name`;
-        console.log(result[0]!.db_name);
-        logger.info(`Prisma is connected to DB: ${result[0]!.db_name} at ${dbUrl}`);
+        const result = await prisma.$queryRaw<
+            { size: string }[]
+        >`SELECT pg_size_pretty(pg_database_size(current_database())) as size`;
+        console.log(result[0]!.size);
+        logger.info(
+            `Prisma is connected to DB: ${result[0]!.size} at ${dbUrl}`
+        );
     } catch (error) {
         logger.warn(`Can't connect to DB. ${error}`);
     }
