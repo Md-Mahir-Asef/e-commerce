@@ -1,0 +1,53 @@
+services:
+    client:
+        build:
+            context: ./client
+        container_name: ecom-client-dev
+        ports:
+            - "5173:5173"
+        volumes:
+            - ./client:/app
+            - /app/node_modules
+        env_file:
+            - ./client/.env
+        environment:
+            # use polling so host -> container FS changes are detected (Windows / WSL)
+            - CHOKIDAR_USEPOLLING=true
+            - CHOKIDAR_INTERVAL=100
+            # optional: tell Vite/your app what port it's served on (useful in config)
+            - VITE_DEV_SERVER_PORT=5173
+        depends_on:
+            - api
+    api:
+        build:
+            context: ./server
+            target: dev
+        container_name: ecom-api-dev
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./server:/app
+            - /app/node_modules
+        depends_on:
+            - db
+        env_file:
+            - ./server/.env
+        environment:
+            - NODE_ENV=development
+            # help some watch libs that read this (not strictly required for nodemon but harmless)
+            - CHOKIDAR_USEPOLLING=true
+            - CHOKIDAR_INTERVAL=100
+
+    db:
+        image: postgres:15
+        container_name: ecom-db-dev
+        restart: always
+        env_file:
+            - ./server/.env
+        ports:
+            - "5432:5432"
+        volumes:
+            - db_data:/var/lib/postgresql/data
+
+volumes:
+    db_data:

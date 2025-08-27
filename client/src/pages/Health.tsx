@@ -21,9 +21,12 @@ export default function Health() {
     return (
         <>
             <Header />
-            <h1 className="text-8xl text-red-800 w-full mx-auto">
-                {text ? text : "Not connected to server."}
-            </h1>
+            <div>
+                <h1 className="text-8xl text-red-800 w-screen mx-auto">
+                    {text ? text : "Not connected to server."}
+                </h1>
+                <h2>Docker Compose</h2>
+            </div>
         </>
     );
 }

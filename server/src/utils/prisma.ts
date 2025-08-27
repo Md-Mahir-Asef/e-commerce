@@ -19,7 +19,6 @@ const connectionCheck = async () => {
         const result = await prisma.$queryRaw<
             { size: string }[]
         >`SELECT pg_size_pretty(pg_database_size(current_database())) as size`;
-        console.log(result[0]!.size);
         logger.info(
             `Prisma is connected to DB: ${result[0]!.size} at ${dbUrl}`
         );
