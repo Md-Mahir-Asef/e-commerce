@@ -20,10 +20,6 @@ RUN npx prisma generate
 # Expose port (informational)
 EXPOSE 3000
 
-# Default command for development (expects "dev" script)
-CMD ["npm", "run", "dev"]
-
-
 ################################
 # Stage: builder
 # (compile TypeScript)

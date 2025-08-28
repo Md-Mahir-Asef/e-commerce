@@ -25,7 +25,7 @@ export default function Health() {
                 <h1 className="text-8xl text-red-800 w-screen mx-auto">
                     {text ? text : "Not connected to server."}
                 </h1>
-                <h2>Docker Compose</h2>
+                <h2>Docker Compose Running</h2>
             </div>
         </>
     );
