@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 
 export default function UtilMenu() {
     return (
-        <div className="flex flex-row pt-2 absolute right-0 pr-10">
+        <div className="pt-2 absolute right-0 pr-10">
+
+        <div className="flex flex-row [@media(max-width:980px)]:hidden">
             <div className="flex flex-row p-3 pr-2">
                 {true ? <Sun /> : <Moon />}
             </div>
@@ -23,6 +25,7 @@ export default function UtilMenu() {
             <Link to="/login" className="flex flex-row p-3">
                 <User /> <p>Account</p>
             </Link>
+        </div>
         </div>
     );
 }
