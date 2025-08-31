@@ -3,10 +3,10 @@ import DropdownMenu from "./DropDownMenu";
 
 export default function SearchBar() {
     return (
-        <div>
+        <>
             {/*Search Bar on Desktop (Search Bar on Mobile is in /src/components/UtilMenu.tsx)*/}
             <div
-                className={`border-2 border-[#BCE3C9] rounded-sm p-2 px-3 ml-7 w-fit hidden [@media(min-width:1550px)]:flex flex-row`}
+                className={`border-2 border-[#BCE3C9] rounded-sm p-2 px-3 ml-3 flex flex-1 flex-row [@media(max-width:1370px)]:hidden`}
             >
                 <DropdownMenu
                     options={[
@@ -23,12 +23,12 @@ export default function SearchBar() {
                     width={175}
                 />
                 <div className="border-2 border-transparent border-l-gray-300" />
-                <div className="flex flex-row">
+                <div className="flex flex-row flex-1">
                     <input
                         type="text"
                         name="search"
                         id="search"
-                        className="px-10 pr-10 text-lg outline-none w-[400px]"
+                        className="px-10 pr-10 text-lg outline-none w-full flex-1"
                         placeholder="Search for items..."
                     />
                     <Search
@@ -38,6 +38,6 @@ export default function SearchBar() {
                     />
                 </div>
             </div>
-        </div>
+        </>
     );
 }
