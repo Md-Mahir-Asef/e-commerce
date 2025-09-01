@@ -19,4 +19,11 @@ model User {
   email String @unique
   password String
   created_at DateTime @default(now())
+  role Roles @default(user)
+}
+
+enum Roles {
+  user
+  admin
+  visitor
 }

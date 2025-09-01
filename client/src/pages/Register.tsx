@@ -13,7 +13,10 @@ export default function Register() {
                 <div className="items-start">
                     <h1 className="text-5xl font-semibold mt-15">Register</h1>
                     <h3>Hi, Welcome to E-commerce. 👋</h3>
-                    <button className="text-md flex flex-row py-1 px-20 border mt-5 rounded-sm border-gray-300 cursor-pointer">
+                    <button
+                        title="This feature is not available."
+                        className="text-md flex flex-row py-1 px-20 border mt-5 rounded-sm border-gray-300 cursor-pointer"
+                    >
                         <img
                             src="/google_logo.png"
                             alt="Google"

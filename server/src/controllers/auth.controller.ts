@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import prisma from "../utils/prisma";
 import logger from "../utils/logger";
 import { hasher } from "../utils/hasher";
@@ -36,6 +36,17 @@ export const register = async (req: Request, res: Response) => {
         logger.error(`Registration Failed. \n ${err}`);
         logger.error(`FAILED USER CREATION ${req.body.user_name}`);
         res.sendErr(err, "Failed to create user.");
+    }
+};
+
+export const getAllUsers = async (req: Request, res: Response) => {
+    try {
+        const users = await prisma.user.findMany();
+        logger.info(`Successfully got all ${users.length} users.`);
+        res.sendApi(users, "Successfully got all users");
+    } catch (err) {
+        logger.error(`FAILED GET USERS QUERY. \n ${err}`);
+        res.sendErr(err, "Failed Get Users Query.");
     }
 };
 
