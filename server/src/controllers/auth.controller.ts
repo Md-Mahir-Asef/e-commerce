@@ -1,4 +1,4 @@
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import prisma from "../utils/prisma";
 import logger from "../utils/logger";
 import { hasher } from "../utils/hasher";
@@ -50,6 +50,29 @@ export const getAllUsers = async (req: Request, res: Response) => {
     }
 };
 
+export const deleteUser = async (req: Request, res: Response) => {
+    try {
+        const userId = req.params["userId"];
+        const deletedUser = await prisma.user.delete({
+            where: {
+                user_id: userId,
+            },
+        });
+        logger.info(
+            `DELETED USER ${deletedUser.user_id} ${deletedUser.user_name}`
+        );
+        res.sendApi(
+            {
+                user_id: deletedUser.user_id,
+                user_name: deletedUser.user_name,
+            },
+            "User deleted successfully."
+        );
+    } catch (err) {
+        logger.error(`USER DELETION FAILED ${req.params["userId"]}. \n ${err}`);
+        res.sendErr(err, "Failed to Delete user.");
+    }
+};
 // export const logOut = async (req: AuthenticatedRequest, res: Response) => {
 //   try {
 //     if (!req.user) {
@@ -75,47 +98,6 @@ export const getAllUsers = async (req: Request, res: Response) => {
 //     res.status(500).json({
 //       message: "Logout Failed!",
 //       error: error,
-//       success: false,
-//     });
-//   }
-// };
-
-// export const deleteUser = async (req: Request, res: Response) => {
-//   try {
-//     const id = req.params.id;
-//     await prisma.task.deleteMany({
-//       where: {
-//         userId: id,
-//       },
-//     });
-//     const deletedUser = await prisma.user.delete({
-//       where: {
-//         id,
-//       },
-//     });
-//     logger.info(`Delete User ${deletedUser.id}`, {
-//       action: "DELETE",
-//       entity: "User",
-//       id: deletedUser.id,
-//       name: deletedUser.name,
-//     });
-//     res.status(200).json({
-//       message: "User deleted successfully.",
-//       data: {
-//         id: deletedUser.id,
-//       },
-//       success: true,
-//     });
-//   } catch (err) {
-//     logger.error("Failed to Delete user.", {
-//       action: "DELETE",
-//       entity: "User",
-//       id: req.params.id,
-//       error: err,
-//     });
-//     res.status(500).json({
-//       message: "Failed to Delete user.",
-//       error: err instanceof Error ? err.message : "Unknown Error Occurred.",
 //       success: false,
 //     });
 //   }
