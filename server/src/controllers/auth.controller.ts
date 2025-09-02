@@ -10,7 +10,8 @@ import { setTokenCookie, clearTokenCookie } from "../utils/cookies";
 
 export const register = async (req: Request, res: Response) => {
     try {
-        const userData = UserDataSchema.parse(req.body);
+        console.log(`\n\n\n\n${JSON.stringify(req.body)}\n\n\n\n\n`);
+        const userData = UserDataSchema.parse(req.body.data);
         const { user_name, email, password } = userData;
         const hashedPass = hasher(password);
         const newUser = await prisma.user.create({
