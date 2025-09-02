@@ -6,6 +6,7 @@ import { generateToken } from "../utils/token";
 import { compareSync } from "bcrypt";
 import { LogInUserDateSchema, UserDataSchema } from "../utils/zodSchemas";
 import { AuthenticatedRequest } from "../utils/types/AuthenticatedRequest";
+import { setTokenCookie, clearTokenCookie } from "../utils/cookies";
 
 export const register = async (req: Request, res: Response) => {
     try {
@@ -23,12 +24,7 @@ export const register = async (req: Request, res: Response) => {
             user_id: newUser.user_id,
         });
         logger.info(`NEW USER CREATED ${newUser.user_id} ${newUser.user_name}`);
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24,
-            sameSite: "lax",
-        });
+        setTokenCookie(res, token);
         res.sendApi({ token: token, user: newUser }, "Registered Successfully");
     } catch (err) {
         logger.error(`FAILED USER CREATION ${req.body.user_name}. \n ${err}`);
@@ -85,31 +81,16 @@ export const logIn = async (req: Request, res: Response) => {
             const token = generateToken({
                 id: user?.user_id,
             });
-            res.cookie("token", token, {
-                httpOnly: true,
-                secure: false,
-                sameSite: "lax",
-                maxAge: 1000 * 60 * 60 * 24 * 7,
-            });
+            setTokenCookie(res, token);
             logger.info(`USER ${user?.user_id} LOGGED IN.`);
-            res.status(200).json({
-                message: "Log in successful.",
-                authenticated: true,
-                success: true,
-            });
+            res.sendApi({ authenticated: true }, "Log in successful.");
         } else {
             throw new Error("Password Incorrect.");
         }
     } catch (err) {
-        logger.error(`Log in Failed`, {
-            error: err,
-        });
-        res.status(500).json({
-            message: "Log in failed.",
-            error: err,
-            authenticated: false,
-            success: false,
-        });
+        const error = err instanceof Error ? err.message : err;
+        logger.error(`LOGIN FAILED FOR ${req.body?.email}. \n ${error}`);
+        res.sendErr({ error, authenticated: false }, "Log in failed.");
     }
 };
 
@@ -119,26 +100,14 @@ export const logOut = async (req: AuthenticatedRequest, res: Response) => {
             throw new Error("Log Out failed.");
         }
         const userId = req.user?.["user_id"];
-        res.clearCookie("token", {
-            httpOnly: true,
-            secure: false,
-            sameSite: "lax",
-        });
-        logger.info(`User ${userId} successfully logged out.`);
-        res.status(200).json({
-            message: "Log Out successful",
-            success: true,
-        });
-    } catch (error) {
-        logger.error("Log Out Failed", {
-            action: "LOGOUT",
-            entity: "User",
-            error,
-        });
-        res.status(500).json({
-            message: "Logout Failed!",
-            error: error,
-            success: false,
-        });
+        clearTokenCookie(res);
+        logger.info(`USER ${userId} LOGGED OUT.`);
+        res.sendApi({ userId }, "Logged Out Successfully.");
+    } catch (err) {
+        const error = err instanceof Error ? err.message : err;
+        logger.error(
+            `LOGOUT FAILED FOR USER ${req.user?.["userId"]}. \n ${error}`
+        );
+        res.sendErr(error, "Logout Failed.");
     }
 };
