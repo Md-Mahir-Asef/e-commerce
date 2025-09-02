@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import { Eye, EyeClosed, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { LoginUserDataSchema } from "@/lib/zodSchemas";
 import axios from "axios";
@@ -33,7 +33,9 @@ export default function Login() {
                 }
             );
             navigate("/");
-            toast.success(`Sir ${response.data.data.user_name}, you are welcome to E-commerce.`);
+            toast.success(
+                `Sir ${response.data.data.user_name}, you are welcome to E-commerce.`
+            );
         } catch (err) {
             if (err instanceof ZodError) {
                 toast.error(JSON.parse(err.message)[0].message);

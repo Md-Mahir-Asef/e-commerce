@@ -22,6 +22,7 @@ export const register = async (req: Request, res: Response) => {
         });
         const token = generateToken({
             user_id: newUser.user_id,
+            user_name: newUser?.user_name,
         });
         logger.info(`NEW USER CREATED ${newUser.user_id} ${newUser.user_name}`);
         setTokenCookie(res, token);
@@ -79,7 +80,8 @@ export const logIn = async (req: Request, res: Response) => {
         const isPassCorrect = compareSync(password, user?.password as string);
         if (isPassCorrect) {
             const token = generateToken({
-                id: user?.user_id,
+                user_id: user?.user_id,
+                user_name: user?.user_name,
             });
             setTokenCookie(res, token);
             logger.info(`USER ${user?.user_id} LOGGED IN.`);
@@ -109,5 +111,24 @@ export const logOut = async (req: AuthenticatedRequest, res: Response) => {
             `LOGOUT FAILED FOR USER ${req.user?.["userId"]}. \n ${error}`
         );
         res.sendErr(error, "Logout Failed.");
+    }
+};
+
+export const getCurrentUser = async (
+    req: AuthenticatedRequest,
+    res: Response
+) => {
+    try {
+        if (!req.user) {
+            throw new Error("Can't Get User Data.");
+        }
+        const user_id = req.user?.["user_id"];
+        const user_name = req.user?.["user_name"];
+        logger.info(`USER DATA FETCHED FOR ${user_name} ${user_id}.`);
+        res.sendApi({ user_id, user_name }, "Got User Data.");
+    } catch (err) {
+        const error = err instanceof Error ? err.message : err;
+        logger.error(`FAILED FETCHING USER DATA. \n ${error}`);
+        res.sendErr(error, "Can't get user data.");
     }
 };
