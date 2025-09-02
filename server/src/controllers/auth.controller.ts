@@ -10,7 +10,6 @@ import { setTokenCookie, clearTokenCookie } from "../utils/cookies";
 
 export const register = async (req: Request, res: Response) => {
     try {
-        console.log(`\n\n\n\n${JSON.stringify(req.body)}\n\n\n\n\n`);
         const userData = UserDataSchema.parse(req.body.data);
         const { user_name, email, password } = userData;
         const hashedPass = hasher(password);
@@ -70,7 +69,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const logIn = async (req: Request, res: Response) => {
     try {
-        const userDate = LogInUserDateSchema.parse(req.body);
+        const userDate = LogInUserDateSchema.parse(req.body.data);
         const { email, password } = userDate;
         const user = await prisma.user.findUnique({
             where: {
@@ -84,7 +83,7 @@ export const logIn = async (req: Request, res: Response) => {
             });
             setTokenCookie(res, token);
             logger.info(`USER ${user?.user_id} LOGGED IN.`);
-            res.sendApi({ authenticated: true }, "Log in successful.");
+            res.sendApi({ ...user, authenticated: true }, "Log in successful.");
         } else {
             throw new Error("Password Incorrect.");
         }

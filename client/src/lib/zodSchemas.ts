@@ -17,3 +17,11 @@ export const RegistrationUserDataSchema = z
         message: "Password Must Match",
         path: ["confirmPassword"],
     });
+
+export const LoginUserDataSchema = z.object({
+    email: z.email({ message: "Invalid Email." }),
+    password: z
+        .string()
+        .min(4, { message: "Password must be at least 4 characters." })
+        .max(32, { message: "Password can't exceed 32 characters." }),
+});

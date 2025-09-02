@@ -1,10 +1,46 @@
 import Header from "../components/Header";
 import { Eye, EyeClosed, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { LoginUserDataSchema } from "@/lib/zodSchemas";
+import axios from "axios";
+import { config } from "../config/config";
+import { toast } from "sonner";
+import { ZodError } from "zod/v4";
+import type { MouseEvent } from "react";
 
 export default function Login() {
     const [show, setShow] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
+    const submitLogin = async (event: MouseEvent) => {
+        try {
+            event.preventDefault();
+            const data = LoginUserDataSchema.parse({
+                email,
+                password,
+            });
+            const response = await axios.post(
+                `${config.VITE_SERVER_BASE_URL}/auth/login`,
+                {
+                    data: {
+                        email: data.email,
+                        password: data.password,
+                    },
+                }
+            );
+            navigate("/");
+            toast.success(`Sir ${response.data.data.user_name}, you are welcome to E-commerce.`);
+        } catch (err) {
+            if (err instanceof ZodError) {
+                toast.error(JSON.parse(err.message)[0].message);
+            }
+        }
+    };
+
     return (
         <>
             <Header />
@@ -32,12 +68,16 @@ export default function Login() {
                         </span>
                         <div className="flex-grow border-b border-gray-300/50"></div>
                     </div>
-                    <form action="post" className="flex flex-col">
+                    <form className="flex flex-col">
                         <div className="flex flex-col">
                             <label htmlFor="email">Email</label>
                             <input
                                 type="email"
                                 id="email"
+                                value={email}
+                                onChange={(event) =>
+                                    setEmail(event.target.value)
+                                }
                                 className="border border-gray-500 border-opacity-50 rounded-sm p-1 outline-none"
                             />
                         </div>
@@ -46,6 +86,10 @@ export default function Login() {
                             <input
                                 type={show ? "text" : "password"}
                                 id="password"
+                                value={password}
+                                onChange={(event) =>
+                                    setPassword(event.target.value)
+                                }
                                 className="border border-gray-500 border-opacity-50 rounded-sm p-1 outline-none"
                             />
                             {show ? (
@@ -68,6 +112,7 @@ export default function Login() {
                         </Link>
                         <button
                             type="submit"
+                            onClick={submitLogin}
                             className="bg-blue-800 text-white p-3 mt-6 rounded-lg cursor-pointer"
                         >
                             Login
