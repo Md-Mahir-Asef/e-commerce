@@ -38,6 +38,6 @@
         "incremental": true /* Faster rebuilds */,
         "tsBuildInfoFile": "./.tsbuildinfo" /* Store incremental build info */
     },
-    "include": ["src"],
+    "include": ["src", "tests/**/*", "**/__tests__/**/*"],
     "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }

@@ -12,13 +12,9 @@ module.exports = {
     transform: {
         "^.+\\.tsx?$": ["ts-jest", { useESM: true }],
     },
-    moduleNameMapping: {
+    moduleNameMapper: {
         "^(\\.{1,2}/.*)\\.js$": "$1",
     },
     extensionsToTreatAsEsm: [".ts"],
-    globals: {
-        "ts-jest": {
-            tsconfig: "tsconfig.json",
-        },
-    },
+    verbose: true,
 };
