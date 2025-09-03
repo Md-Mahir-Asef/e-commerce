@@ -4,9 +4,7 @@
 **/dist
 **/logs
 cookie.txt
-
-# Client
-
-# Server
+**/.env.*
+**/.env
 
 

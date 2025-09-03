@@ -6,6 +6,7 @@
         "moduleResolution": "NodeNext" /* Match Node.js ESM resolution */,
         "outDir": "./dist" /* Output folder */,
         "rootDir": "./src" /* Keep structure clean */,
+        "types": ["node", "jest"],
 
         /* Type Safety */
         "strict": true /* Enable all strict checks */,
