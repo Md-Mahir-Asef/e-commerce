@@ -7,6 +7,7 @@ import { compareSync } from "bcrypt";
 import { LogInUserDateSchema, UserDataSchema } from "../utils/zodSchemas";
 import { AuthenticatedRequest } from "../utils/types/AuthenticatedRequest";
 import { setTokenCookie, clearTokenCookie } from "../utils/cookies";
+import { ZodError } from "zod";
 
 export const register = async (req: Request, res: Response) => {
     try {
@@ -28,8 +29,12 @@ export const register = async (req: Request, res: Response) => {
         setTokenCookie(res, token);
         res.sendApi({ token: token, user: newUser }, "Registered Successfully");
     } catch (err) {
-        logger.error(`FAILED USER CREATION ${req.body.user_name}. \n ${err}`);
-        res.sendErr(err, "Failed to create user.");
+        let error: any = err;
+        if (err instanceof ZodError) {
+            error = JSON.parse(err.message)[0].message;
+        }
+        logger.error(`FAILED USER CREATION ${req.body.user_name}. \n ${error}`);
+        res.sendErr(error, "Failed to create user.");
     }
 };
 
@@ -114,7 +119,7 @@ export const logOut = async (req: AuthenticatedRequest, res: Response) => {
     }
 };
 
-export const getCurrentUser = async (
+export const getUserToken = async (
     req: AuthenticatedRequest,
     res: Response
 ) => {

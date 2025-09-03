@@ -4,7 +4,7 @@ import { config } from "../config/config";
 import logger from "../utils/logger";
 import { AuthenticatedRequest } from "../utils/types/AuthenticatedRequest";
 
-export const authMiddleware = (
+export const authUserMiddleware = (
     req: AuthenticatedRequest,
     res: Response,
     next: NextFunction

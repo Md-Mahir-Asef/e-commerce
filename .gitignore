@@ -3,9 +3,10 @@
 **/node_modules
 **/dist
 **/logs
+cookie.txt
 
 # Client
 
 # Server
-server/src/generated
+
 

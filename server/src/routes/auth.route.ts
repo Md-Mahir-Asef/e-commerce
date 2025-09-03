@@ -5,9 +5,9 @@ import {
     deleteUser,
     logIn,
     logOut,
-    getCurrentUser,
+    getUserToken,
 } from "../controllers/auth.controller";
-import { authMiddleware } from "../middlewares/auth.middleware";
+import { authUserMiddleware } from "../middlewares/auth.middleware";
 
 const authRoutes = Router();
 
@@ -15,7 +15,7 @@ authRoutes.post("/register", register);
 authRoutes.get("/users", getAllUsers);
 authRoutes.delete("/user/:userId", deleteUser);
 authRoutes.post("/login", logIn);
-authRoutes.post("/logout/:userId", logOut);
-authRoutes.get("/me", getCurrentUser);
+authRoutes.post("/logout/:userId", authUserMiddleware, logOut);
+authRoutes.get("/me", authUserMiddleware, getUserToken);
 
 export default authRoutes;
