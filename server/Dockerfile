@@ -58,3 +58,25 @@ EXPOSE 3000
 
 # Start the app (expects "start" script -> node dist/index.js)
 CMD ["npm", "run", "start"]
+
+################################
+# Stage: test (integration / unit tests)
+################################
+
+FROM node:22-slim AS test
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y openssl libssl-dev
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY . .
+
+RUN npx prisma generate
+
+# Set test env
+ENV NODE_ENV=test
+
+# Run tests directly
+CMD ["npm", "run", "test", "--", "--runInBand"]

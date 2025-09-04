@@ -1,13 +1,26 @@
-import { config } from "../../config/config";
 import { hasher } from "../hasher";
 import bcrypt from "bcrypt";
-import { jest, describe, it, expect } from "@jest/globals";
-
-jest.mock("bcrypt");
-jest.mock("../../config/config");
+import { describe, it, expect } from "@jest/globals";
 
 describe("hasher", () => {
-    it("should work", () => {
-        expect(true).toBe(true);
+    it("returns a hashed string", () => {
+        const plain = "mypassword";
+        const hash = hasher(plain);
+
+        expect(typeof hash).toBe("string");
+        expect(hash).not.toBe(plain); // shouldn’t equal the input
+    });
+
+    it("produces a hash that bcrypt can verify", () => {
+        const plain = "mypassword";
+        const hash = hasher(plain);
+
+        const matches = bcrypt.compareSync(plain, hash);
+        expect(matches).toBe(true);
+    });
+
+    it("throws if data is not a string", () => {
+        // @ts-expect-error testing invalid input
+        expect(() => hasher(null)).toThrow();
     });
 });
