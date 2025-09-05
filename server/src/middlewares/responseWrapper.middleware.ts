@@ -4,7 +4,11 @@ import { ApiResponse } from "../utils/types/ApiResponse";
 declare global {
     namespace Express {
         interface Response {
-            sendApi: <TData = void>(data?: TData, message?: string) => void;
+            sendApi: <TData = void>(
+                data?: TData,
+                message?: string,
+                statusCode?: number
+            ) => void;
             sendErr: <TError = string>(
                 error: TError,
                 message?: string,

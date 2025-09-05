@@ -17,4 +17,5 @@ module.exports = {
     },
     extensionsToTreatAsEsm: [".ts"],
     verbose: true,
+    setupFilesAfterEnv: ["./jest.setup.ts"]
 };

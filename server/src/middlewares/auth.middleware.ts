@@ -23,11 +23,6 @@ export const authUserMiddleware = (
         next();
     } catch (err) {
         logger.error(`UNAUTHORIZED USER. \n ${err}`);
-        res.status(401).json({
-            success: false,
-            authenticated: false,
-            message: "Invalid Token",
-        });
-        res.sendErr({ err, authenticated: false }, "Invalid Token.");
+        res.sendErr({ err, authenticated: false }, "Invalid Token.", 401);
     }
 };

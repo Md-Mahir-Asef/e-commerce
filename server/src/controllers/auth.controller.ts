@@ -27,7 +27,11 @@ export const register = async (req: Request, res: Response) => {
         });
         logger.info(`NEW USER CREATED ${newUser.user_id} ${newUser.user_name}`);
         setTokenCookie(res, token);
-        res.sendApi({ token: token, user: newUser }, "Registered Successfully");
+        res.sendApi(
+            { token: token, user: newUser },
+            "Registered Successfully",
+            201
+        );
     } catch (err) {
         let error: any = err;
         if (err instanceof ZodError) {

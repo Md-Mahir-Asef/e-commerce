@@ -69,15 +69,16 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y openssl libssl-dev
 
 COPY package.json package-lock.json ./
+ENV DATABASE_URL=postgres://test:test@db:5432/test_db
+ENV NODE_ENV=test
+
+RUN rm -rf node_modules/@prisma/client
 RUN npm ci
+RUN npx prisma generate
 
 COPY . .
 
-RUN npx prisma generate
-
 # Set test env
-ENV NODE_ENV=test
-ENV DATABASE_URL=postgres://test:test@db:5432/test_db
 
 RUN rm -rf .env .env.test .env.example
 
