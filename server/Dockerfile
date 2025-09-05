@@ -77,6 +77,9 @@ RUN npx prisma generate
 
 # Set test env
 ENV NODE_ENV=test
+ENV DATABASE_URL=postgres://test:test@db:5432/test_db
+
+RUN rm -rf .env .env.test .env.example
 
 # Run tests directly
 CMD ["npm", "run", "test", "--", "--runInBand"]

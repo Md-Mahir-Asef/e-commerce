@@ -17,13 +17,13 @@ const prisma = new PrismaClient({
 const connectionCheck = async () => {
     try {
         const result = await prisma.$queryRaw<
-            { size: string }[]
-        >`SELECT pg_size_pretty(pg_database_size(current_database())) as size`;
+            { size: string; name: string }[]
+        >`SELECT pg_size_pretty(pg_database_size(current_database())) as size, current_database() as name`;
         logger.info(
-            `Prisma is connected to DB: ${result[0]!.size} at ${dbUrl}`
+            `Prisma is connected to DB: ${result[0]?.name} at ${dbUrl}. Database size: ${result[0]?.size}`
         );
     } catch (error) {
-        logger.warn(`Can't connect to DB. ${error}`);
+        logger.warn(`ERROR ON PRISMA INITIAL CONNECTION AND INITIAL HEALTH CHECK.\nCan't connect to DB. ${error}`);
     }
 };
 

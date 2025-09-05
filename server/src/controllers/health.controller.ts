@@ -11,11 +11,11 @@ export const healthCheck = async (req: Request, res: Response) => {
     try {
         // Get DB size
         const result = await prisma.$queryRaw<
-            { size: string }[]
-        >`SELECT pg_size_pretty(pg_database_size(current_database())) as size`;
+            { size: string; name: string }[]
+        >`SELECT pg_size_pretty(pg_database_size(current_database())) as size, current_database() as name`;
 
         logger.info(
-            `Health check successful. Prisma DB size: ${result[0]?.size}`
+            `Health check successful. Prisma DB size: ${result[0]?.size}, name: ${result[0]?.name}`
         );
 
         res.sendApi(
