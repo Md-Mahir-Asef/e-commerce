@@ -2,7 +2,7 @@ services:
     client:
         build:
             context: ./client
-        container_name: ecom-client-dev
+        container_name: ecom-client-dev 
         ports:
             - "5173:5173"
         volumes:
@@ -16,8 +16,8 @@ services:
             - CHOKIDAR_INTERVAL=100
             # optional: tell Vite/your app what port it's served on (useful in config)
             - VITE_DEV_SERVER_PORT=5173
-        depends_on:
-            - api
+        depends_on: # I want the db to spin up first and then the client and then the api.
+            - db 
         tty: true
         init: true
         command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
@@ -31,8 +31,9 @@ services:
         volumes:
             - ./server:/app:cached
             - /app/node_modules
-        depends_on:
+        depends_on: # I want the db to spin up first and then the client and then the api.
             - db
+            - client 
         env_file:
             - ./server/.env
         environment:
@@ -42,7 +43,8 @@ services:
             - CHOKIDAR_INTERVAL=100
         tty: true
         init: true
-        command: ["npm", "run", "dev"]
+        command: > 
+            sh -c "sleep 10 && npx prisma db push && npm run dev"
 
     db:
         image: postgres:15
@@ -51,7 +53,7 @@ services:
         env_file:
             - ./server/.env
         ports:
-            - "5432:5432"
+            - "15432:5432"
         volumes:
             - db_data:/var/lib/postgresql/data
 
