@@ -1,20 +1,20 @@
 version: "3.9"
 
 services:
-    db:
+    test_db:
         image: postgres:15
         environment:
             POSTGRES_USER: test
             POSTGRES_PASSWORD: test
             POSTGRES_DB: test_db
         ports:
-            - "5433:5432" # Optional: local port for debugging
+            - "25433:5432" # Optional: local port for debugging
         healthcheck:
             test: ["CMD-SHELL", "pg_isready -U test"]
             interval: 5s
             retries: 5
 
-    app:
+    test_app:
         build:
             context: .
             dockerfile: Dockerfile
@@ -24,6 +24,6 @@ services:
             NODE_ENV: test
             DATABASE_URL: postgres://test:test@db:5432/test_db
         depends_on:
-            db:
+            test_db:
                 condition: service_healthy
-        command: sh -c "npx prisma generate && npm run test"
+        command: sh -c "npx prisma db push && npm run test"

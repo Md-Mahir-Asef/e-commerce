@@ -74,11 +74,9 @@ ENV NODE_ENV=test
 
 RUN rm -rf node_modules/@prisma/client
 RUN npm ci
-RUN npx prisma generate
-
 COPY . .
 
-# Set test env
+RUN npx prisma generate
 
 RUN rm -rf .env .env.test .env.example
 
