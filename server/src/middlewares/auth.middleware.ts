@@ -19,7 +19,9 @@ export const authUserMiddleware = (
             config.SERVER_JWT_SECRET as string
         ) as JwtPayload;
         req.user = user;
-        logger.info(`AUTHENTICATED USER ${user["id"]}.`);
+        logger.info(
+            `AUTHENTICATED USER ${user["user_name"]} ${user["user_id"]}.`
+        );
         next();
     } catch (err) {
         logger.error(`UNAUTHORIZED USER. \n${err}`);

@@ -3,9 +3,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { config } from "../config/config";
 import ProfileDropDownMenu from "./ProfileDropDownMenu";
+import { Link } from "react-router-dom";
 
 export default function AuthStatus() {
     const [name, setName] = useState("Account");
+    const [id, setId] = useState("Not_set");
+    const [authenticated, setAuthenticated] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -14,14 +17,17 @@ export default function AuthStatus() {
                     `${config.VITE_SERVER_BASE_URL}/auth/me`,
                     { withCredentials: true }
                 );
-                const userName: string = response.data.data.user_name;
-                setName(userName.slice(0, 10));
                 if (
                     response.status === 401 ||
                     response.data.authenticated === false
                 ) {
                     throw new Error("Unauthenticated.");
                 }
+                const userName: string = response.data.data.user_name;
+                const userId: string = response.data.data.user_id;
+                setName(userName.slice(0, 10));
+                setId(userId);
+                setAuthenticated(true);
             } catch (err) {
                 console.log(err);
             }
@@ -29,20 +35,51 @@ export default function AuthStatus() {
         fetchData();
     }, []);
 
+    const logOutHandler = async () => {
+        try {
+            const response = await axios.post(
+                `${config.VITE_SERVER_BASE_URL}/auth/logout/${id}`,
+                {},
+                { withCredentials: true }
+            );
+            if (
+                response.status === 401 ||
+                response.data.authenticated === false
+            ) {
+                throw new Error("Unauthenticated.");
+            }
+            window.location.reload();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     return (
         <div>
-            <ProfileDropDownMenu
-                label={
-                    <div className="flex flex-row p-3">
-                        <CircleUserRound /> <p> {name}</p>
-                    </div>
-                }
-                items={[
-                    { name: "Profile", onClick: () => console.log("Profile") },
-                    { name: <p className="text-red-700">Logout</p>, onClick: () => console.log("Logout") },
-                ]}
-                width={100}
-            />
+            {authenticated ? (
+                <ProfileDropDownMenu
+                    label={
+                        <div className="flex flex-row p-3">
+                            <CircleUserRound /> <p> {name}</p>
+                        </div>
+                    }
+                    items={[
+                        {
+                            name: "Profile",
+                            onClick: () => console.log("Profile"),
+                        },
+                        {
+                            name: <p className="text-red-800">Logout</p>,
+                            onClick: logOutHandler,
+                        },
+                    ]}
+                    width={100}
+                />
+            ) : (
+                <Link to={"/login"} className="flex flex-row p-3">
+                    <CircleUserRound /> <p> {name}</p>
+                </Link>
+            )}
         </div>
     );
 }
