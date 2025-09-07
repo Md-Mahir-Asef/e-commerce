@@ -1,11 +1,11 @@
-import { Analytics } from "@vercel/analytics/react";
-import Landing from "./pages/Landing";
+import { Toaster } from "sonner";
 import { Routes, Route } from "react-router-dom";
+import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Health from "./pages/Health";
-import { Toaster } from "sonner";
+import Profile from "./pages/Profile";
 
 function App() {
     return (
@@ -16,9 +16,9 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/health" element={<Health />} />
+                <Route path="/profile/:id" element={<Profile />}/>
                 <Route path="*" element={<NotFound />} />
             </Routes>
-            <Analytics />
             <Toaster richColors position="top-right" />
         </>
     );
