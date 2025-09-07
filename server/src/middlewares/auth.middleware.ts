@@ -22,7 +22,7 @@ export const authUserMiddleware = (
         logger.info(`AUTHENTICATED USER ${user["id"]}.`);
         next();
     } catch (err) {
-        logger.error(`UNAUTHORIZED USER. \n ${err}`);
+        logger.error(`UNAUTHORIZED USER. \n${err}`);
         res.sendErr({ err, authenticated: false }, "Invalid Token.", 401);
     }
 };

@@ -26,7 +26,14 @@ export const register = async (req: Request, res: Response) => {
             user_name: newUser?.user_name,
         });
         logger.info(`NEW USER CREATED ${newUser.user_id} ${newUser.user_name}`);
-        setTokenCookie(res, token);
+        // setTokenCookie(res, token);
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: false, // dev
+            sameSite: "none",
+            path: "/",
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+        });
         res.sendApi(
             { token: token, user: newUser },
             "Registered Successfully",

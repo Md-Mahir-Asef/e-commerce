@@ -28,15 +28,22 @@ export default function Register() {
                 password,
                 confirmPassword,
             });
-            await axios.post(`${config.VITE_SERVER_BASE_URL}/auth/register`, {
-                data: {
-                    user_name: data.user_name,
-                    email: data.email,
-                    password: data.password,
+            const response = await axios.post(
+                `${config.VITE_SERVER_BASE_URL}/auth/register`,
+                {
+                    data: {
+                        user_name: data.user_name,
+                        email: data.email,
+                        password: data.password,
+                    },
                 },
-            });
+                { withCredentials: true }
+            );
+            console.log(response.data.data);
             navigate("/");
-            toast(`Sir ${data.user_name}, you are welcome to E-commerce.`);
+            toast(
+                `Sir ${response.data.data.user.user_name}, you are welcome to E-commerce.`
+            );
         } catch (err) {
             if (err instanceof ZodError) {
                 toast.error(JSON.parse(err.message)[0].message);

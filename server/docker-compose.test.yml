@@ -22,8 +22,9 @@ services:
             - .env.test
         environment:
             NODE_ENV: test
-            DATABASE_URL: postgres://test:test@db:5432/test_db
+            DATABASE_URL: postgres://test:test@test_db:5432/test_db
         depends_on:
             test_db:
                 condition: service_healthy
-        command: sh -c "npx prisma db push && npm run test"
+        command: >
+            sh -c "sleep 10 && npx prisma db push && npm run dev"

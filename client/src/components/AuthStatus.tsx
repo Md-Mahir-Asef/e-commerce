@@ -15,7 +15,7 @@ export default function AuthStatus() {
                     { withCredentials: true }
                 );
                 setName("Mahir");
-                console.log(response);
+                console.log(JSON.stringify(response));
                 if (
                     response.status === 401 ||
                     response.data.authenticated === false
