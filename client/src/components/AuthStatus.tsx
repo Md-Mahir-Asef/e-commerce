@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
 import { CircleUserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { config } from "../config/config";
+import ProfileDropDownMenu from "./ProfileDropDownMenu";
 
 export default function AuthStatus() {
     const [name, setName] = useState("Account");
@@ -14,8 +14,8 @@ export default function AuthStatus() {
                     `${config.VITE_SERVER_BASE_URL}/auth/me`,
                     { withCredentials: true }
                 );
-                setName("Mahir");
-                console.log(JSON.stringify(response));
+                const userName: string = response.data.data.user_name;
+                setName(userName.slice(0, 10));
                 if (
                     response.status === 401 ||
                     response.data.authenticated === false
@@ -31,9 +31,18 @@ export default function AuthStatus() {
 
     return (
         <div>
-            <Link to="/login" className="flex flex-row p-3">
-                <CircleUserRound /> <p>{name}</p>
-            </Link>
+            <ProfileDropDownMenu
+                label={
+                    <div className="flex flex-row p-3">
+                        <CircleUserRound /> <p> {name}</p>
+                    </div>
+                }
+                items={[
+                    { name: "Profile", onClick: () => console.log("Profile") },
+                    { name: <p className="text-red-700">Logout</p>, onClick: () => console.log("Logout") },
+                ]}
+                width={100}
+            />
         </div>
     );
 }

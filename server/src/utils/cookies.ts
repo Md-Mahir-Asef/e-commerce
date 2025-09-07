@@ -10,7 +10,7 @@ export function setTokenCookie(
     const defaultOptions: CookieOptions = {
         httpOnly: true,
         secure: isProduction, // secure in prod
-        sameSite: isProduction ? "lax" : "none", // cross-domain in prod
+        sameSite: isProduction ? "none" : "lax", // cross-domain in prod
         domain: isProduction ? "backend.com" : undefined, // set only in prod
         path: "/",
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
