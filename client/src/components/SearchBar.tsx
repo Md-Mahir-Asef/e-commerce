@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import DropdownMenu from "./DropDownMenu";
+import CategoryDropDownMenu from "./CategoryDropDownMenu";
 
 export default function SearchBar() {
     return (
@@ -8,8 +8,8 @@ export default function SearchBar() {
             <div
                 className={`border-2 border-[#BCE3C9] rounded-sm p-2 px-3 ml-3 flex flex-1 flex-row [@media(max-width:1370px)]:hidden`}
             >
-                <DropdownMenu
-                    options={[
+                <CategoryDropDownMenu
+                    categories={[
                         "All Categories",
                         "Grocery",
                         "Dairy",
