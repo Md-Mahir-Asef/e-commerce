@@ -3,10 +3,8 @@ import { ChevronDown } from "lucide-react";
 
 const DropdownMenu = ({
     options,
-    width,
 }: {
     options: string[];
-    width: number;
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState<string | null>(null);

@@ -58,22 +58,9 @@ export default function AuthStatus() {
         <div>
             {authenticated ? (
                 <ProfileDropDownMenu
-                    label={
-                        <div className="flex flex-row p-3">
-                            <CircleUserRound /> <p> {name}</p>
-                        </div>
-                    }
-                    items={[
-                        {
-                            name: "Profile",
-                            onClick: () => console.log("Profile"),
-                        },
-                        {
-                            name: <p className="text-red-800">Logout</p>,
-                            onClick: logOutHandler,
-                        },
-                    ]}
-                    width={100}
+                    name={name}
+                    id={id}
+                    logoutHandler={logOutHandler}
                 />
             ) : (
                 <Link to={"/login"} className="flex flex-row p-3">
