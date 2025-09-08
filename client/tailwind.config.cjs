@@ -4,7 +4,10 @@ module.exports = {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
     theme: {
         extend: {
-            darkBg: "#ee0000",
+            colors: {
+                darkBg: "var(--background)",
+                darkText: "var(--foreground)",
+            },
         },
     },
     plugins: [],

@@ -19,7 +19,7 @@ export default function SlideMenu({
             ></div>
             {/* Slide-in Menu */}
             <div
-                className={`fixed top-0 left-0 h-full w-full bg-white z-50 transform transition-transform duration-300 shadow-lg ${
+                className={`fixed top-0 left-0 h-full w-full bg-white z-50 transform transition-transform duration-300 shadow-lg dark:bg-darkBg dark:text-darkText${
                     isOpen ? "translate-x-0" : "-translate-x-full"
                 }`}
             >
