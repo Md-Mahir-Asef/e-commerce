@@ -26,7 +26,15 @@ export default function ThemeToggle() {
             className="flex flex-row p-3 pr-2 cursor-pointer"
             onClick={() => setDark(!dark)}
         >
-            {dark ? <Sun /> : <Moon />}
+            {dark ? (
+                <>
+                    <Sun /> Light
+                </>
+            ) : (
+                <>
+                    <Moon /> Dark
+                </>
+            )}
         </div>
     );
 }

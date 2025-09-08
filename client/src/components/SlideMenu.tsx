@@ -1,5 +1,6 @@
-import { X, Sun, Moon, Heart, Search, ShoppingCart } from "lucide-react";
+import { X, Heart, Search, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle";
 
 export default function SlideMenu({
     isOpen,
@@ -19,7 +20,7 @@ export default function SlideMenu({
             ></div>
             {/* Slide-in Menu */}
             <div
-                className={`fixed top-0 left-0 h-full w-full bg-white z-50 transform transition-transform duration-300 shadow-lg dark:bg-darkBg dark:text-darkText${
+                className={`fixed top-0 left-0 h-full w-full bg-background text-foreground z-50 transform transition-transform duration-300 shadow-lg ${
                     isOpen ? "translate-x-0" : "-translate-x-full"
                 }`}
             >
@@ -40,23 +41,11 @@ export default function SlideMenu({
                         <X size={24} />
                     </button>
                 </div>
-                <div className="h-[0.25px] bg-black" />
+                <div className="h-[0.25px] bg-black dark:bg-white" />
 
                 {/* Menu Items */}
                 <div className="flex flex-col">
-                    <div className="flex flex-row p-3">
-                        {true ? (
-                            <>
-                                <Sun />
-                                <p>Light</p>
-                            </>
-                        ) : (
-                            <>
-                                <Moon />
-                                <p>Dark</p>
-                            </>
-                        )}
-                    </div>
+                    <ThemeToggle />
                     <div className="flex flex-row p-3">
                         <Link to={"/search"}>
                             <Search />
