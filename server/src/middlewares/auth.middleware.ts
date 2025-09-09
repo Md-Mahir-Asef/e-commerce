@@ -28,3 +28,32 @@ export const authUserMiddleware = (
         res.sendErr({ err, authenticated: false }, "Invalid Token.", 401);
     }
 };
+
+export const authAdminMiddleware = (
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const token = req.cookies["token"];
+        if (!token) {
+            throw new Error("Invalid Token");
+        }
+        const admin = verify(
+            token,
+            config.SERVER_JWT_SECRET as string
+        ) as JwtPayload;
+        if (admin["role"] !== "admin") {
+            throw new Error("Not An Admin.");
+        }
+        req.admin = admin;
+        logger.info(
+            `AUTHENTICATED ADMIN ${admin["user_name"]} ${admin["user_id"]}.`
+        );
+        next();
+    } catch (err) {
+        const error = err instanceof Error ? err.message : err;
+        logger.error(`UNAUTHORIZED ADMIN. \n${error}`);
+        res.sendErr({ error, authenticated: false }, "Invalid Token.", 401);
+    }
+};
