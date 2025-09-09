@@ -6,8 +6,11 @@ export default function TopHeader() {
         element?.classList.add("hidden");
     };
     return (
-        <div id="topHeaderRoot" className="relative py-1 flex flex-row bg-green-100">
-            <p className="text-xm opacity-75 text-green-600 mx-auto pr-12">
+        <div
+            id="topHeaderRoot"
+            className="relative py-1 flex flex-row bg-green-100 dark:bg-green-950"
+        >
+            <p className="text-xm opacity-75 text-green-950 mx-auto pr-12 dark:text-white">
                 This is website not for commercial use, all the products are
                 fake and the payment gateway is made for testing purposes. You
                 can access the admin dashboard with the username: admin and

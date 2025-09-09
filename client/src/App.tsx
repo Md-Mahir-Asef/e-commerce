@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Health from "./pages/Health";
 import Profile from "./pages/Profile";
+import AdminLogin from "./pages/AdminLogin";
 
 function App() {
     return (
@@ -16,7 +17,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/health" element={<Health />} />
-                <Route path="/profile/:id" element={<Profile />}/>
+                <Route path="/profile/:id" element={<Profile />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
             <Toaster richColors position="top-right" />

@@ -23,7 +23,8 @@ export const register = async (req: Request, res: Response) => {
         });
         const token = generateToken({
             user_id: newUser.user_id,
-            user_name: newUser?.user_name,
+            user_name: newUser.user_name,
+            role: newUser.role,
         });
         logger.info(`NEW USER CREATED ${newUser.user_id} ${newUser.user_name}`);
         setTokenCookie(res, token);
@@ -86,11 +87,15 @@ export const logIn = async (req: Request, res: Response) => {
                 email,
             },
         });
+        if (!user) {
+            throw new Error("User Not Found.");
+        }
         const isPassCorrect = compareSync(password, user?.password as string);
         if (isPassCorrect) {
             const token = generateToken({
-                user_id: user?.user_id,
-                user_name: user?.user_name,
+                user_id: user.user_id,
+                user_name: user.user_name,
+                role: user.role,
             });
             setTokenCookie(res, token);
             logger.info(`USER ${user?.user_id} LOGGED IN.`);
