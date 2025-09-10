@@ -10,12 +10,14 @@ services:
             # - /app/node_modules # It is causing problem with prisma generation on new schema
         env_file:
             - ./client/.env
+            - ./.env.docker
         environment:
             # use polling so host -> container FS changes are detected (Windows / WSL)
             - CHOKIDAR_USEPOLLING=true
             - CHOKIDAR_INTERVAL=100
             # optional: tell Vite/your app what port it's served on (useful in config)
             - VITE_DEV_SERVER_PORT=5173
+            - VITE_SERVER_DEVELOPMENT_BASE_URL="http://localhost:${DOCKER_SERVER_PORT}/api/v1"
         depends_on:
             - api
         tty: true
@@ -27,7 +29,7 @@ services:
             target: dev
         container_name: ecom-api-dev
         ports:
-            - "3000:3000"
+            - "${DOCKER_SERVER_PORT}:${DOCKER_SERVER_PORT}"
         volumes:
             - ./server:/app:cached
             - /app/node_modules
@@ -36,15 +38,17 @@ services:
                 condition: service_healthy
         env_file:
             - ./server/.env
+            - ./.env.docker
         environment:
             - NODE_ENV=development
             # help some watch libs that read this (not strictly required for nodemon but harmless)
             - CHOKIDAR_USEPOLLING=true
             - CHOKIDAR_INTERVAL=100
+            - PORT=${DOCKER_SERVER_PORT}
         tty: true
         init: true
         command: >
-            sh -c "sleep 10 && npx prisma db push && npm run dev"
+            sh -c "sleep 10 && npx prisma db push && PORT=${DOCKER_SERVER_PORT} npm run dev"
 
     db:
         image: postgres:15
