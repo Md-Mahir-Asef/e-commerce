@@ -46,7 +46,7 @@ export const authAdminMiddleware = (
         if (admin["role"] !== "admin") {
             throw new Error("Not An Admin.");
         }
-        req.admin = admin;
+        req.user = admin;
         logger.info(
             `AUTHENTICATED ADMIN ${admin["user_name"]} ${admin["user_id"]}.`
         );
@@ -54,6 +54,35 @@ export const authAdminMiddleware = (
     } catch (err) {
         const error = err instanceof Error ? err.message : err;
         logger.error(`UNAUTHORIZED ADMIN. \n${error}`);
+        res.sendErr({ error, authenticated: false }, "Invalid Token.", 401);
+    }
+};
+
+export const authVisitorMiddleware = (
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const token = req.cookies["token"];
+        if (!token) {
+            throw new Error("Invalid Token");
+        }
+        const visitor = verify(
+            token,
+            config.SERVER_JWT_SECRET as string
+        ) as JwtPayload;
+        if (visitor["role"] !== "admin" || visitor["role"] !== "visitor") {
+            throw new Error("Not An Visitor.");
+        }
+        req.user = visitor;
+        logger.info(
+            `AUTHENTICATED VISITOR ${visitor["user_name"]} ${visitor["user_id"]}.`
+        );
+        next();
+    } catch (err) {
+        const error = err instanceof Error ? err.message : err;
+        logger.error(`UNAUTHORIZED VISITOR. \n${error}`);
         res.sendErr({ error, authenticated: false }, "Invalid Token.", 401);
     }
 };

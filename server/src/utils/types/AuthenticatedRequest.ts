@@ -3,5 +3,4 @@ import { JwtPayload } from "jsonwebtoken";
 
 export interface AuthenticatedRequest extends Request {
     user?: JwtPayload;
-    admin?: JwtPayload;
 }
