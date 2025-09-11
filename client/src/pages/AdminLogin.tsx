@@ -24,17 +24,20 @@ export default function AdminLogin() {
                 password,
             });
             const response = await axios.post(
-                `${config.VITE_SERVER_BASE_URL}/auth/login`,
+                `${config.VITE_SERVER_BASE_URL}/auth/admin/login`,
                 {
                     data: {
                         email: data.email,
                         password: data.password,
                     },
+                },
+                {
+                    withCredentials: true,
                 }
             );
             navigate("/");
             toast.success(
-                `Sir ${response.data.data.user_name}, you are welcome to E-commerce.`
+                `Sir ${response.data.data.user_name}, you are welcome to E-commerce. As an admin`
             );
         } catch (err) {
             if (err instanceof ZodError) {
