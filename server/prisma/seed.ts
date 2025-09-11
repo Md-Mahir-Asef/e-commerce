@@ -8,11 +8,12 @@ const NumOfUsers = 10;
 const seed = async () => {
     try {
         logger.info("Seeding the Database...");
+        await prisma.user.deleteMany();
         await prisma.user.create({
             data: {
                 user_name: "Md. Mahir Asef",
                 email: "mahir@asef.ecom",
-                password: "MahirCan'tPass420",
+                password: hasher("MahirCan'tPass420"),
                 role: "admin",
             },
         });
@@ -28,14 +29,15 @@ const seed = async () => {
             await prisma.user.create({
                 data: {
                     user_name: faker.person.fullName(),
-                    email: `${faker.person.prefix()}${i ** 2}@${
-                        faker.internet.domainName
-                    }`,
+                    email: `${faker.person.prefix()}${
+                        i ** 2
+                    }@${faker.internet.domainName()}`,
                     password: faker.internet.password(),
                 },
             });
         }
         logger.info("Seeding Finished.");
+        await prisma.$disconnect();
     } catch (err) {
         logger.error(`Can't seed due to Error: \n${err}`);
     }
