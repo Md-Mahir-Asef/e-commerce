@@ -16,13 +16,24 @@ export default function Health() {
     }>();
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get(
-                `${config.VITE_SERVER_BASE_URL}/health`,
-                {
-                    withCredentials: true,
+            try {
+                const response = await axios.get(
+                    `${config.VITE_SERVER_BASE_URL}/health`,
+                    {
+                        withCredentials: true,
+                    }
+                );
+                console.log("Connected to Server.", response);
+                if (!response.data.data) {
+                    throw new Error(
+                        "Can't receive health status from the server."
+                    );
                 }
-            );
-            setData(response.data.data);
+                setData(response.data.data);
+            } catch (err) {
+                const error = err instanceof Error ? err.message : err;
+                console.log("Can't connect to server. Error:", error);
+            }
         };
         fetchData();
     }, []);
@@ -39,15 +50,24 @@ export default function Health() {
                             <h3>Uptime: </h3>
                             <h3>Time Stamp: </h3>
                             <h3>Database Size: </h3>
+                            <h3>Server URL: </h3>
                         </div>
                         <div className="flex flex-col text-4xl text-green-600">
                             <h3>{data.uptime}</h3>
                             <h3>{data.timeStamp}</h3>
                             <h3>{data.availability.database.size}</h3>
+                            <h3>{config.VITE_SERVER_BASE_URL}</h3>
                         </div>
                     </div>
                 ) : (
-                    ""
+                    <div className="flex flex-row justify-center mt-20 gap-30">
+                        <div className="flex flex-col text-4xl text-green-600">
+                            <h3>Server URL: </h3>
+                        </div>
+                        <div className="flex flex-col text-4xl text-green-600">
+                            <h3>{config.VITE_SERVER_BASE_URL}</h3>
+                        </div>
+                    </div>
                 )}
             </div>
         </>

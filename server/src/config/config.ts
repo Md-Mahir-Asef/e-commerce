@@ -1,5 +1,5 @@
 import { config as dotenvConfig } from "dotenv";
-dotenvConfig({ override: true });
+dotenvConfig({ override: false });
 
 export const config = {
     PORT: Number(process.env["PORT"]) || 3000,

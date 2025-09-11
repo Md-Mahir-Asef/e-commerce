@@ -13,12 +13,12 @@ RUN npm ci
 
 # Copy source
 COPY . .
+RUN rm -rf .env .env.test .env.example
 
 # Generate Prisma client (so imports work)
 RUN npx prisma generate
 
 # Expose port (informational)
-EXPOSE 3000
 
 ################################
 # Stage: builder
