@@ -136,10 +136,11 @@ export const getUserToken = async (
         if (!req.user) {
             throw new Error("Can't Get User Data.");
         }
-        const user_id = req.user?.["user_id"];
-        const user_name = req.user?.["user_name"];
-        logger.info(`USER DATA FETCHED FOR ${user_name} ${user_id}.`);
-        res.sendApi({ user_id, user_name }, "Got User Data.");
+        const user_id = req.user["user_id"];
+        const user_name = req.user["user_name"];
+        const role = req.user["role"];
+        logger.info(`USER DATA FETCHED FOR ${user_name} ${user_id} ${role}.`);
+        res.sendApi({ user_id, user_name, role }, "Got User Data.");
     } catch (err) {
         const error = err instanceof Error ? err.message : err;
         logger.error(`FAILED FETCHING USER DATA. \n ${error}`);

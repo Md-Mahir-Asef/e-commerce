@@ -1,11 +1,11 @@
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { LoginUserDataSchema } from "@/lib/zodSchemas";
 import axios from "axios";
-import { config } from "../config/config";
+import { config } from "../../config/config";
 import { toast } from "sonner";
 import { ZodError } from "zod/v4";
 import type { MouseEvent } from "react";
@@ -35,7 +35,7 @@ export default function AdminLogin() {
                     withCredentials: true,
                 }
             );
-            navigate("/");
+            navigate("/admin/dashboard");
             toast.success(
                 `Sir ${response.data.data.user_name}, you are welcome to E-commerce. As an admin`
             );

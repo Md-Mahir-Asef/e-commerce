@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Health from "./pages/Health";
 import Profile from "./pages/Profile";
-import AdminLogin from "./pages/AdminLogin";
+import AdminLogin from "./pages/admin/AdminLogin";
 
 function App() {
     return (
