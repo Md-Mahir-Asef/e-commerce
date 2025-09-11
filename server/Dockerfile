@@ -14,6 +14,7 @@ RUN npm ci
 # Copy source
 COPY . .
 RUN rm -rf .env .env.test .env.example
+RUN npm install -g ts-node
 
 # Generate Prisma client (so imports work)
 RUN npx prisma generate
