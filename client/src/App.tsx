@@ -7,6 +7,8 @@ import NotFound from "./pages/NotFound";
 import Health from "./pages/Health";
 import Profile from "./pages/Profile";
 import AdminLogin from "./pages/admin/AdminLogin";
+import RouteProtector from "./components/RouteProtector";
+import Dashboard from "./pages/admin/Dashboard";
 
 function App() {
     return (
@@ -19,6 +21,14 @@ function App() {
                 <Route path="/health" element={<Health />} />
                 <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
+                <Route
+                    path="/admin/dashboard"
+                    element={
+                        <RouteProtector roles={["admin", "visitor"]} redirectionUrl="/">
+                            <Dashboard />
+                        </RouteProtector>
+                    }
+                />
                 <Route path="*" element={<NotFound />} />
             </Routes>
             <Toaster richColors position="top-right" />
