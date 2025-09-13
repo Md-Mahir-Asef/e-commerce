@@ -1,5 +1,7 @@
 export default function Dashboard() {
-  return (
-    <div>Dashboard</div>
-  )
+    return (
+        <>
+            <h1 className="text-3xl">Dashboard</h1>{" "}
+        </>
+    );
 }

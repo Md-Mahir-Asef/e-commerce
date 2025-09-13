@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import AdminLogin from "./pages/admin/AdminLogin";
 import RouteProtector from "./components/RouteProtector";
 import Dashboard from "./pages/admin/Dashboard";
+import AdminLayout from "./components/admin/AdminLayout";
 
 function App() {
     return (
@@ -22,13 +23,18 @@ function App() {
                 <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route
-                    path="/admin/dashboard"
+                    path="/admin"
                     element={
-                        <RouteProtector roles={["admin", "visitor"]} redirectionUrl="/">
-                            <Dashboard />
+                        <RouteProtector
+                            roles={["admin", "visitor"]}
+                            redirectionUrl="/"
+                        >
+                            <AdminLayout />
                         </RouteProtector>
                     }
-                />
+                >
+                    <Route path="dashboard" element={<Dashboard />}></Route>
+                </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>
             <Toaster richColors position="top-right" />
