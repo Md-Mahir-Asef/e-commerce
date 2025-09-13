@@ -18,7 +18,7 @@ export default function Header() {
                 className="flex flex-row ml-[2%] shrink-0 [@media(max-width:980px)]:mx-auto"
                 to={"/"}
             >
-                <img src="/logo.png" alt="logo" width={50} height={50} />
+                <img src="/images/logo.png" alt="logo" width={50} height={50} />
                 <h2 className="text-4xl pt-3 text-[#3BB77E] font-extrabold [@media(max-width:820px)]:hidden">
                     E-commerce
                 </h2>
