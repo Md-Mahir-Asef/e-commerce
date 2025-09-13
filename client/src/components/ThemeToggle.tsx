@@ -23,7 +23,7 @@ export default function ThemeToggle() {
 
     return (
         <div
-            className="flex flex-row p-3 pr-2 cursor-pointer"
+            className="flex flex-row gap-2 p-3 pr-2 cursor-pointer"
             onClick={() => setDark(!dark)}
         >
             {dark ? (
