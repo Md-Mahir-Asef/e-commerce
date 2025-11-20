@@ -55,7 +55,7 @@ export default function Login() {
                         className="text-md flex flex-row py-1 px-20 border mt-5 rounded-sm border-gray-300 cursor-pointer"
                     >
                         <img
-                            src="/google_logo.png"
+                            src="images/google_logo.png"
                             alt="Google"
                             className="pr-3 w-8 h-8 object-contain"
                         />
