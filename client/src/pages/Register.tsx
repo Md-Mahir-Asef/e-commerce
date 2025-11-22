@@ -63,20 +63,18 @@ export default function Register() {
                         className="text-md flex flex-row py-1 px-20 border mt-5 rounded-sm border-gray-300 cursor-pointer"
                     >
                         <img
-                            src="/google_logo.png"
+                            src="/images/google_logo.png"
                             alt="Google"
                             className="pr-3 w-8 h-8 object-contain"
                         />
-                        <p className="pt-[4px] font-medium">
-                            Register with Google
-                        </p>
+                        <p className="pt-1 font-medium">Register with Google</p>
                     </button>
                     <div className="flex items-center my-6 w-full">
-                        <div className="flex-grow border-b border-gray-300/50"></div>
+                        <div className="grow border-b border-gray-300/50"></div>
                         <span className="mx-4 text-gray-500 text-sm">
                             or Register with Email
                         </span>
-                        <div className="flex-grow border-b border-gray-300/50"></div>
+                        <div className="grow border-b border-gray-300/50"></div>
                     </div>
                     <form className="flex flex-col">
                         <div className="flex flex-col">

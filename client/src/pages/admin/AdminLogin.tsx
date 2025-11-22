@@ -24,7 +24,7 @@ export default function AdminLogin() {
                 password,
             });
             const response = await axios.post(
-                `${config.VITE_SERVER_BASE_URL}/auth/admin/login`,
+                `${config.VITE_SERVER_BASE_URL}/admin/login`,
                 {
                     data: {
                         email: data.email,

@@ -1,10 +1,12 @@
 import { Router } from "express";
 import { healthCheck } from "../controllers/health.controller";
 import authRoutes from "./auth.route";
+import adminRoutes from "./admin.route";
 
 const routes = Router();
 
 routes.get("/health", healthCheck);
 routes.use("/auth", authRoutes);
+routes.use("/admin", adminRoutes);
 
 export default routes;

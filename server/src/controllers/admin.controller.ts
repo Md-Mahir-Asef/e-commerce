@@ -4,7 +4,8 @@ import prisma from "../utils/prisma";
 import { compareSync } from "bcrypt";
 import { generateToken } from "../utils/token";
 import logger from "../utils/logger";
-import { setTokenCookie } from "../utils/cookies";
+import { setTokenCookie, clearTokenCookie } from "../utils/cookies";
+import { AuthenticatedRequest } from "../utils/types/AuthenticatedRequest";
 
 export const adminLogin = async (req: Request, res: Response) => {
     try {
@@ -38,5 +39,23 @@ export const adminLogin = async (req: Request, res: Response) => {
         const error = err instanceof Error ? err.message : err;
         logger.error(`LOGIN FAILED FOR ADMIN ${req.body?.email}. \n ${error}`);
         res.sendErr({ error, authenticated: false }, "Log in failed.");
+    }
+};
+
+export const adminLogout = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        if (!req.user) {
+            throw new Error("Admin Log Out failed.");
+        }
+        const userId = req.user?.["user_id"];
+        clearTokenCookie(res);
+        logger.info(`ADMIN USER ${userId} LOGGED OUT.`);
+        res.sendApi({ userId }, "Logged Out Successfully.");
+    } catch (err) {
+        const error = err instanceof Error ? err.message : err;
+        logger.error(
+            `LOGOUT FAILED FOR USER ${req.user?.["userId"]}. \n ${error}`
+        );
+        res.sendErr(error, "Logout Failed.");
     }
 };

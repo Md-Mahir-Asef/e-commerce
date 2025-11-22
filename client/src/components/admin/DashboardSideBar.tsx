@@ -23,6 +23,7 @@ interface MenuItem {
     path?: string;
     subItems?: { label: string; path: string; icon?: JSX.Element }[];
     isThemeToggle?: boolean; // flag for theme toggle menu item
+    action?: () => void;
 }
 
 export default function DashboardSideBar() {
@@ -50,6 +51,10 @@ export default function DashboardSideBar() {
         if (newDark) root.classList.add("dark");
         else root.classList.remove("dark");
         localStorage.setItem("theme", newDark ? "dark" : "light");
+    };
+
+    const logOutFunction = () => {
+        console.log("Logout as an Admin");
     };
 
     const menuItems: MenuItem[] = [
@@ -84,7 +89,7 @@ export default function DashboardSideBar() {
             icon: <Settings size={18} />,
             path: "/admin/settings",
         },
-        { label: "Logout", icon: <LogOut size={18} />, path: "/logout" },
+        { label: "Logout", icon: <LogOut size={18} />, action: logOutFunction },
         {
             label: "Theme",
             icon: dark ? <Sun size={18} /> : <Moon size={18} />,
@@ -103,6 +108,23 @@ export default function DashboardSideBar() {
                     {item.icon}
                     {isOpen && <span>{dark ? "Light Mode" : "Dark Mode"}</span>}
                 </div>
+            );
+        }
+
+        if (item.action) {
+            return (
+                <button
+                    key={item.path}
+                    className={`flex items-center gap-3 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
+                        location.pathname === item.path
+                            ? "bg-gray-300 dark:bg-gray-800"
+                            : ""
+                    }`}
+                    onClick={item.action}
+                >
+                    {item.icon}
+                    {isOpen && <span>{item.label}</span>}
+                </button>
             );
         }
 
