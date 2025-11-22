@@ -27,7 +27,7 @@ export const authUserMiddleware = (
         logger.error(`UNAUTHORIZED USER. \n${err}`);
         res.sendErr({ err, authenticated: false }, "Invalid Token.", 401);
     }
-};
+}; // Only Users
 
 export const authAdminMiddleware = (
     req: AuthenticatedRequest,
@@ -56,7 +56,7 @@ export const authAdminMiddleware = (
         logger.error(`UNAUTHORIZED ADMIN. \n${error}`);
         res.sendErr({ error, authenticated: false }, "Invalid Token.", 401);
     }
-};
+}; // Only Admins
 
 export const authVisitorMiddleware = (
     req: AuthenticatedRequest,
@@ -85,4 +85,4 @@ export const authVisitorMiddleware = (
         logger.error(`UNAUTHORIZED VISITOR. \n${error}`);
         res.sendErr({ error, authenticated: false }, "Invalid Token.", 401);
     }
-};
+}; // Admins and Visitors

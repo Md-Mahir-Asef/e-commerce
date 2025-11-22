@@ -54,7 +54,7 @@ export const adminLogout = async (req: AuthenticatedRequest, res: Response) => {
     } catch (err) {
         const error = err instanceof Error ? err.message : err;
         logger.error(
-            `LOGOUT FAILED FOR USER ${req.user?.["userId"]}. \n ${error}`
+            `LOGOUT FAILED FOR ADMIN USER ${req.user?.["userId"]}. \n ${error}`
         );
         res.sendErr(error, "Logout Failed.");
     }
