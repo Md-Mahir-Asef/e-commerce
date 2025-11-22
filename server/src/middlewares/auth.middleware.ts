@@ -72,8 +72,8 @@ export const authVisitorMiddleware = (
             token,
             config.SERVER_JWT_SECRET as string
         ) as JwtPayload;
-        if (visitor["role"] !== "admin" || visitor["role"] !== "visitor") {
-            throw new Error("Not An Visitor.");
+        if (visitor["role"] !== "admin" && visitor["role"] !== "visitor") {
+            throw new Error("Not An Visitor or Admin.");
         }
         req.user = visitor;
         logger.info(

@@ -59,3 +59,22 @@ export const adminLogout = async (req: AuthenticatedRequest, res: Response) => {
         res.sendErr(error, "Logout Failed.");
     }
 };
+
+export const visitorInfo = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        if (!req.user) {
+            throw new Error("Not Authorized.");
+        }
+        const userId = req.user?.["user_id"];
+        const role: string = req.user?.["role"];
+        const userName = req.user?.["user_name"];
+        logger.info(
+            `${role.toUpperCase()} DATA FETCHED FOR ${userName} ${userId}`
+        );
+        res.sendApi({ userId, userName, role }, `Got ${role} data.`);
+    } catch (err) {
+        const error = err instanceof Error ? err.message : err;
+        logger.error(`FAILED FETCHING ADMIN OR VISITOR DATA. \n ${error}`);
+        res.sendErr(error, "Can't get admin or visitor data.");
+    }
+};
