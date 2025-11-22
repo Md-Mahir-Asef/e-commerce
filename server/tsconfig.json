@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
         /* Output */
-        "target": "ES2022" /* Modern JS output */,
-        "module": "NodeNext" /* For Node.js ESM projects */,
-        "moduleResolution": "NodeNext" /* Match Node.js ESM resolution */,
+        "target": "es2020" /* Modern JS output */,
+        "module": "commonjs" /* For Node.js ESM projects */,
+        // "moduleResolution": "commonjs" /* Match Node.js ESM resolution */,
         "outDir": "./dist" /* Output folder */,
         "rootDir": "./src" /* Keep structure clean */,
         "types": ["node", "jest"],

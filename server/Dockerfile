@@ -1,9 +1,11 @@
 ################################
 # Stage: dev (for local dev)
 ################################
-FROM node:22-slim AS dev
+FROM node:24-bookworm AS dev
 WORKDIR /app
-RUN apt-get update && apt-get install -y openssl libssl-dev
+
+# These packages are needed by prisma and other important libraries as they are not installed on node:22-slim image
+RUN apt-get update && apt-get install -y openssl libssl-dev ca-certificates 
 
 # Copy package files first to use Docker cache for deps
 COPY package.json package-lock.json ./
@@ -13,8 +15,13 @@ RUN npm ci
 
 # Copy source
 COPY . .
-RUN rm -rf .env .env.test .env.example
+# Remove example and test envs
+RUN rm -rf .env.test .env.example
 RUN npm install -g ts-node
+
+# Force Prisma to embed engine binaries inside node_modules
+ENV PRISMA_CLI_QUERY_ENGINE_TYPE=binary
+# ENV PRISMA_CLI_QUERY_ENGINE_BINARY=true
 
 # Generate Prisma client (so imports work)
 RUN npx prisma generate
@@ -25,7 +32,7 @@ RUN npx prisma generate
 # Stage: builder
 # (compile TypeScript)
 ################################
-FROM node:22-slim AS builder
+FROM node:24-bookworm AS builder
 WORKDIR /app
 RUN apt-get update && apt-get install -y openssl libssl-dev
 
@@ -44,7 +51,7 @@ RUN npm run build
 ################################
 # Stage: prod (final image)
 ################################
-FROM node:22-slim AS prod
+FROM node:24-bookworm AS prod
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y openssl libssl-dev
@@ -64,7 +71,7 @@ CMD ["npm", "run", "start"]
 # Stage: test (integration / unit tests)
 ################################
 
-FROM node:22-slim AS test
+FROM node:24-bookworm AS test
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y openssl libssl-dev

@@ -59,16 +59,14 @@ export default function Login() {
                             alt="Google"
                             className="pr-3 w-8 h-8 object-contain"
                         />
-                        <p className="pt-[4px] font-medium">
-                            Login with Google
-                        </p>
+                        <p className="pt-1 font-medium">Login with Google</p>
                     </button>
                     <div className="flex items-center my-6 w-full">
-                        <div className="flex-grow border-b border-gray-300/50"></div>
+                        <div className="grow border-b border-gray-300/50"></div>
                         <span className="mx-4 text-gray-500 text-sm">
                             or Login with Email
                         </span>
-                        <div className="flex-grow border-b border-gray-300/50"></div>
+                        <div className="grow border-b border-gray-300/50"></div>
                     </div>
                     <form className="flex flex-col">
                         <div className="flex flex-col">
