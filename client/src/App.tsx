@@ -10,6 +10,7 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import RouteProtector from "./components/RouteProtector";
 import Dashboard from "./pages/admin/Dashboard";
 import AdminLayout from "./components/admin/AdminLayout";
+import Users from "./pages/admin/Users";
 
 function App() {
     return (
@@ -34,6 +35,7 @@ function App() {
                     }
                 >
                     <Route path="dashboard" element={<Dashboard />}></Route>
+                    <Route path="users/list" element={<Users />}></Route>
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>

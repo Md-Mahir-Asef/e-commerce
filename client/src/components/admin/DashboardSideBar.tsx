@@ -20,10 +20,16 @@ import axios from "axios";
 import { config } from "@/config/config";
 
 interface MenuItem {
+    id: number;
     label: string;
     icon?: JSX.Element;
     path?: string;
-    subItems?: { label: string; path: string; icon?: JSX.Element }[];
+    subItems?: {
+        id: number;
+        label: string;
+        path: string;
+        icon?: JSX.Element;
+    }[];
     isThemeToggle?: boolean; // flag for theme toggle menu item
     action?: () => void;
 }
@@ -61,7 +67,7 @@ export default function DashboardSideBar() {
             try {
                 const response = await axios.get(
                     `${config.VITE_SERVER_BASE_URL}/admin/visitorinfo`,
-                    { withCredentials: true }
+                    { withCredentials: true },
                 );
                 if (
                     response.status === 401 ||
@@ -83,7 +89,7 @@ export default function DashboardSideBar() {
             const response = await axios.post(
                 `${config.VITE_SERVER_BASE_URL}/admin/logout/${id}`,
                 {},
-                { withCredentials: true }
+                { withCredentials: true },
             );
             if (
                 response.status === 401 ||
@@ -99,20 +105,24 @@ export default function DashboardSideBar() {
 
     const menuItems: MenuItem[] = [
         {
+            id: 0,
             label: "Dashboard",
             icon: <Home size={18} />,
             path: "/admin/dashboard",
         },
         {
+            id: 1,
             label: "Users",
             icon: <Users size={18} />,
             subItems: [
                 {
+                    id: 2,
                     label: "List Users",
                     path: "/admin/users/list",
                     icon: <List size={16} />,
                 },
                 {
+                    id: 3,
                     label: "Create User",
                     path: "/admin/users/create",
                     icon: <Plus size={16} />,
@@ -120,21 +130,25 @@ export default function DashboardSideBar() {
             ],
         },
         {
+            id: 4,
             label: "Orders",
             icon: <ShoppingCart size={18} />,
             path: "/admin/orders",
         },
         {
+            id: 5,
             label: "Settings",
             icon: <Settings size={18} />,
             path: "/admin/settings",
         },
         {
+            id: 6,
             label: "Logout",
             icon: <LogOut size={18} />,
             action: adminLogOutFunction,
         },
         {
+            id: 7,
             label: "Theme",
             icon: dark ? <Sun size={18} /> : <Moon size={18} />,
             isThemeToggle: true,
@@ -145,7 +159,7 @@ export default function DashboardSideBar() {
         if (item.isThemeToggle) {
             return (
                 <div
-                    key={item.label}
+                    key={item.id}
                     className={`flex items-center gap-3 p-3 rounded-md cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700`}
                     onClick={toggleTheme}
                 >
@@ -157,8 +171,8 @@ export default function DashboardSideBar() {
 
         if (item.action) {
             return (
-                <button
-                    key={item.path}
+                <div
+                    key={item.id}
                     className={`flex items-center gap-3 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
                         location.pathname === item.path
                             ? "bg-gray-300 dark:bg-gray-800"
@@ -168,14 +182,14 @@ export default function DashboardSideBar() {
                 >
                     {item.icon}
                     {isOpen && <span>{item.label}</span>}
-                </button>
+                </div>
             );
         }
 
         if (item.path) {
             return (
                 <Link
-                    key={item.path}
+                    key={item.id}
                     to={item.path}
                     className={`flex items-center gap-3 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
                         location.pathname === item.path
@@ -197,7 +211,7 @@ export default function DashboardSideBar() {
                     {isOpen &&
                         item.subItems?.map((sub) => (
                             <Link
-                                key={sub.path}
+                                key={sub.id}
                                 to={sub.path}
                                 className={`flex items-center gap-2 pl-10 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ${
                                     location.pathname === sub.path
