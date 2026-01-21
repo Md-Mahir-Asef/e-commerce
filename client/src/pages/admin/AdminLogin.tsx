@@ -33,16 +33,20 @@ export default function AdminLogin() {
                 },
                 {
                     withCredentials: true,
-                }
+                },
             );
             navigate("/admin/dashboard");
             toast.success(
-                `Sir ${response.data.data.user_name}, you are welcome to E-commerce. As an admin`
+                `Sir ${response.data.data.user_name}, you are welcome to E-commerce. As an admin`,
             );
         } catch (err) {
             if (err instanceof ZodError) {
                 toast.error(JSON.parse(err.message)[0].message);
+            } else {
+                toast.error("Authentication failed! Not an admin.");
+                navigate("/");
             }
+            console.log("Not an Admin.");
         }
     };
 

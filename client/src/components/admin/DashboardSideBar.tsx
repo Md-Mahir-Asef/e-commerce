@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
     Home,
@@ -16,6 +16,8 @@ import {
     Moon,
 } from "lucide-react";
 import type { JSX } from "react";
+import axios from "axios";
+import { config } from "@/config/config";
 
 interface MenuItem {
     label: string;
@@ -30,6 +32,7 @@ export default function DashboardSideBar() {
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(true);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [id, setId] = useState("Not_set");
     const [dark, setDark] = useState<boolean>(() => {
         if (typeof window !== "undefined") {
             const savedTheme = localStorage.getItem("theme");
@@ -53,8 +56,45 @@ export default function DashboardSideBar() {
         localStorage.setItem("theme", newDark ? "dark" : "light");
     };
 
-    const logOutFunction = () => {
-        console.log("Logout as an Admin");
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    `${config.VITE_SERVER_BASE_URL}/admin/visitorinfo`,
+                    { withCredentials: true }
+                );
+                if (
+                    response.status === 401 ||
+                    response.data.authenticated === false
+                ) {
+                    throw new Error("Unauthenticated.");
+                }
+                const userId: string = response.data.data.userId;
+                setId(userId);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const adminLogOutFunction = async () => {
+        try {
+            const response = await axios.post(
+                `${config.VITE_SERVER_BASE_URL}/admin/logout/${id}`,
+                {},
+                { withCredentials: true }
+            );
+            if (
+                response.status === 401 ||
+                response.data.authenticated === false
+            ) {
+                throw new Error("Unauthenticated.");
+            }
+            window.location.reload();
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const menuItems: MenuItem[] = [
@@ -89,7 +129,11 @@ export default function DashboardSideBar() {
             icon: <Settings size={18} />,
             path: "/admin/settings",
         },
-        { label: "Logout", icon: <LogOut size={18} />, action: logOutFunction },
+        {
+            label: "Logout",
+            icon: <LogOut size={18} />,
+            action: adminLogOutFunction,
+        },
         {
             label: "Theme",
             icon: dark ? <Sun size={18} /> : <Moon size={18} />,

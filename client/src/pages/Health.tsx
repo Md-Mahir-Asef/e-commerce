@@ -42,7 +42,7 @@ export default function Health() {
             <Header />
             <div className="flex flex-col items-center mt-20">
                 <h1 className="text-8xl text-red-800">
-                    {data ? "Connect to Server." : "Not connected to server."}
+                    {data ? "Connected to Server." : "Not connected to server."}
                 </h1>
                 {data ? (
                     <div className="flex flex-row justify-center mt-20 gap-30">
