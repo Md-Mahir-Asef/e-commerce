@@ -6,6 +6,7 @@ import {
     logIn,
     logOut,
     getUserToken,
+    getUsersByPage,
 } from "../controllers/auth.controller";
 import {
     authUserMiddleware,
@@ -20,5 +21,6 @@ authRoutes.delete("/user/:userId", deleteUser);
 authRoutes.post("/login", logIn);
 authRoutes.post("/logout/:userId", authUserMiddleware, logOut);
 authRoutes.get("/me", authUserMiddleware, getUserToken);
+authRoutes.get("/users/:page/:limit", authVisitorMiddleware, getUsersByPage);
 
 export default authRoutes;

@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import { hasher } from "../src/utils/hasher";
 import logger from "../src/utils/logger";
 
-const NumOfUsers = 10;
+const NumOfUsers = 100;
 
 const seed = async () => {
     try {

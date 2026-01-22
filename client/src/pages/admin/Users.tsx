@@ -56,6 +56,8 @@ export default function Users() {
                 </thead>
                 <tbody>{tableRows}</tbody>
             </table>
+            {/* Pagination */}
+            <div></div>
         </>
     );
 }

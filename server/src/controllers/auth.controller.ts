@@ -31,7 +31,7 @@ export const register = async (req: Request, res: Response) => {
         res.sendApi(
             { token: token, user: newUser },
             "Registered Successfully",
-            201
+            201,
         );
     } catch (err) {
         let error: any = err;
@@ -63,14 +63,14 @@ export const deleteUser = async (req: Request, res: Response) => {
             },
         });
         logger.info(
-            `DELETED USER ${deletedUser.user_id} ${deletedUser.user_name}`
+            `DELETED USER ${deletedUser.user_id} ${deletedUser.user_name}`,
         );
         res.sendApi(
             {
                 user_id: deletedUser.user_id,
                 user_name: deletedUser.user_name,
             },
-            "User deleted successfully."
+            "User deleted successfully.",
         );
     } catch (err) {
         logger.error(`USER DELETION FAILED ${req.params["userId"]}. \n ${err}`);
@@ -122,7 +122,7 @@ export const logOut = async (req: AuthenticatedRequest, res: Response) => {
     } catch (err) {
         const error = err instanceof Error ? err.message : err;
         logger.error(
-            `LOGOUT FAILED FOR USER ${req.user?.["userId"]}. \n ${error}`
+            `LOGOUT FAILED FOR USER ${req.user?.["userId"]}. \n ${error}`,
         );
         res.sendErr(error, "Logout Failed.");
     }
@@ -130,7 +130,7 @@ export const logOut = async (req: AuthenticatedRequest, res: Response) => {
 
 export const getUserToken = async (
     req: AuthenticatedRequest,
-    res: Response
+    res: Response,
 ) => {
     try {
         if (!req.user) {
@@ -145,5 +145,23 @@ export const getUserToken = async (
         const error = err instanceof Error ? err.message : err;
         logger.error(`FAILED FETCHING USER DATA. \n ${error}`);
         res.sendErr(error, "Can't get user data.");
+    }
+};
+
+export const getUsersByPage = async (req: Request, res: Response) => {
+    try {
+        const page = Number(req.params["page"]);
+        const limit = Number(req.params["limit"]);
+        const users = await prisma.user.findMany({
+            skip: (page - 1) * limit,
+            take: limit,
+        });
+        logger.info(
+            `Successfully got all ${users.length} users. page ${page} Limit ${limit}`,
+        );
+        res.sendApi(users, "Successfully got all users");
+    } catch (err) {
+        logger.error(`FAILED GET USERS QUERY. \n ${err}`);
+        res.sendErr(err, "Failed Get Users Query.");
     }
 };
