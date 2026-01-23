@@ -8,6 +8,7 @@ import { LogInUserDateSchema, UserDataSchema } from "../utils/zodSchemas";
 import { AuthenticatedRequest } from "../utils/types/AuthenticatedRequest";
 import { setTokenCookie, clearTokenCookie } from "../utils/cookies";
 import { ZodError } from "zod";
+import { user } from "../generated/client";
 
 export const register = async (req: Request, res: Response) => {
     try {
@@ -22,11 +23,11 @@ export const register = async (req: Request, res: Response) => {
             },
         });
         const token = generateToken({
-            user_id: newUser.user_id,
+            id: newUser.id,
             user_name: newUser.user_name,
             role: newUser.role,
         });
-        logger.info(`NEW USER CREATED ${newUser.user_id} ${newUser.user_name}`);
+        logger.info(`NEW USER CREATED ${newUser.id} ${newUser.user_name}`);
         setTokenCookie(res, token);
         res.sendApi(
             { token: token, user: newUser },
@@ -56,18 +57,16 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
     try {
-        const userId = req.params["userId"];
+        const userId = Number(req.params["userId"]);
         const deletedUser = await prisma.user.delete({
             where: {
-                user_id: userId,
+                id: userId,
             },
         });
-        logger.info(
-            `DELETED USER ${deletedUser.user_id} ${deletedUser.user_name}`,
-        );
+        logger.info(`DELETED USER ${deletedUser.id} ${deletedUser.user_name}`);
         res.sendApi(
             {
-                user_id: deletedUser.user_id,
+                id: deletedUser.id,
                 user_name: deletedUser.user_name,
             },
             "User deleted successfully.",
@@ -93,12 +92,12 @@ export const logIn = async (req: Request, res: Response) => {
         const isPassCorrect = compareSync(password, user?.password as string);
         if (isPassCorrect) {
             const token = generateToken({
-                user_id: user.user_id,
+                id: user.id,
                 user_name: user.user_name,
                 role: user.role,
             });
             setTokenCookie(res, token);
-            logger.info(`USER ${user?.user_id} LOGGED IN.`);
+            logger.info(`USER ${user?.id} LOGGED IN.`);
             res.sendApi({ ...user, authenticated: true }, "Log in successful.");
         } else {
             throw new Error("Password Incorrect.");
@@ -115,7 +114,7 @@ export const logOut = async (req: AuthenticatedRequest, res: Response) => {
         if (!req.user) {
             throw new Error("Log Out failed.");
         }
-        const userId = req.user?.["user_id"];
+        const userId = req.user?.["id"];
         clearTokenCookie(res);
         logger.info(`USER ${userId} LOGGED OUT.`);
         res.sendApi({ userId }, "Logged Out Successfully.");
@@ -136,11 +135,11 @@ export const getUserToken = async (
         if (!req.user) {
             throw new Error("Can't Get User Data.");
         }
-        const user_id = req.user["user_id"];
+        const id = req.user["id"];
         const user_name = req.user["user_name"];
         const role = req.user["role"];
-        logger.info(`USER DATA FETCHED FOR ${user_name} ${user_id} ${role}.`);
-        res.sendApi({ user_id, user_name, role }, "Got User Data.");
+        logger.info(`USER DATA FETCHED FOR ${user_name} ${id} ${role}.`);
+        res.sendApi({ id, user_name, role }, "Got User Data.");
     } catch (err) {
         const error = err instanceof Error ? err.message : err;
         logger.error(`FAILED FETCHING USER DATA. \n ${error}`);
@@ -152,10 +151,8 @@ export const getUsersByPage = async (req: Request, res: Response) => {
     try {
         const page = Number(req.params["page"]);
         const limit = Number(req.params["limit"]);
-        const users = await prisma.user.findMany({
-            skip: (page - 1) * limit,
-            take: limit,
-        });
+        const users: user[] =
+            await prisma.$queryRaw`SELECT * FROM "user" ORDER BY id LIMIT ${limit} OFFSET ${(page - 1) * limit}`;
         logger.info(
             `Successfully got all ${users.length} users. page ${page} Limit ${limit}`,
         );

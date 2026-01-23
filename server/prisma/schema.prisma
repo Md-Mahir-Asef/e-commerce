@@ -1,29 +1,20 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/"
+  provider   = "prisma-client"
+  output     = "../src/generated/"
   engineType = "client"
 }
 
 datasource db {
   provider = "postgresql"
-  // Prisma version 7 doesn't use url here
-  // url      = env("DATABASE_URL")
 }
 
-model User {
-  sl Int @unique @default(autoincrement())
-  user_id String @id @unique @default(uuid())
-  user_name String 
-  email String @unique
-  password String
+model user {
+  user_name  String
+  email      String   @unique
+  password   String
   created_at DateTime @default(now())
-  role Roles @default(user)
+  role       Roles    @default(user)
+  id         Int      @id @unique @default(autoincrement())
 }
 
 enum Roles {

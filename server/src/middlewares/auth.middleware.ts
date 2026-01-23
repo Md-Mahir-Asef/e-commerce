@@ -7,7 +7,7 @@ import { AuthenticatedRequest } from "../utils/types/AuthenticatedRequest";
 export const authUserMiddleware = (
     req: AuthenticatedRequest,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
 ) => {
     try {
         const token = req.cookies["token"];
@@ -16,12 +16,10 @@ export const authUserMiddleware = (
         }
         const user = verify(
             token,
-            config.SERVER_JWT_SECRET as string
+            config.SERVER_JWT_SECRET as string,
         ) as JwtPayload;
         req.user = user;
-        logger.info(
-            `AUTHENTICATED USER ${user["user_name"]} ${user["user_id"]}.`
-        );
+        logger.info(`AUTHENTICATED USER ${user["user_name"]} ${user["id"]}.`);
         next();
     } catch (err) {
         logger.error(`UNAUTHORIZED USER. \n${err}`);
@@ -32,7 +30,7 @@ export const authUserMiddleware = (
 export const authAdminMiddleware = (
     req: AuthenticatedRequest,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
 ) => {
     try {
         const token = req.cookies["token"];
@@ -41,14 +39,14 @@ export const authAdminMiddleware = (
         }
         const admin = verify(
             token,
-            config.SERVER_JWT_SECRET as string
+            config.SERVER_JWT_SECRET as string,
         ) as JwtPayload;
         if (admin["role"] !== "admin") {
             throw new Error("Not An Admin.");
         }
         req.user = admin;
         logger.info(
-            `AUTHENTICATED ADMIN ${admin["user_name"]} ${admin["user_id"]}.`
+            `AUTHENTICATED ADMIN ${admin["user_name"]} ${admin["id"]}.`,
         );
         next();
     } catch (err) {
@@ -61,7 +59,7 @@ export const authAdminMiddleware = (
 export const authVisitorMiddleware = (
     req: AuthenticatedRequest,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
 ) => {
     try {
         const token = req.cookies["token"];
@@ -70,14 +68,14 @@ export const authVisitorMiddleware = (
         }
         const visitor = verify(
             token,
-            config.SERVER_JWT_SECRET as string
+            config.SERVER_JWT_SECRET as string,
         ) as JwtPayload;
         if (visitor["role"] !== "admin" && visitor["role"] !== "visitor") {
             throw new Error("Not An Visitor or Admin.");
         }
         req.user = visitor;
         logger.info(
-            `AUTHENTICATED VISITOR ${visitor["user_name"]} ${visitor["user_id"]}.`
+            `AUTHENTICATED VISITOR ${visitor["user_name"]} ${visitor["id"]}.`,
         );
         next();
     } catch (err) {

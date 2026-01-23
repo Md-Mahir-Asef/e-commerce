@@ -25,15 +25,15 @@ export const adminLogin = async (req: Request, res: Response) => {
             throw new Error("Password Incorrect.");
         }
         const token = generateToken({
-            user_id: user.user_id,
+            id: user.id,
             user_name: user.user_name,
             role: user.role,
         });
         setTokenCookie(res, token, { maxAge: 1000 * 60 * 60 });
-        logger.info(`ADMIN ${user?.user_id} LOGGED IN.`);
+        logger.info(`ADMIN ${user?.id} LOGGED IN.`);
         res.sendApi(
             { ...user, authenticated: true, token },
-            "Log in successful."
+            "Log in successful.",
         );
     } catch (err) {
         const error = err instanceof Error ? err.message : err;
@@ -47,14 +47,14 @@ export const adminLogout = async (req: AuthenticatedRequest, res: Response) => {
         if (!req.user) {
             throw new Error("Admin Log Out failed.");
         }
-        const userId = req.user?.["user_id"];
+        const userId = req.user?.["id"];
         clearTokenCookie(res);
         logger.info(`ADMIN USER ${userId} LOGGED OUT.`);
         res.sendApi({ userId }, "Logged Out Successfully.");
     } catch (err) {
         const error = err instanceof Error ? err.message : err;
         logger.error(
-            `LOGOUT FAILED FOR ADMIN USER ${req.user?.["userId"]}. \n ${error}`
+            `LOGOUT FAILED FOR ADMIN USER ${req.user?.["userId"]}. \n ${error}`,
         );
         res.sendErr(error, "Logout Failed.");
     }
@@ -65,11 +65,11 @@ export const visitorInfo = async (req: AuthenticatedRequest, res: Response) => {
         if (!req.user) {
             throw new Error("Not Authorized.");
         }
-        const userId = req.user?.["user_id"];
+        const userId = req.user?.["id"];
         const role: string = req.user?.["role"];
         const userName = req.user?.["user_name"];
         logger.info(
-            `${role.toUpperCase()} DATA FETCHED FOR ${userName} ${userId}`
+            `${role.toUpperCase()} DATA FETCHED FOR ${userName} ${userId}`,
         );
         res.sendApi({ userId, userName, role }, `Got ${role} data.`);
     } catch (err) {
