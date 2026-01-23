@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { config } from "@/config/config";
 import { useState } from "react";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 export default function Users() {
     const [users, setUsers] = useState([]);
@@ -45,6 +47,12 @@ export default function Users() {
         );
     });
 
+    const [page, setPage] = useState(1);
+    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        event.preventDefault();
+        setPage(value);
+    };
+
     return (
         <>
             <h1 className="text-3xl mb-3.5">Users</h1>
@@ -57,7 +65,15 @@ export default function Users() {
                 <tbody>{tableRows}</tbody>
             </table>
             {/* Pagination */}
-            <div></div>
+            <div>
+                <Stack spacing={2}>
+                    <Pagination
+                        count={10}
+                        page={page}
+                        onChange={handleChange}
+                    />
+                </Stack>
+            </div>
         </>
     );
 }
