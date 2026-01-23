@@ -162,3 +162,14 @@ export const getUsersByPage = async (req: Request, res: Response) => {
         res.sendErr(err, "Failed Get Users Query.");
     }
 };
+
+export const getNumberOfUsers = async (req: Request, res: Response) => {
+    try {
+        const numOfUsr: number = await prisma.user.count();
+        logger.info(`Successfully got the number of users: ${numOfUsr}`);
+        res.sendApi({ numOfUsr }, "Successfully got the number of users.");
+    } catch (err) {
+        logger.error(`FAILED GET NUM OF USERS QUERY. \n ${err}`);
+        res.sendErr(err, "Failed Get Number Of Users Query.");
+    }
+};
