@@ -68,9 +68,26 @@ This focuses on core functionality that can be delivered quickly while showcasin
 
 ---
 
+## What I Learned
+
+Working on this E-commerce project helped me strengthen my **full-stack development skills** and gave practical experience in delivering a working MVP:
+
+- **Backend Development:** Built REST APIs using **Node.js, TypeScript, and Express**.
+- **Database Management:** Designed and queried **PostgreSQL** database using **Prisma ORM**.
+- **Frontend Development:** Created responsive UI with **React (Vite) and TypeScript**.
+- **Authentication & Authorization:** Implemented **JWT-based user and admin authentication**.
+- **Pagination:** Learned to implement **efficient offset-based pagination** for product listings to handle large datasets smoothly.
+- **State Management:** Managed shopping cart, user sessions, and order state efficiently.
+- **Version Control & Workflow:** Used **Git** for project versioning and collaboration.
+- **Project Structuring:** Learned to organize code for maintainability and scalability.
+- **MVP Mindset:** Focused on delivering **core features first**, ensuring a working product that demonstrates capability to recruiters.
+
+---
+
 ## Contact
 
 ##### Md. Mahir Asef
+
 `Backend-Focused Full-Stack Engineer | TypeScript, Node.js, PostgreSQL | Open to Remote Opportunities`
 
 - 💼 LinkedIn: [linkedin.com/in/md-mahir-asef-89bb7b3a7/](https://www.linkedin.com/in/md-mahir-asef-89bb7b3a7/)
