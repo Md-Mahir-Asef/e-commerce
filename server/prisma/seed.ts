@@ -4,10 +4,28 @@ import { hasher } from "../src/utils/hasher";
 import logger from "../src/utils/logger";
 
 const NumOfUsers = 100;
+const NumOfProds = 100;
+const categories = [
+    "Electronics",
+    "Computers",
+    "Mobile Phones",
+    "Home Appliances",
+    "Furniture",
+    "Clothing",
+    "Footwear",
+    "Books",
+    "Sports",
+    "Toys & Games",
+    "Beauty & Personal Care",
+    "Health",
+    "Automotive",
+    "Gadgets",
+    "Stationery",
+];
 
-const seed = async () => {
+const userSeed = async () => {
     try {
-        logger.info("Seeding the Database...");
+        logger.info("Seeding users to the Database...");
         await prisma.user.deleteMany();
         await prisma.user.create({
             data: {
@@ -36,11 +54,49 @@ const seed = async () => {
                 },
             });
         }
-        logger.info("Seeding Finished.");
+        logger.info("User Seeding Finished.");
         await prisma.$disconnect();
     } catch (err) {
-        logger.error(`Can't seed due to Error: \n${err}`);
+        logger.error(`Can't seed users due to Error: \n${err}`);
     }
 };
 
-seed();
+const createCategories = async () => {
+    try {
+        logger.info("Seeding categories to the Database...");
+        await prisma.category.deleteMany();
+        for (const category of categories) {
+            await prisma.category.create({
+                data: {
+                    name: category,
+                },
+            });
+        }
+        logger.info("Category Seeding Finished.");
+        await prisma.$disconnect();
+    } catch (err) {
+        logger.error(`Can't seed categories due to Error: \n${err}`);
+    }
+};
+
+// const productSeed = async () => {
+//     try {
+//         logger.info("Seeding products to the Database...");
+//         await prisma.product.deleteMany();
+//         for (let i = 0; i < NumOfUsers; i++) {
+//             await prisma.product.create({
+//                 data: {
+//                     name: faker.
+//                 },
+//             });
+//         }
+//         logger.info("Product Seeding Finished.");
+//         await prisma.$disconnect();
+//     } catch (err) {
+//         logger.error(`Can't seed products due to Error: \n${err}`);
+//     }
+// };
+
+userSeed();
+createCategories();
+// productSeed();

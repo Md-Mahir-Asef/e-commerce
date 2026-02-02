@@ -29,7 +29,7 @@ cd e-commerce
 
 This focuses on core functionality that can be delivered quickly while showcasing my full-stack skills:
 
-### User Features
+#### User Features
 
 - [x] **Sign-up & Login:** Users can create accounts and log in securely.
 - [ ] **Product Listing:** Browse products with images, names, and prices.
@@ -38,18 +38,22 @@ This focuses on core functionality that can be delivered quickly while showcasin
 - [ ] **Checkout:** Place orders using a simple form (payment integration can be added later).
 - [ ] **Order History:** View past orders and their status.
 
-### Admin Features
+#### Admin Features
 
 - [ ] **Product Management:** Add, edit, or remove products.
 - [ ] **Order Management:** View and update order statuses.
 - [x] **User Management:** View all users (Pagination).
 
-### Technical Features
+#### Technical Features
 
 - [x] **Responsive UI:** Works on desktop and mobile devices.
 - [x] **Backend API:** CRUD endpoints for products, users, and orders.
 - [x] **Database:** PostgreSQL with Prisma ORM.
 - [x] **Authentication:** JWT-based authentication for users and admin.
+
+### Features To Develop
+
+- [ ] Product Seeding
 
 ---
 

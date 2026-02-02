@@ -17,6 +17,25 @@ model user {
   id         Int      @id @unique @default(autoincrement())
 }
 
+model Product {
+  id            Int        @id @unique @default(autoincrement())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  name          String
+  price         Int
+  description   String?
+  rating        Float      @default(5.0)
+  discountPrice Int?
+  images        String[]
+  categories    Category[] @relation("ProductCategories")
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[] @relation("ProductCategories")
+}
+
 enum Roles {
   user
   admin
