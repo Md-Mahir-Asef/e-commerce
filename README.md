@@ -1,34 +1,78 @@
-# E-commerce
+# E-Commerce App
 
-This is a full-stack e-commerce app.
+A simple, full-stack E-commerce application built with **TypeScript, Node.js, PostgreSQL, Prisma, and React (Vite)**.  
+This project demonstrates my ability to build end-to-end features, manage a database, and ship working features.
 
-# Set-up for development
+---
 
-Clone the repository
+## Table of Contents
+
+- [Set up](#set-up)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Contact](#contact)
+
+---
+
+# Set up
+
+Run the following command to setup E-commerce App
 
 ```bash
 git clone git@github.com:Md-Mahir-Asef/e-commerce.git
+cd e-commerce
 ```
 
-# Features
+---
 
-- [x] User
-- [x] User Registration.
-- [x] User Login.
-- [x] View Users in Admin Panel.
-- [x] Delete Users.
-- [x] Role-Based Access Control for Admin, Visitor and User.
-- [x] Store hashed Password in Database.
-- [x] View Profile.
-- [x] Edit Profile.
-- [x] Change Password.
-- [x] Upload Profile Pic or Avatar.
-- [x] Product
-- [x] List Products.
-- [x] Search Bar to search products.
-- [x] Filter products by category.
-- [x] Filter products based on price in search bar.
-- [x] Product price.
-- [x] Discount on price.
-- [x] Rating.
-- [x] Upload and manage Multiple images per product.
+## Features
+
+This focuses on core functionality that can be delivered quickly while showcasing my full-stack skills:
+
+### User Features
+
+- [x] **Sign-up & Login:** Users can create accounts and log in securely.
+- [ ] **Product Listing:** Browse products with images, names, and prices.
+- [ ] **Product Details:** View details of each product (description, price, image).
+- [ ] **Shopping Cart:** Add or remove items from the cart.
+- [ ] **Checkout:** Place orders using a simple form (payment integration can be added later).
+- [ ] **Order History:** View past orders and their status.
+
+### Admin Features
+
+- [ ] **Product Management:** Add, edit, or remove products.
+- [ ] **Order Management:** View and update order statuses.
+- [x] **User Management:** View all users (Pagination).
+
+### Technical Features
+
+- [x] **Responsive UI:** Works on desktop and mobile devices.
+- [x] **Backend API:** CRUD endpoints for products, users, and orders.
+- [x] **Database:** PostgreSQL with Prisma ORM.
+- [x] **Authentication:** JWT-based authentication for users and admin.
+
+---
+
+## Tech Stack
+
+- **Backend:** Node.js, Express, TypeScript
+- **Frontend:** React (Vite), TypeScript, TailwindCSS
+- **Database:** PostgreSQL, Prisma ORM
+- **Authentication:** JWT
+- **Version Control:** Git
+- **Containerization:** Docker
+- **Schema Validation:** Zod
+- **Logging:** Winston Logger
+- **Testing (Unit Testing):** Jest
+- **Other Libraries:** bcrypt, cookie-parser, cors, dotenv, faker-js(For DB seeding in dev)
+
+---
+
+## Contact
+
+Md. Mahir Asef
+`Backend-Focused Full-Stack Engineer | TypeScript, Node.js, PostgreSQL | Open to Remote Opportunities`
+
+- 💼 LinkedIn: [linkedin.com/in/md-mahir-asef-89bb7b3a7/](https://www.linkedin.com/in/md-mahir-asef-89bb7b3a7/)
+- 🧩 LeetCode: [leetcode.com/u/Md-Mahir-Asef/](https://leetcode.com/u/Md-Mahir-Asef/)
+- 📧 Email: [mdmahirasef.dev@gmail.com](mdmahirasef.dev@gmail.com)
