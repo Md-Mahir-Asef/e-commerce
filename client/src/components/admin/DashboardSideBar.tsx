@@ -16,6 +16,7 @@ import {
     Moon,
     Package,
     PenSquare,
+    Bookmark,
 } from "lucide-react";
 import type { JSX } from "react";
 import axios from "axios";
@@ -136,6 +137,12 @@ export default function DashboardSideBar() {
             label: "Products",
             icon: <Package size={18} />,
             subItems: [
+                {
+                    id: 12,
+                    label: "Category",
+                    path: "/admin/products/category",
+                    icon: <Bookmark size={16}/>
+                },
                 {
                     id: 8,
                     label: "Product List",

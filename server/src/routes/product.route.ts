@@ -10,6 +10,7 @@ import {
     deleteProduct,
     getProductsByPage,
     getAllCategories,
+    createCategory,
 } from "../controllers/product.controller";
 
 const productRoutes = Router();
@@ -24,5 +25,6 @@ productRoutes.get(
     getProductsByPage
 );
 productRoutes.get("/categories", authUserMiddleware, getAllCategories);
+productRoutes.post("/category", authAdminMiddleware, createCategory);
 
 export default productRoutes;

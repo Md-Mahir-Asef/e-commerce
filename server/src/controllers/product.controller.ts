@@ -145,3 +145,44 @@ export const getAllCategories = async (req: Request, res: Response) => {
         res.sendErr(err, "Failed to get all categories.");
     }
 };
+
+export const createCategory = async (req: Request, res: Response) => {
+    try {
+        const { name } = req.body;
+
+        if (!name || typeof name !== "string" || name.trim().length === 0) {
+            return res.sendErr(
+                null,
+                "Category name is required and must be a non-empty string.",
+                400
+            );
+        }
+
+        // Check if category already exists
+        const existing = await prisma.category.findUnique({
+            where: { name: name.trim() },
+        });
+
+        if (existing) {
+            return res.sendErr(
+                null,
+                `Category "${name.trim()}" already exists.`,
+                409
+            );
+        }
+
+        const category = await prisma.category.create({
+            data: {
+                name: name.trim(),
+            },
+        });
+
+        logger.info(
+            `Created new category: ${category.name} (id: ${category.id}).`
+        );
+        res.sendApi(category, "Category created successfully.", 201);
+    } catch (err) {
+        logger.error(`Failed to create category. \n${err}`);
+        res.sendErr(err, "Failed to create category.");
+    }
+};

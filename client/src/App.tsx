@@ -14,6 +14,7 @@ import Users from "./pages/admin/Users";
 import CreateProduct from "./pages/admin/CreateProduct";
 import UpdateProduct from "./pages/admin/UpdateProduct";
 import ProductList from "./pages/admin/ProductList";
+import Category from "./pages/admin/Category";
 
 function App() {
     return (
@@ -50,6 +51,10 @@ function App() {
                     <Route
                         path="products/update"
                         element={<UpdateProduct />}
+                    ></Route>
+                    <Route
+                        path="products/category"
+                        element={<Category />}
                     ></Route>
                 </Route>
                 <Route path="*" element={<NotFound />} />
