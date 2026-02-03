@@ -15,7 +15,7 @@ import {
     Sun,
     Moon,
     Package,
-    PencilSquare,
+    PenSquare,
 } from "lucide-react";
 import type { JSX } from "react";
 import axios from "axios";
@@ -69,7 +69,7 @@ export default function DashboardSideBar() {
             try {
                 const response = await axios.get(
                     `${config.VITE_SERVER_BASE_URL}/admin/visitorinfo`,
-                    { withCredentials: true },
+                    { withCredentials: true }
                 );
                 if (
                     response.status === 401 ||
@@ -91,7 +91,7 @@ export default function DashboardSideBar() {
             const response = await axios.post(
                 `${config.VITE_SERVER_BASE_URL}/admin/logout/${id}`,
                 {},
-                { withCredentials: true },
+                { withCredentials: true }
             );
             if (
                 response.status === 401 ||
@@ -133,24 +133,49 @@ export default function DashboardSideBar() {
         },
         {
             id: 4,
+            label: "Products",
+            icon: <Package size={18} />,
+            subItems: [
+                {
+                    id: 8,
+                    label: "Product List",
+                    path: "/admin/products/list",
+                    icon: <List size={16} />,
+                },
+                {
+                    id: 9,
+                    label: "Create Product",
+                    path: "/admin/products/create",
+                    icon: <Plus size={16} />,
+                },
+                {
+                    id: 10,
+                    label: "Update Product",
+                    path: "/admin/products/update",
+                    icon: <PenSquare size={16} />,
+                },
+            ],
+        },
+        {
+            id: 5,
             label: "Orders",
             icon: <ShoppingCart size={18} />,
             path: "/admin/orders",
         },
         {
-            id: 5,
+            id: 6,
             label: "Settings",
             icon: <Settings size={18} />,
             path: "/admin/settings",
         },
         {
-            id: 6,
+            id: 7,
             label: "Logout",
             icon: <LogOut size={18} />,
             action: adminLogOutFunction,
         },
         {
-            id: 7,
+            id: 11,
             label: "Theme",
             icon: dark ? <Sun size={18} /> : <Moon size={18} />,
             isThemeToggle: true,
