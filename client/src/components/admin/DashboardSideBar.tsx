@@ -14,6 +14,8 @@ import {
     X,
     Sun,
     Moon,
+    Package,
+    PencilSquare,
 } from "lucide-react";
 import type { JSX } from "react";
 import axios from "axios";

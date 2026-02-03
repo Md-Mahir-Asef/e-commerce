@@ -22,8 +22,8 @@ model Product {
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   name          String
-  price         Int
   description   String?
+  price         Int
   rating        Float      @default(5.0)
   discountPrice Int?
   images        String[]
