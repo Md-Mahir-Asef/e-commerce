@@ -1,0 +1,61 @@
+{
+    "info": {
+        "name": "Product API",
+        "description": "Test all endpoints under /api/v1/product.\n\n**Auth:** GET /products uses user auth; POST/PUT/DELETE require admin. Login first via POST /api/v1/admin/login with admin credentials to get the token cookie, then run these requests (Postman will send cookies automatically if you use the same base URL).",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        { "key": "baseUrl", "value": "http://localhost:4001" },
+        { "key": "productId", "value": "1" }
+    ],
+    "item": [
+        {
+            "name": "Get All Products",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{baseUrl}}/api/v1/product/products",
+                "description": "Requires authenticated user (token cookie). Returns all products."
+            }
+        },
+        {
+            "name": "Create Product",
+            "request": {
+                "method": "POST",
+                "header": [
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"data\": {\n    \"name\": \"Test Product\",\n    \"description\": \"A test product\",\n    \"price\": 1999,\n    \"rating\": 4.5,\n    \"discountPrice\": 1499,\n    \"images\": [\"https://example.com/img1.jpg\"],\n    \"categoryIds\": [1, 2]\n  }\n}"
+                },
+                "url": "{{baseUrl}}/api/v1/product/product",
+                "description": "Requires admin auth. categoryIds = existing category IDs from DB. discountPrice optional, must be <= price."
+            }
+        },
+        {
+            "name": "Update Product",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Updated Product Name\",\n    \"description\": \"Updated description\",\n    \"price\": 2499,\n    \"rating\": 4.8,\n    \"discountPrice\": null,\n    \"images\": [],\n    \"categoryIds\": [1]\n  }\n}"
+                },
+                "url": "{{baseUrl}}/api/v1/product/product/{{productId}}",
+                "description": "Requires admin auth. id in body must match :id in URL. discountPrice can be null."
+            }
+        },
+        {
+            "name": "Delete Product",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "{{baseUrl}}/api/v1/product/product/{{productId}}",
+                "description": "Requires admin auth. Deletes the product with the given id."
+            }
+        }
+    ]
+}

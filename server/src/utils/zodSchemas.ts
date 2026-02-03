@@ -19,3 +19,52 @@ export const LogInUserDateSchema = z.object({
         .min(4, { message: "Password must be at least 4 characters." })
         .max(32, { message: "Password must not exceed 32 characters." }),
 });
+
+export const ProductDataSchema = z
+    .object({
+        name: z.string().min(1, { message: "Product name is required." }),
+        description: z.string().optional().nullable(),
+        price: z
+            .number()
+            .int()
+            .positive({ message: "Price must be a positive integer." }),
+        rating: z.number().min(0).max(5).default(5),
+        discountPrice: z.number().int().positive().optional().nullable(),
+        images: z.array(z.string()).default([]),
+        categoryNames: z.array(z.string()).default([]),
+    })
+    .refine(
+        (data) =>
+            data.discountPrice === null ||
+            data.discountPrice === undefined ||
+            data.discountPrice <= data.price,
+        {
+            message: "Discount price must be less than or equal to price.",
+            path: ["discountPrice"],
+        }
+    );
+
+export const UpdateProductDataSchema = z
+    .object({
+        id: z.number().int().positive(),
+        name: z.string().min(1, { message: "Product name is required." }),
+        description: z.string().optional().nullable(),
+        price: z
+            .number()
+            .int()
+            .positive({ message: "Price must be a positive integer." }),
+        rating: z.number().min(0).max(5).default(5),
+        discountPrice: z.number().int().positive().optional().nullable(),
+        images: z.array(z.string()).default([]),
+        categoryNames: z.array(z.string()).default([]),
+    })
+    .refine(
+        (data) =>
+            data.discountPrice === null ||
+            data.discountPrice === undefined ||
+            data.discountPrice <= data.price,
+        {
+            message: "Discount price must be less than or equal to price.",
+            path: ["discountPrice"],
+        }
+    );
