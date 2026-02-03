@@ -11,6 +11,9 @@ import RouteProtector from "./components/RouteProtector";
 import Dashboard from "./pages/admin/Dashboard";
 import AdminLayout from "./components/admin/AdminLayout";
 import Users from "./pages/admin/Users";
+import CreateProduct from "./pages/admin/CreateProduct";
+import UpdateProduct from "./pages/admin/UpdateProduct";
+import ProductList from "./pages/admin/ProductList";
 
 function App() {
     return (
@@ -36,6 +39,18 @@ function App() {
                 >
                     <Route path="dashboard" element={<Dashboard />}></Route>
                     <Route path="users/list" element={<Users />}></Route>
+                    <Route
+                        path="products/list"
+                        element={<ProductList />}
+                    ></Route>
+                    <Route
+                        path="products/create"
+                        element={<CreateProduct />}
+                    ></Route>
+                    <Route
+                        path="products/update"
+                        element={<UpdateProduct />}
+                    ></Route>
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>

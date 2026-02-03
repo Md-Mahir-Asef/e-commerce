@@ -35,7 +35,7 @@ export const createProduct = async (req: Request, res: Response) => {
                 description: description ?? undefined,
                 price,
                 rating,
-                discountPrice: discountPrice ?? undefined,
+                discountPrice: discountPrice ?? price,
                 images,
                 categories: {
                     connect: categoryNames.map((name) => ({ name })),
@@ -132,5 +132,16 @@ export const getProductsByPage = async (req: Request, res: Response) => {
     } catch (err) {
         logger.error(`Failed to get products by page. \n${err}`);
         res.sendErr(err, "Failed to get products by page.");
+    }
+};
+
+export const getAllCategories = async (req: Request, res: Response) => {
+    try {
+        const categories = await prisma.category.findMany();
+        logger.info(`Successfully got all ${categories.length} categories.`);
+        res.sendApi(categories, "Successfully got all categories.");
+    } catch (err) {
+        logger.error(`Failed to get all categories. \n${err}`);
+        res.sendErr(err, "Failed to get all categories.");
     }
 };
