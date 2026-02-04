@@ -4,6 +4,7 @@ import logger from "../utils/logger";
 import {
     ProductDataSchema,
     UpdateProductDataSchema,
+    UpdateCategorySchema,
 } from "../utils/zodSchemas";
 
 export const getAllProducts = async (req: Request, res: Response) => {
@@ -184,5 +185,98 @@ export const createCategory = async (req: Request, res: Response) => {
     } catch (err) {
         logger.error(`Failed to create category. \n${err}`);
         res.sendErr(err, "Failed to create category.");
+    }
+};
+
+export const updateCategory = async (req: Request, res: Response) => {
+    try {
+        if (!req.params && !req.params["id"]) {
+            throw new Error("No ID provided.");
+        }
+        const id = Number(req.params["id"]);
+        const CategoryNames = UpdateCategorySchema.parse(req.body.data);
+        console.log("Second");
+        const { new_name } = CategoryNames;
+        const updatedCategory = await prisma.category.update({
+            where: { id },
+            data: {
+                name: new_name,
+            },
+        });
+        logger.info(
+            `Updated category name: ${updatedCategory.name} (id: ${updatedCategory.id}).`
+        );
+        res.sendApi(updatedCategory, "Product updated successfully.");
+    } catch (err) {
+        logger.error(`Failed to update category. \n${err}`);
+        res.sendErr(err, "Failed to update category.");
+    }
+};
+
+export const deleteCategory = async (req: Request, res: Response) => {
+    try {
+        const idParam = req.params["id"];
+        if (!idParam) {
+            return res.sendErr(
+                { message: "Category ID is required" },
+                "Category ID is required.",
+                400
+            );
+        }
+        const categoryId = parseInt(idParam, 10);
+        if (Number.isNaN(categoryId)) {
+            return res.sendErr(
+                { message: "Invalid category ID" },
+                "Invalid category ID.",
+                400
+            );
+        }
+
+        const category = await prisma.category.findUnique({
+            where: { id: categoryId },
+        });
+        if (!category) {
+            return res.sendErr(
+                { message: "Category not found" },
+                "Category not found.",
+                404
+            );
+        }
+
+        const productsWithCategory = await prisma.product.findMany({
+            where: {
+                categories: {
+                    some: { id: categoryId },
+                },
+            },
+            select: { id: true },
+        });
+
+        await prisma.$transaction([
+            ...productsWithCategory.map((p) =>
+                prisma.product.update({
+                    where: { id: p.id },
+                    data: {
+                        categories: {
+                            disconnect: [{ id: categoryId }],
+                        },
+                    },
+                })
+            ),
+            prisma.category.delete({
+                where: { id: categoryId },
+            }),
+        ]);
+
+        logger.info(
+            `Deleted category: ${category.name} (id: ${categoryId}), removed from ${productsWithCategory.length} product(s).`
+        );
+        res.sendApi(
+            { id: categoryId, name: category.name },
+            "Category deleted successfully."
+        );
+    } catch (err) {
+        logger.error(`Failed to delete category. \n${err}`);
+        res.sendErr(err, "Failed to delete category.");
     }
 };

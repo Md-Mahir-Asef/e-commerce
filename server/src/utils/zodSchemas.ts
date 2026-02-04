@@ -68,3 +68,7 @@ export const UpdateProductDataSchema = z
             path: ["discountPrice"],
         }
     );
+
+export const UpdateCategorySchema = z.object({
+    new_name: z.string().min(1, { message: "New Category name is required." }),
+});
