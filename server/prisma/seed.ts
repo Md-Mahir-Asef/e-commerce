@@ -2,6 +2,8 @@ import prisma from "../src/utils/prisma";
 import { faker } from "@faker-js/faker";
 import { hasher } from "../src/utils/hasher";
 import logger from "../src/utils/logger";
+import fs from "fs";
+import path from "path";
 
 const NumOfUsers = 100;
 const NumOfProds = 100;
@@ -79,11 +81,72 @@ const createCategories = async () => {
     }
 };
 
+const getUploadedImageFiles = (): string[] => {
+    try {
+        const uploadsDir = path.join(__dirname, "../uploads");
+
+        // Check if uploads directory exists
+        if (!fs.existsSync(uploadsDir)) {
+            logger.warn(
+                "Uploads directory does not exist, no images will be assigned to products.",
+            );
+            return [];
+        }
+
+        // Read all files in the uploads directory
+        const files = fs.readdirSync(uploadsDir);
+
+        // Filter for image files only
+        const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
+        const imageFiles = files.filter((file) => {
+            const ext = path.extname(file).toLowerCase();
+            return imageExtensions.includes(ext);
+        });
+
+        logger.info(
+            `Found ${imageFiles.length} image files in uploads directory`,
+        );
+        return imageFiles;
+    } catch (error) {
+        logger.error(`Error reading uploads directory: ${error}`);
+        return [];
+    }
+};
+
+const getRandomImages = (imageFiles: string[], count: number = 3): string[] => {
+    if (imageFiles.length === 0) return [];
+
+    const randomImages: string[] = [];
+    const availableImages = [...imageFiles];
+
+    // Get up to 'count' random images
+    for (let i = 0; i < Math.min(count, availableImages.length); i++) {
+        const randomIndex = faker.number.int({
+            min: 0,
+            max: availableImages.length - 1,
+        });
+        const selectedImage = availableImages[randomIndex];
+        if (selectedImage) {
+            randomImages.push(selectedImage);
+            availableImages.splice(randomIndex, 1);
+        }
+    }
+
+    return randomImages;
+};
+
 const productSeed = async () => {
     try {
         logger.info("Seeding products to the Database...");
         await prisma.product.deleteMany();
+
+        // Get available image files
+        const imageFiles = getUploadedImageFiles();
+
         for (let i = 0; i < NumOfProds; i++) {
+            // Assign 3 random images to each product
+            const productImages = getRandomImages(imageFiles, 3);
+
             await prisma.product.create({
                 data: {
                     name: faker.commerce.productName(),
@@ -94,9 +157,9 @@ const productSeed = async () => {
                             min: 0,
                             max: 5,
                             fractionDigits: 1,
-                        })
+                        }),
                     ),
-                    images: [],
+                    images: productImages,
                     categories: {
                         connect: [
                             {
