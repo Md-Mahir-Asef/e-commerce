@@ -1,6 +1,6 @@
 # E-Commerce Application – Product Requirement & Execution Plan
 
-## 1. Purpose of This Document
+## [ ] 1. Purpose of This Document
 This document defines the **Minimum Viable Product (MVP)** scope for the E-Commerce application.  
 It is written to:
 - Clearly communicate system behavior and expectations
