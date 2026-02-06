@@ -38,6 +38,12 @@
         "incremental": true /* Faster rebuilds */,
         "tsBuildInfoFile": "./.tsbuildinfo" /* Store incremental build info */
     },
-    "include": ["src", "tests/**/*", "**/__tests__/**/*"],
+    "include": [
+        "src",
+        "tests/**/*",
+        "**/__tests__/**/*",
+        "src/middlewares/multer.middleware.ts",
+        "src/types/express/index.d.ts"
+    ],
     "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }
