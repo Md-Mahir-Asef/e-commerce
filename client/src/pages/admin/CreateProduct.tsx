@@ -3,7 +3,7 @@ import axios from "axios";
 import { config } from "@/config/config";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X, Upload, Image as ImageIcon } from "lucide-react";
 
 type Category = { id: number; name: string };
 
@@ -13,11 +13,12 @@ export default function CreateProduct() {
     const [price, setPrice] = useState("");
     const [discountPrice, setDiscountPrice] = useState("");
     const [selectedCategories, setSelectedCategories] = useState<Set<string>>(
-        () => new Set()
+        () => new Set(),
     );
     const [categories, setCategories] = useState<Category[]>([]);
     const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
     const [images, setImages] = useState<string[]>([]);
+    const [uploadingImages, setUploadingImages] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const categoryContainerRef = useRef<HTMLDivElement>(null);
 
@@ -41,10 +42,12 @@ export default function CreateProduct() {
             try {
                 const response = await axios.get(
                     `${config.VITE_SERVER_BASE_URL}/product/categories`,
-                    { withCredentials: true }
+                    { withCredentials: true },
                 );
                 setCategories(
-                    Array.isArray(response.data?.data) ? response.data.data : []
+                    Array.isArray(response.data?.data)
+                        ? response.data.data
+                        : [],
                 );
             } catch (err) {
                 console.error(err);
@@ -62,6 +65,50 @@ export default function CreateProduct() {
 
     const requiredFieldsFilled =
         name.trim().length > 0 && !Number.isNaN(priceNum) && priceNum > 0;
+
+    const handleImageUpload = async (files: FileList) => {
+        setUploadingImages(true);
+        const newImages: string[] = [];
+
+        try {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const formData = new FormData();
+                formData.append("image", file);
+
+                const response = await axios.post(
+                    `${config.VITE_SERVER_BASE_URL}/upload`,
+                    formData,
+                    {
+                        withCredentials: true,
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    },
+                );
+
+                if (response.data?.data?.filename) {
+                    newImages.push(response.data.data.filename);
+                }
+            }
+
+            setImages((prev) => [...prev, ...newImages]);
+            if (newImages.length > 0) {
+                toast.success(
+                    `${newImages.length} image(s) uploaded successfully.`,
+                );
+            }
+        } catch (error) {
+            console.error("Image upload error:", error);
+            toast.error("Failed to upload images.");
+        } finally {
+            setUploadingImages(false);
+        }
+    };
+
+    const handleRemoveImage = (imageName: string) => {
+        setImages((prev) => prev.filter((img) => img !== imageName));
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -84,7 +131,7 @@ export default function CreateProduct() {
                         categoryNames,
                     },
                 },
-                { withCredentials: true }
+                { withCredentials: true },
             );
 
             toast.success("Product created successfully.");
@@ -110,14 +157,103 @@ export default function CreateProduct() {
         <div className="mr-2">
             <h1 className="text-3xl mb-4">Create Product</h1>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Left: Image upload & preview – implement file receive/handle here */}
+                {/* Left: Image upload & preview */}
                 <div className="flex flex-col border border-gray-300 dark:border-gray-600 rounded-lg p-4 bg-gray-50 dark:bg-gray-800/50">
                     <h2 className="text-xl font-medium mb-3">Product Images</h2>
-                    <div className="flex flex-col items-center justify-center min-h-48 border-2 border-dashed border-gray-400 dark:border-gray-500 rounded-lg text-gray-500 dark:text-gray-400">
-                        Upload area – add file input and previews here. Use{" "}
-                        <code className="text-sm">images</code> state and{" "}
-                        <code className="text-sm">setImages</code> when ready.
+
+                    {/* Upload area */}
+                    <div className="mb-4">
+                        <label
+                            htmlFor="image-upload"
+                            className="flex flex-col items-center justify-center min-h-48 border-2 border-dashed border-gray-400 dark:border-gray-500 rounded-lg cursor-pointer hover:border-gray-500 dark:hover:border-gray-400 transition-colors"
+                        >
+                            <input
+                                id="image-upload"
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                onChange={(e) => {
+                                    if (
+                                        e.target.files &&
+                                        e.target.files.length > 0
+                                    ) {
+                                        handleImageUpload(e.target.files);
+                                    }
+                                }}
+                                disabled={uploadingImages}
+                                className="hidden"
+                            />
+                            <div className="flex flex-col items-center text-gray-500 dark:text-gray-400">
+                                {uploadingImages ? (
+                                    <>
+                                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mb-2"></div>
+                                        <span className="text-sm">
+                                            Uploading...
+                                        </span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Upload size={32} className="mb-2" />
+                                        <span className="text-sm font-medium">
+                                            Click to upload images
+                                        </span>
+                                        <span className="text-xs mt-1">
+                                            PNG, JPG, GIF up to 10MB
+                                        </span>
+                                    </>
+                                )}
+                            </div>
+                        </label>
                     </div>
+
+                    {/* Image previews */}
+                    {images.length > 0 && (
+                        <div className="space-y-2">
+                            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Uploaded Images ({images.length})
+                            </h3>
+                            <div className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto">
+                                {images.map((imageName) => (
+                                    <div
+                                        key={imageName}
+                                        className="relative group border border-gray-200 dark:border-gray-600 rounded-md overflow-hidden"
+                                    >
+                                        <img
+                                            src={`${config.VITE_SERVER_BASE_URL}/../../uploads/${imageName}`}
+                                            alt={imageName}
+                                            className="w-full h-24 object-cover"
+                                            onError={(e) => {
+                                                e.currentTarget.src =
+                                                    "/placeholder-image.png";
+                                            }}
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                handleRemoveImage(imageName)
+                                            }
+                                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                            aria-label={`Remove ${imageName}`}
+                                        >
+                                            <X size={12} />
+                                        </button>
+                                        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs p-1 truncate">
+                                            {imageName}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {images.length === 0 && (
+                        <div className="flex flex-col items-center justify-center py-8 text-gray-400 dark:text-gray-500">
+                            <ImageIcon size={32} className="mb-2" />
+                            <span className="text-sm">
+                                No images uploaded yet
+                            </span>
+                        </div>
+                    )}
                 </div>
 
                 {/* Right: Product details form */}
@@ -213,13 +349,13 @@ export default function CreateProduct() {
                                                             (prev) => {
                                                                 const next =
                                                                     new Set(
-                                                                        prev
+                                                                        prev,
                                                                     );
                                                                 next.delete(
-                                                                    name
+                                                                    name,
                                                                 );
                                                                 return next;
-                                                            }
+                                                            },
                                                         );
                                                     }}
                                                     className="ml-0.5 hover:bg-gray-400 dark:hover:bg-gray-500 rounded p-0.5 leading-none"
@@ -228,7 +364,7 @@ export default function CreateProduct() {
                                                     ×
                                                 </button>
                                             </span>
-                                        )
+                                        ),
                                     )}
                                 </div>
                             )}
@@ -263,8 +399,8 @@ export default function CreateProduct() {
                                             .filter(
                                                 (c) =>
                                                     !selectedCategories.has(
-                                                        c.name
-                                                    )
+                                                        c.name,
+                                                    ),
                                             )
                                             .map((c) => (
                                                 <li
@@ -276,11 +412,11 @@ export default function CreateProduct() {
                                                         setSelectedCategories(
                                                             (prev) =>
                                                                 new Set(
-                                                                    prev
-                                                                ).add(c.name)
+                                                                    prev,
+                                                                ).add(c.name),
                                                         );
                                                         setCategoryDropdownOpen(
-                                                            false
+                                                            false,
                                                         );
                                                     }}
                                                 >
@@ -289,7 +425,7 @@ export default function CreateProduct() {
                                             ))}
                                         {categories.filter(
                                             (c) =>
-                                                !selectedCategories.has(c.name)
+                                                !selectedCategories.has(c.name),
                                         ).length === 0 && (
                                             <li className="px-3 py-2 text-gray-500 dark:text-gray-400 text-sm">
                                                 No more categories
