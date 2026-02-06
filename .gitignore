@@ -7,5 +7,6 @@ cookie.txt
 **/.env
 server/.env
 client/.env
+client/uploads
 
 
