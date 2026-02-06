@@ -219,7 +219,7 @@ export default function CreateProduct() {
                                         className="relative group border border-gray-200 dark:border-gray-600 rounded-md overflow-hidden"
                                     >
                                         <img
-                                            src={`${config.VITE_SERVER_BASE_URL}/../../uploads/${imageName}`}
+                                            src={`${config.VITE_SERVER_BASE_URL}/uploads/${imageName}`}
                                             alt={imageName}
                                             className="w-full h-24 object-cover"
                                             onError={(e) => {
