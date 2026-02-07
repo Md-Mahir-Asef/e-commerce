@@ -15,7 +15,6 @@ import {
     Sun,
     Moon,
     Package,
-    PenSquare,
     Bookmark,
 } from "lucide-react";
 import type { JSX } from "react";
@@ -70,7 +69,7 @@ export default function DashboardSideBar() {
             try {
                 const response = await axios.get(
                     `${config.VITE_SERVER_BASE_URL}/admin/visitorinfo`,
-                    { withCredentials: true }
+                    { withCredentials: true },
                 );
                 if (
                     response.status === 401 ||
@@ -92,7 +91,7 @@ export default function DashboardSideBar() {
             const response = await axios.post(
                 `${config.VITE_SERVER_BASE_URL}/admin/logout/${id}`,
                 {},
-                { withCredentials: true }
+                { withCredentials: true },
             );
             if (
                 response.status === 401 ||
@@ -141,7 +140,7 @@ export default function DashboardSideBar() {
                     id: 12,
                     label: "Category",
                     path: "/admin/products/category",
-                    icon: <Bookmark size={16}/>
+                    icon: <Bookmark size={16} />,
                 },
                 {
                     id: 8,
@@ -154,12 +153,6 @@ export default function DashboardSideBar() {
                     label: "Create Product",
                     path: "/admin/products/create",
                     icon: <Plus size={16} />,
-                },
-                {
-                    id: 10,
-                    label: "Update Product",
-                    path: "/admin/products/update",
-                    icon: <PenSquare size={16} />,
                 },
             ],
         },

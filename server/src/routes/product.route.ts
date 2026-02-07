@@ -7,6 +7,7 @@ import {
     getAllProducts,
     createProduct,
     updateProduct,
+    getProductById,
     deleteProduct,
     getProductsByPage,
     getAllCategories,
@@ -18,13 +19,14 @@ import {
 const productRoutes = Router();
 
 productRoutes.get("/products", authUserMiddleware, getAllProducts);
+productRoutes.get("/product/:id", authUserMiddleware, getProductById);
 productRoutes.post("/product", authAdminMiddleware, createProduct);
 productRoutes.put("/product/:id", authAdminMiddleware, updateProduct);
 productRoutes.delete("/product/:id", authAdminMiddleware, deleteProduct);
 productRoutes.get(
     "/products/:page/:limit",
     authUserMiddleware,
-    getProductsByPage
+    getProductsByPage,
 );
 productRoutes.get("/categories", authUserMiddleware, getAllCategories);
 productRoutes.post("/category", authAdminMiddleware, createCategory);

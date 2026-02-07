@@ -9,5 +9,4 @@ server/.env
 client/.env
 client/uploads
 server/uploads
-
-
+**/uploads

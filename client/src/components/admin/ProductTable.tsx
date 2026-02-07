@@ -113,9 +113,14 @@ export default function ProductTable({
                                         )}
                                     </div>
                                     <div className="min-w-0">
-                                        <h3 className="font-medium text-white truncate">
-                                            {product.name}
-                                        </h3>
+                                        <div className="flex items-center gap-2">
+                                            <h3 className="font-medium text-white truncate">
+                                                {product.name}
+                                            </h3>
+                                            <span className="text-xs text-gray-500 opacity-60">
+                                                [#{product.id}]
+                                            </span>
+                                        </div>
                                         {product.description && (
                                             <p className="text-xs text-gray-400 truncate">
                                                 {product.description}

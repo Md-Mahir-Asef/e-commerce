@@ -15,8 +15,7 @@ export default function ProductList() {
         useProducts(currentPage, 10);
 
     const handleEdit = (product: any) => {
-        // Navigate to edit page or open edit modal
-        navigate(`/admin/edit-product/${product.id}`);
+        navigate(`/admin/products/update/${product.id}`);
     };
 
     const handleDelete = async (productId: number) => {

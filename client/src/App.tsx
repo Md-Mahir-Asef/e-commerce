@@ -49,7 +49,7 @@ function App() {
                         element={<CreateProduct />}
                     ></Route>
                     <Route
-                        path="products/update"
+                        path="products/update/:id"
                         element={<UpdateProduct />}
                     ></Route>
                     <Route
