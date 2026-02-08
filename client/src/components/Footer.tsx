@@ -8,10 +8,7 @@ import {
     MapPin,
     Github,
     Linkedin,
-    Youtube,
-    MessageCircle,
-    Send,
-    ExternalLink,
+    X,
 } from "lucide-react";
 
 export default function Footer() {
@@ -39,25 +36,11 @@ export default function Footer() {
                         </p>
                         <div className="flex flex-wrap gap-3">
                             <a
-                                href="#"
-                                className="text-gray-400 hover:text-[#3BB77E] transition-colors"
-                                aria-label="Facebook"
-                            >
-                                <Facebook size={20} />
-                            </a>
-                            <a
-                                href="#"
+                                href="https://x.com/MdMahirAsef"
                                 className="text-gray-400 hover:text-[#3BB77E] transition-colors"
                                 aria-label="Twitter/X"
                             >
-                                <Twitter size={20} />
-                            </a>
-                            <a
-                                href="#"
-                                className="text-gray-400 hover:text-[#3BB77E] transition-colors"
-                                aria-label="Instagram"
-                            >
-                                <Instagram size={20} />
+                                <X size={20} />
                             </a>
                             <a
                                 href="#"
@@ -67,43 +50,14 @@ export default function Footer() {
                                 <Github size={20} />
                             </a>
                             <a
-                                href="#"
+                                href="https://www.linkedin.com/in/md-mahir-asef-dev/"
                                 className="text-gray-400 hover:text-[#3BB77E] transition-colors"
                                 aria-label="LinkedIn"
                             >
                                 <Linkedin size={20} />
                             </a>
-                            <a
-                                href="#"
-                                className="text-gray-400 hover:text-[#3BB77E] transition-colors"
-                                aria-label="YouTube"
-                            >
-                                <Youtube size={20} />
-                            </a>
-                            <a
-                                href="#"
-                                className="text-gray-400 hover:text-[#3BB77E] transition-colors"
-                                aria-label="Discord/Chat"
-                            >
-                                <MessageCircle size={20} />
-                            </a>
-                            <a
-                                href="#"
-                                className="text-gray-400 hover:text-[#3BB77E] transition-colors"
-                                aria-label="Telegram/WhatsApp"
-                            >
-                                <Send size={20} />
-                            </a>
-                            <a
-                                href="#"
-                                className="text-gray-400 hover:text-[#3BB77E] transition-colors"
-                                aria-label="Website"
-                            >
-                                <ExternalLink size={20} />
-                            </a>
                         </div>
                     </div>
-
                     {/* Quick Links */}
                     <div>
                         <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
@@ -144,7 +98,6 @@ export default function Footer() {
                             </li>
                         </ul>
                     </div>
-
                     {/* Contact Info */}
                     <div>
                         <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
@@ -156,42 +109,38 @@ export default function Footer() {
                                     size={16}
                                     className="mr-2 text-[#3BB77E]"
                                 />
-                                <span>support@ecommerce.com</span>
-                            </div>
-                            <div className="flex items-center text-gray-600 dark:text-gray-300">
-                                <Mail
-                                    size={16}
-                                    className="mr-2 text-[#3BB77E]"
-                                />
-                                <span>info@ecommerce.com</span>
-                            </div>
-                            <div className="flex items-center text-gray-600 dark:text-gray-300">
-                                <Phone
-                                    size={16}
-                                    className="mr-2 text-[#3BB77E]"
-                                />
-                                <span>+1 (555) 123-4567</span>
+                                <a
+                                    href="mailto:mdmahirasef.dev@gmail.com"
+                                    className="hover:text-[#3BB77E] transition-colors"
+                                >
+                                    mdmahirasef.dev@gmail.com
+                                </a>
                             </div>
                             <div className="flex items-center text-gray-600 dark:text-gray-300">
                                 <Phone
                                     size={16}
                                     className="mr-2 text-[#3BB77E]"
                                 />
-                                <span>+1 (555) 987-6543</span>
+                                <a
+                                    href="tel:+8801832055053"
+                                    className="hover:text-[#3BB77E] transition-colors"
+                                >
+                                    +8801832055053
+                                </a>
                             </div>
                             <div className="flex items-center text-gray-600 dark:text-gray-300">
                                 <MapPin
                                     size={16}
                                     className="mr-2 text-[#3BB77E]"
                                 />
-                                <span>123 Commerce St, Business City</span>
-                            </div>
-                            <div className="flex items-center text-gray-600 dark:text-gray-300">
-                                <MapPin
-                                    size={16}
-                                    className="mr-2 text-[#3BB77E]"
-                                />
-                                <span>456 Market Ave, Tech Town</span>
+                                <a
+                                    href="https://maps.google.com/?q=Tejgaon, Dhaka-1208, Bangladesh"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-[#3BB77E] transition-colors"
+                                >
+                                    Tejgaon, Dhaka-1208, Bangladesh
+                                </a>
                             </div>
                         </div>
                     </div>
