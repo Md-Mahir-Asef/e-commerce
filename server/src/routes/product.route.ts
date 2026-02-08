@@ -10,6 +10,7 @@ import {
     getProductById,
     deleteProduct,
     getProductsByPage,
+    getProductsByCategory,
     getAllCategories,
     createCategory,
     updateCategory,
@@ -28,7 +29,11 @@ productRoutes.get(
     authUserMiddleware,
     getProductsByPage,
 );
-productRoutes.get("/categories", authUserMiddleware, getAllCategories);
+productRoutes.get(
+    "/category/:categoryId/products/:page/:limit",
+    getProductsByCategory,
+);
+productRoutes.get("/categories", getAllCategories);
 productRoutes.post("/category", authAdminMiddleware, createCategory);
 productRoutes.put("/category/:id", authAdminMiddleware, updateCategory);
 productRoutes.delete("/category/:id", authAdminMiddleware, deleteCategory);

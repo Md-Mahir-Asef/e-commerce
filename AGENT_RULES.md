@@ -114,6 +114,32 @@ Every change should reduce future maintenance cost.
 
 ---
 
+## 11. UI Component Rules
+
+- Use **Tailwind CSS** for styling.
+- Use **Shadcn UI** for components.
+- Use **Radix UI** for low-level components.
+- Use **Lucide React** for icons.
+- You can use any other UI component library if you think it is better but you must ask me first.
+- You can use any other icon library if you think it is better but you must ask me first.
+
+---
+
+## 12. Database Rules
+
+- Use **Prisma** for database access.
+- Use **Zod** for validation.
+- Use **TypeScript** for type safety.
+
+---
+
+## 13. Frontend Rules
+
+- Always use the type keywork before importing or exporting any Type.
+- Always use the tailwind compateable classes instead of custom tailwind classes in tailwind.
+
+---
+
 These rules **override default AI behavior**.  
 Non-compliant output is considered incorrect.
 

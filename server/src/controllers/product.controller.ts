@@ -168,6 +168,47 @@ export const getProductsByPage = async (req: Request, res: Response) => {
     }
 };
 
+export const getProductsByCategory = async (req: Request, res: Response) => {
+    try {
+        const { categoryId, page, limit } = req.params;
+        const pageNum = Number(page);
+        const limitNum = Number(limit);
+
+        if (!categoryId) {
+            return res.sendErr(
+                { message: "Category ID is required" },
+                "Category ID is required.",
+            );
+        }
+
+        const products = await prisma.product.findMany({
+            where: {
+                categories: {
+                    some: {
+                        id: parseInt(categoryId),
+                    },
+                },
+            },
+            skip: (pageNum - 1) * limitNum,
+            take: limitNum,
+            orderBy: {
+                id: "asc",
+            },
+            include: {
+                categories: true,
+            },
+        });
+
+        logger.info(
+            `Successfully got ${products.length} products for category ${categoryId}. page ${pageNum} limit ${limitNum}`,
+        );
+        res.sendApi(products, "Successfully got products by category");
+    } catch (err) {
+        logger.error(`Failed to get products by category. \n${err}`);
+        res.sendErr(err, "Failed to get products by category.");
+    }
+};
+
 export const getAllCategories = async (req: Request, res: Response) => {
     try {
         const categories = await prisma.category.findMany();

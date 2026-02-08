@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Health from "./pages/Health";
 import Profile from "./pages/Profile";
+import ProductList from "./pages/ProductList";
 import AdminLogin from "./pages/admin/AdminLogin";
 import RouteProtector from "./components/RouteProtector";
 import Dashboard from "./pages/admin/Dashboard";
@@ -13,7 +14,7 @@ import AdminLayout from "./components/admin/AdminLayout";
 import Users from "./pages/admin/Users";
 import CreateProduct from "./pages/admin/CreateProduct";
 import UpdateProduct from "./pages/admin/UpdateProduct";
-import ProductList from "./pages/admin/ProductList";
+import ProductListAdmin from "./pages/admin/ProductList";
 import Category from "./pages/admin/Category";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/home" element={<Landing />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/products" element={<ProductList />} />
                 <Route path="/health" element={<Health />} />
                 <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
@@ -42,7 +44,7 @@ function App() {
                     <Route path="users/list" element={<Users />}></Route>
                     <Route
                         path="products/list"
-                        element={<ProductList />}
+                        element={<ProductListAdmin />}
                     ></Route>
                     <Route
                         path="products/create"
