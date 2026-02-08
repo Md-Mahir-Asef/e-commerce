@@ -44,7 +44,7 @@ export const createProduct = async (req: Request, res: Response) => {
             },
         });
         logger.info(
-            `Created product: ${newProduct.name} (id: ${newProduct.id}).`,
+            `Created product: ${newProduct.name} (id: ${newProduct.id}).`
         );
         res.sendApi(newProduct, "Product created successfully.");
     } catch (err) {
@@ -81,7 +81,7 @@ export const updateProduct = async (req: Request, res: Response) => {
             },
         });
         logger.info(
-            `Updated product: ${updatedProduct.name} (id: ${updatedProduct.id}).`,
+            `Updated product: ${updatedProduct.name} (id: ${updatedProduct.id}).`
         );
         res.sendApi(updatedProduct, "Product updated successfully.");
     } catch (err) {
@@ -96,7 +96,7 @@ export const getProductById = async (req: Request, res: Response) => {
         if (!id) {
             return res.sendErr(
                 { message: "Product ID is required" },
-                "Product ID is required.",
+                "Product ID is required."
             );
         }
         const product = await prisma.product.findUnique({
@@ -109,11 +109,11 @@ export const getProductById = async (req: Request, res: Response) => {
             return res.sendErr(
                 { message: "Product not found" },
                 "Product not found.",
-                404,
+                404
             );
         }
         logger.info(
-            `Successfully got product: ${product.name} (id: ${product.id}).`,
+            `Successfully got product: ${product.name} (id: ${product.id}).`
         );
         res.sendApi(product, "Successfully got product by ID");
     } catch (err) {
@@ -128,14 +128,14 @@ export const deleteProduct = async (req: Request, res: Response) => {
         if (!id) {
             return res.sendErr(
                 { message: "Product ID is required" },
-                "Product ID is required.",
+                "Product ID is required."
             );
         }
         const deletedProduct = await prisma.product.delete({
             where: { id: parseInt(id) },
         });
         logger.info(
-            `Deleted product: ${deletedProduct.name} (id: ${deletedProduct.id}).`,
+            `Deleted product: ${deletedProduct.name} (id: ${deletedProduct.id}).`
         );
         res.sendApi(deletedProduct, "Product deleted successfully.");
     } catch (err) {
@@ -159,7 +159,7 @@ export const getProductsByPage = async (req: Request, res: Response) => {
             },
         });
         logger.info(
-            `Successfully got ${products.length} products. page ${page} limit ${limit}`,
+            `Successfully got ${products.length} products. page ${page} limit ${limit}`
         );
         res.sendApi(products, "Successfully got products by page");
     } catch (err) {
@@ -177,7 +177,7 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
         if (!categoryId) {
             return res.sendErr(
                 { message: "Category ID is required" },
-                "Category ID is required.",
+                "Category ID is required."
             );
         }
 
@@ -200,7 +200,7 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
         });
 
         logger.info(
-            `Successfully got ${products.length} products for category ${categoryId}. page ${pageNum} limit ${limitNum}`,
+            `Successfully got ${products.length} products for category ${categoryId}. page ${pageNum} limit ${limitNum}`
         );
         res.sendApi(products, "Successfully got products by category");
     } catch (err) {
@@ -228,7 +228,7 @@ export const createCategory = async (req: Request, res: Response) => {
             return res.sendErr(
                 null,
                 "Category name is required and must be a non-empty string.",
-                400,
+                400
             );
         }
 
@@ -241,7 +241,7 @@ export const createCategory = async (req: Request, res: Response) => {
             return res.sendErr(
                 null,
                 `Category "${name.trim()}" already exists.`,
-                409,
+                409
             );
         }
 
@@ -252,7 +252,7 @@ export const createCategory = async (req: Request, res: Response) => {
         });
 
         logger.info(
-            `Created new category: ${category.name} (id: ${category.id}).`,
+            `Created new category: ${category.name} (id: ${category.id}).`
         );
         res.sendApi(category, "Category created successfully.", 201);
     } catch (err) {
@@ -277,7 +277,7 @@ export const updateCategory = async (req: Request, res: Response) => {
             },
         });
         logger.info(
-            `Updated category name: ${updatedCategory.name} (id: ${updatedCategory.id}).`,
+            `Updated category name: ${updatedCategory.name} (id: ${updatedCategory.id}).`
         );
         res.sendApi(updatedCategory, "Product updated successfully.");
     } catch (err) {
@@ -293,7 +293,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
             return res.sendErr(
                 { message: "Category ID is required" },
                 "Category ID is required.",
-                400,
+                400
             );
         }
         const categoryId = parseInt(idParam, 10);
@@ -301,7 +301,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
             return res.sendErr(
                 { message: "Invalid category ID" },
                 "Invalid category ID.",
-                400,
+                400
             );
         }
 
@@ -312,7 +312,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
             return res.sendErr(
                 { message: "Category not found" },
                 "Category not found.",
-                404,
+                404
             );
         }
 
@@ -334,7 +334,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
                             disconnect: [{ id: categoryId }],
                         },
                     },
-                }),
+                })
             ),
             prisma.category.delete({
                 where: { id: categoryId },
@@ -342,11 +342,11 @@ export const deleteCategory = async (req: Request, res: Response) => {
         ]);
 
         logger.info(
-            `Deleted category: ${category.name} (id: ${categoryId}), removed from ${productsWithCategory.length} product(s).`,
+            `Deleted category: ${category.name} (id: ${categoryId}), removed from ${productsWithCategory.length} product(s).`
         );
         res.sendApi(
             { id: categoryId, name: category.name },
-            "Category deleted successfully.",
+            "Category deleted successfully."
         );
     } catch (err) {
         logger.error(`Failed to delete category. \n${err}`);

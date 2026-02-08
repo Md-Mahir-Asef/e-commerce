@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { RegistrationUserDataSchema } from "@/lib/zodSchemas";
 import { ZodError } from "zod/v4";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function Register() {
     const [showPass, setShowPass] = useState(false);
@@ -37,12 +38,12 @@ export default function Register() {
                         password: data.password,
                     },
                 },
-                { withCredentials: true }
+                { withCredentials: true },
             );
             console.log(response.data.data);
             navigate("/");
             toast(
-                `Sir ${response.data.data.user.user_name}, you are welcome to E-commerce.`
+                `Sir ${response.data.data.user.user_name}, you are welcome to E-commerce.`,
             );
         } catch (err) {
             if (err instanceof ZodError) {
@@ -172,6 +173,7 @@ export default function Register() {
                     </h4>
                 </div>
             </section>
+            <Footer />
         </>
     );
 }

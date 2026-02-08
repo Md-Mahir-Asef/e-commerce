@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function NotFound() {
     return (
@@ -17,11 +18,16 @@ export default function NotFound() {
                             className="cursor-pointer text-blue-700 hover:text-blue-900 hover:underline flex flex-row"
                         >
                             Go to Home{" "}
-                            <ArrowUpRight className="" width={30} height={30} />{" "}
+                            <ArrowUpRight
+                                className=""
+                                width={30}
+                                height={30}
+                            />{" "}
                         </Link>
                     </p>
                 </div>
             </section>
+            <Footer />
         </>
     );
 }

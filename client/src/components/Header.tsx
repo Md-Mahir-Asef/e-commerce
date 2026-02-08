@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <section className="px-10 py-5 border border-transparent border-b-gray-300 flex flex-row justify-between items-center relative">
+        <section className="px-10 py-5 border border-transparent border-b-gray-300 flex flex-row justify-between items-center relative bg-gray-50 dark:bg-gray-900">
             <Menu
                 className="hidden pl-2 [@media(max-width:980px)]:flex"
                 onClick={() => setIsOpen(!isOpen)}

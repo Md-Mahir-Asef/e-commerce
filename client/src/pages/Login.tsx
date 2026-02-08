@@ -9,6 +9,7 @@ import { config } from "../config/config";
 import { toast } from "sonner";
 import { ZodError } from "zod/v4";
 import type { MouseEvent } from "react";
+import Footer from "@/components/Footer";
 
 export default function Login() {
     const [show, setShow] = useState(false);
@@ -30,11 +31,11 @@ export default function Login() {
                         email: data.email,
                         password: data.password,
                     },
-                }
+                },
             );
             navigate("/");
             toast.success(
-                `Sir ${response.data.data.user_name}, you are welcome to E-commerce.`
+                `Sir ${response.data.data.user_name}, you are welcome to E-commerce.`,
             );
         } catch (err) {
             if (err instanceof ZodError) {
@@ -129,6 +130,7 @@ export default function Login() {
                     </h4>
                 </div>
             </section>
+            <Footer />
         </>
     );
 }

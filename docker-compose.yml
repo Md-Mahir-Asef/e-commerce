@@ -39,8 +39,8 @@ services:
             - PORT=${DOCKER_SERVER_PORT}
         ports:
             - "${DOCKER_SERVER_PORT}:${DOCKER_SERVER_PORT}"
-            - "5555:5555"
-            - "51212:51212"
+            - "51212:51212" # For Prisma Studio
+            - "3204:5555" # It was causing problems so I commented it out
         volumes:
             - ./server:/app:cached
             - /app/node_modules

@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { config } from "../config/config";
+import Footer from "@/components/Footer";
 
 export default function Health() {
     const [data, setData] = useState<{
@@ -21,12 +22,12 @@ export default function Health() {
                     `${config.VITE_SERVER_BASE_URL}/health`,
                     {
                         withCredentials: true,
-                    }
+                    },
                 );
                 console.log("Connected to Server.", response);
                 if (!response.data.data) {
                     throw new Error(
-                        "Can't receive health status from the server."
+                        "Can't receive health status from the server.",
                     );
                 }
                 setData(response.data.data);
@@ -70,6 +71,7 @@ export default function Health() {
                     </div>
                 )}
             </div>
+            <Footer />
         </>
     );
 }
