@@ -20,6 +20,30 @@ export const LogInUserDateSchema = z.object({
         .max(32, { message: "Password must not exceed 32 characters." }),
 });
 
+export const AddToCartSchema = z.object({
+    productId: z
+        .number()
+        .int()
+        .positive({ message: "Product ID must be a positive integer." }),
+    quantity: z
+        .number()
+        .int()
+        .min(1, { message: "Quantity must be at least 1." })
+        .max(10, { message: "Quantity cannot exceed 10." }),
+});
+
+export const UpdateCartSchema = z.object({
+    productId: z
+        .number()
+        .int()
+        .positive({ message: "Product ID must be a positive integer." }),
+    quantity: z
+        .number()
+        .int()
+        .min(1, { message: "Quantity must be at least 1." })
+        .max(10, { message: "Quantity cannot exceed 10." }),
+});
+
 export const ProductDataSchema = z
     .object({
         name: z.string().min(1, { message: "Product name is required." }),
@@ -41,7 +65,7 @@ export const ProductDataSchema = z
         {
             message: "Discount price must be less than or equal to price.",
             path: ["discountPrice"],
-        }
+        },
     );
 
 export const UpdateProductDataSchema = z
@@ -66,7 +90,7 @@ export const UpdateProductDataSchema = z
         {
             message: "Discount price must be less than or equal to price.",
             path: ["discountPrice"],
-        }
+        },
     );
 
 export const UpdateCategorySchema = z.object({

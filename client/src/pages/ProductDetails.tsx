@@ -18,10 +18,12 @@ import type { Product } from "@/hooks/useProductsByCategory";
 import TopHeader from "../components/TopHeader";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useCart } from "@/hooks/useCart";
 
 export default function ProductDetails() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const { addToCart } = useCart();
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -93,9 +95,14 @@ export default function ProductDetails() {
         }
     };
 
-    const handleAddToCart = () => {
-        // TODO: Implement cart functionality
-        console.log(`Adding ${quantity} of product ${id} to cart`);
+    const handleAddToCart = async () => {
+        if (!product) return;
+
+        try {
+            await addToCart(product.id, quantity);
+        } catch (err) {
+            // Error is handled in the hook
+        }
     };
 
     const handleToggleWishlist = () => {

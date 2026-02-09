@@ -15,6 +15,7 @@ model user {
   created_at DateTime @default(now())
   role       Roles    @default(user)
   id         Int      @id @unique @default(autoincrement())
+  cart       Cart?
 }
 
 model Product {
@@ -28,6 +29,7 @@ model Product {
   discountPrice Int?
   images        String[]
   categories    Category[] @relation("ProductCategories")
+  cartItems     CartItem[]
 }
 
 model Category {
@@ -40,4 +42,26 @@ enum Roles {
   user
   admin
   visitor
+}
+
+model Cart {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      user      @relation(fields: [userId], references: [id])
+  items     CartItem[]
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  cartId    Int
+  productId Int
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cart      Cart     @relation(fields: [cartId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+  
+  @@unique([cartId, productId])
 }

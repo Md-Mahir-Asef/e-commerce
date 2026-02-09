@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { config } from "@/config/config";
-import CategoryRow from "../components/CategoryRow";
+import CategoryRow from "./CategoryRow";
 
 interface Category {
     id: number;
