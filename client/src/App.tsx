@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound";
 import Health from "./pages/Health";
 import Profile from "./pages/Profile";
 import ProductList from "./pages/ProductList";
+import ProductDetails from "./pages/ProductDetails";
 import AdminLogin from "./pages/admin/AdminLogin";
 import RouteProtector from "./components/RouteProtector";
 import Dashboard from "./pages/admin/Dashboard";
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/products" element={<ProductList />} />
+                <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/health" element={<Health />} />
                 <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/admin/login" element={<AdminLogin />} />

@@ -20,7 +20,7 @@ import {
 const productRoutes = Router();
 
 productRoutes.get("/products", authUserMiddleware, getAllProducts);
-productRoutes.get("/product/:id", authUserMiddleware, getProductById);
+productRoutes.get("/product/:id", getProductById);
 productRoutes.post("/product", authAdminMiddleware, createProduct);
 productRoutes.put("/product/:id", authAdminMiddleware, updateProduct);
 productRoutes.delete("/product/:id", authAdminMiddleware, deleteProduct);
