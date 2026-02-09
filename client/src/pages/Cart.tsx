@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useCart } from "@/hooks/useCart";
+import { useOrders } from "@/hooks/useOrders";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft } from "lucide-react";
 import TopHeader from "../components/TopHeader";
 import Header from "../components/Header";
@@ -9,6 +10,7 @@ import { config } from "@/config/config";
 export default function Cart() {
     const { cart, loading, error, updateCartItem, removeFromCart, clearCart } =
         useCart();
+    const { placeOrder } = useOrders();
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat("en-US", {
@@ -47,6 +49,22 @@ export default function Cart() {
             } catch (err) {
                 // Error is handled in the hook
             }
+        }
+    };
+
+    const handlePlaceOrder = async () => {
+        if (!cart || cart.items.length === 0) {
+            return;
+        }
+
+        try {
+            const order = await placeOrder();
+            if (order) {
+                // Redirect to order details or orders page
+                window.location.href = `/orders/${order.id}`;
+            }
+        } catch (err) {
+            // Error is handled in the hook
         }
     };
 
@@ -316,8 +334,11 @@ export default function Cart() {
                                     </div>
                                 </div>
 
-                                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors">
-                                    Proceed to Checkout
+                                <button
+                                    onClick={handlePlaceOrder}
+                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                                >
+                                    Place Order
                                 </button>
 
                                 <Link

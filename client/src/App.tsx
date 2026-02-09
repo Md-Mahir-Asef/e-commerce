@@ -8,6 +8,8 @@ import Health from "./pages/Health";
 import Profile from "./pages/Profile";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
+import Orders from "./pages/Orders";
+import OrderDetails from "./pages/OrderDetails";
 import AdminLogin from "./pages/admin/AdminLogin";
 import RouteProtector from "./components/RouteProtector";
 import Dashboard from "./pages/admin/Dashboard";
@@ -17,6 +19,7 @@ import CreateProduct from "./pages/admin/CreateProduct";
 import UpdateProduct from "./pages/admin/UpdateProduct";
 import ProductListAdmin from "./pages/admin/ProductList";
 import Category from "./pages/admin/Category";
+import AdminOrders from "./pages/admin/AdminOrders";
 import Products from "./pages/Products";
 
 function App() {
@@ -30,6 +33,8 @@ function App() {
                 <Route path="/products" element={<Products />} />
                 <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/orders/:id" element={<OrderDetails />} />
                 <Route path="/health" element={<Health />} />
                 <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
@@ -62,6 +67,7 @@ function App() {
                         path="products/category"
                         element={<Category />}
                     ></Route>
+                    <Route path="orders" element={<AdminOrders />}></Route>
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>

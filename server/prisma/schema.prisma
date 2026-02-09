@@ -16,6 +16,7 @@ model user {
   role       Roles    @default(user)
   id         Int      @id @unique @default(autoincrement())
   cart       Cart?
+  orders     Order[]
 }
 
 model Product {
@@ -64,4 +65,36 @@ model CartItem {
   product   Product  @relation(fields: [productId], references: [id])
   
   @@unique([cartId, productId])
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id          Int         @id @unique @default(autoincrement())
+  userId      Int
+  totalAmount Int
+  status      OrderStatus @default(PENDING)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  user        user        @relation(fields: [userId], references: [id])
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id             Int     @id @unique @default(autoincrement())
+  orderId        Int
+  productId      Int
+  quantity       Int
+  priceAtOrder   Int
+  productSnapshot Json   // Store product details snapshot
+  createdAt      DateTime @default(now())
+  order          Order   @relation(fields: [orderId], references: [id])
+  
+  @@unique([orderId, productId])
 }

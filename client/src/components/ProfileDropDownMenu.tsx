@@ -27,6 +27,9 @@ export default function ProfileDropDownMenu({
                 <Link to={`/profile/${id}`}>
                     <DropdownMenuItem> My Profile </DropdownMenuItem>
                 </Link>
+                <Link to="/orders">
+                    <DropdownMenuItem> My Orders </DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem
                     className="text-red-700 hover:text-red-900"
                     onClick={logoutHandler}

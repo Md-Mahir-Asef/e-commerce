@@ -96,3 +96,12 @@ export const UpdateProductDataSchema = z
 export const UpdateCategorySchema = z.object({
     new_name: z.string().min(1, { message: "New Category name is required." }),
 });
+
+export const UpdateOrderStatusSchema = z.object({
+    status: z.enum(
+        ["PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"],
+        {
+            message: "Invalid order status",
+        },
+    ),
+});
