@@ -16,3 +16,14 @@ export const Roles = {
 } as const
 
 export type Roles = (typeof Roles)[keyof typeof Roles]
+
+
+export const OrderStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  SHIPPED: 'SHIPPED',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]

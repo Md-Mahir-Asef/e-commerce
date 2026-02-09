@@ -25,7 +25,7 @@ export const getCart = async (req: AuthenticatedRequest, res: Response) => {
         });
 
         if (!cart) {
-            cart = await (prisma as any).cart.create({
+            cart = await prisma.cart.create({
                 data: { userId },
                 include: {
                     items: {

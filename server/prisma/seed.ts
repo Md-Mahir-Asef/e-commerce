@@ -28,9 +28,17 @@ const categories = [
 const userSeed = async () => {
     try {
         logger.info("Seeding users to the Database...");
+
+        // Delete in correct order to respect foreign key constraints
+        await (prisma as any).cartItem.deleteMany();
+        await (prisma as any).cart.deleteMany();
+        await (prisma as any).orderItem.deleteMany();
+        await (prisma as any).order.deleteMany();
         await prisma.user.deleteMany();
+
         await prisma.user.create({
             data: {
+                id: 307,
                 user_name: "Md. Mahir Asef",
                 email: "mahir@asef.ecom",
                 password: hasher("MahirCan'tPass320"),
@@ -138,6 +146,12 @@ const getRandomImages = (imageFiles: string[], count: number = 3): string[] => {
 const productSeed = async () => {
     try {
         logger.info("Seeding products to the Database...");
+
+        // Delete in correct order to respect foreign key constraints
+        await (prisma as any).cartItem.deleteMany();
+        await (prisma as any).cart.deleteMany();
+        await (prisma as any).orderItem.deleteMany();
+        await (prisma as any).order.deleteMany();
         await prisma.product.deleteMany();
 
         // Get available image files
