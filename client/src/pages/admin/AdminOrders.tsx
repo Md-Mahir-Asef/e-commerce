@@ -11,11 +11,6 @@ export default function AdminOrders() {
         setIsViewModalOpen(true);
     };
 
-    const handleEditOrder = (order: Order) => {
-        // For now, just view the order. Edit functionality can be added later
-        handleViewOrder(order);
-    };
-
     const closeModal = () => {
         setIsViewModalOpen(false);
         setSelectedOrder(null);
@@ -37,10 +32,7 @@ export default function AdminOrders() {
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                         All Orders
                     </h2>
-                    <OrderTable
-                        onViewOrder={handleViewOrder}
-                        onEditOrder={handleEditOrder}
-                    />
+                    <OrderTable onViewOrder={handleViewOrder} />
                 </div>
             </div>
 

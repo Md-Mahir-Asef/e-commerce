@@ -187,7 +187,7 @@ export const getAllOrders = async (
             })),
         });
 
-        logger.info(`ALL_ORDERS_RETRIEVED by ${userRole}`);
+        logger.info(`ALL ${orders.length} ORDERS RETRIEVED by ${userRole}`);
     } catch (err) {
         logger.error(`ALL_ORDERS_ERROR: ${err}`);
         res.sendErr({ err }, "Failed to retrieve orders", 500);

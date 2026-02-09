@@ -1,17 +1,13 @@
 import { useState } from "react";
 import { useAllOrders } from "@/hooks/useOrders";
-import { Eye, Edit } from "lucide-react";
+import { Eye } from "lucide-react";
 import type { Order, OrderStatus } from "@/types/order";
 
 interface OrderTableProps {
-    onEditOrder?: (order: Order) => void;
     onViewOrder?: (order: Order) => void;
 }
 
-export default function OrderTable({
-    onEditOrder,
-    onViewOrder,
-}: OrderTableProps) {
+export default function OrderTable({ onViewOrder }: OrderTableProps) {
     const { orders, loading, error, updateOrderStatus } = useAllOrders();
     const [updatingOrderId, setUpdatingOrderId] = useState<number | null>(null);
 
@@ -180,22 +176,13 @@ export default function OrderTable({
                                 </select>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <div className="flex items-center gap-2">
-                                    <button
-                                        onClick={() => onViewOrder?.(order)}
-                                        className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
-                                        title="View Order"
-                                    >
-                                        <Eye size={16} />
-                                    </button>
-                                    <button
-                                        onClick={() => onEditOrder?.(order)}
-                                        className="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300"
-                                        title="Edit Order"
-                                    >
-                                        <Edit size={16} />
-                                    </button>
-                                </div>
+                                <button
+                                    onClick={() => onViewOrder?.(order)}
+                                    className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+                                    title="View Order"
+                                >
+                                    <Eye size={20} />
+                                </button>
                             </td>
                         </tr>
                     ))}
