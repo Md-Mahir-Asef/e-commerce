@@ -55,16 +55,16 @@ export default function CategoryRow({
 
     if (loading && products.length === 0) {
         return (
-            <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+            <div className="mb-6 sm:mb-8">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
                     {categoryName}
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4">
                     {[...Array(4)].map((_, index) => (
                         <div key={index} className="animate-pulse">
                             <div className="bg-gray-200 dark:bg-gray-700 rounded-lg aspect-square mb-2"></div>
-                            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-                            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                            <div className="h-3 sm:h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+                            <div className="h-3 sm:h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
                         </div>
                     ))}
                 </div>
@@ -73,8 +73,8 @@ export default function CategoryRow({
     }
 
     return (
-        <div className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+        <div className="mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
                 {categoryName}
             </h2>
 
@@ -83,11 +83,11 @@ export default function CategoryRow({
                 {showLeftArrow && (
                     <button
                         onClick={scrollLeft}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 rounded-full shadow-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 rounded-full shadow-lg p-1.5 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                         aria-label="Scroll left"
                     >
                         <ChevronLeft
-                            size={20}
+                            size={16}
                             className="text-gray-600 dark:text-gray-400"
                         />
                     </button>
@@ -97,11 +97,11 @@ export default function CategoryRow({
                 {showRightArrow && (
                     <button
                         onClick={scrollRight}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 rounded-full shadow-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 rounded-full shadow-lg p-1.5 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                         aria-label="Scroll right"
                     >
                         <ChevronRight
-                            size={20}
+                            size={16}
                             className="text-gray-600 dark:text-gray-400"
                         />
                     </button>
@@ -111,13 +111,13 @@ export default function CategoryRow({
                 <div className="relative">
                     <div
                         ref={scrollContainerRef}
-                        className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth"
+                        className="flex gap-2 sm:gap-3 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth"
                     >
-                        <div className="flex gap-4">
+                        <div className="flex gap-2 sm:gap-3 md:gap-4">
                             {products.map((product) => (
                                 <div
                                     key={product.id}
-                                    className="shrink-0 w-[200px] md:w-[220px] lg:w-60 xl:w-[260px]"
+                                    className="shrink-0 w-32 sm:w-36 md:w-40 lg:w-44 xl:w-52 2xl:w-60"
                                 >
                                     <ProductCard product={product} />
                                 </div>
@@ -127,21 +127,21 @@ export default function CategoryRow({
                                 <button
                                     onClick={loadMore}
                                     disabled={loading}
-                                    className="shrink-0 w-[200px] md:w-[220px] lg:w-60 xl:w-[260px] bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full flex flex-col items-center justify-center group min-h-[250px] border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500"
+                                    className="shrink-0 w-32 sm:w-36 md:w-40 lg:w-44 xl:w-52 2xl:w-60 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full flex flex-col items-center justify-center group min-h-[200px] sm:min-h-[220px] md:min-h-60 lg:min-h-[250px] border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500"
                                 >
                                     {loading ? (
                                         <div className="flex flex-col items-center gap-2">
-                                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                                            <span className="text-sm text-gray-600 dark:text-gray-400">
+                                            <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-blue-600"></div>
+                                            <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                                                 Loading...
                                             </span>
                                         </div>
                                     ) : (
                                         <div className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                            <span className="text-sm font-medium">
+                                            <span className="text-xs sm:text-sm font-medium">
                                                 Load More
                                             </span>
-                                            <ChevronRight size={20} />
+                                            <ChevronRight size={16} />
                                         </div>
                                     )}
                                 </button>

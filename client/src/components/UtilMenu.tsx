@@ -8,24 +8,24 @@ export default function UtilMenu() {
     const cartItemCount = useCartItemCount();
 
     return (
-        <div className="flex flex-row pt-2 shrink-0">
-            <div className="flex flex-row [@media(max-width:980px)]:hidden">
+        <div className="flex flex-row pt-1 sm:pt-2 shrink-0">
+            <div className="hidden md:flex flex-row">
                 <ThemeToggle />
                 {/* Search Bar on Mobile (Search Bar on Desktop is in /src/components/SearchBar.tsx) */}
-                <div className="flex flex-row p-3 [@media(min-width:1370px)]:hidden">
+                <div className="flex flex-row p-2 sm:p-3 lg:hidden">
                     <Link to={"/search"}>
-                        <Search />
+                        <Search size={16} />
                     </Link>
-                    <p>Search</p>
+                    <p className="ml-1 sm:ml-2 text-xs sm:text-sm">Search</p>
                 </div>
                 <Link
                     to="/cart"
-                    className="flex flex-row p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors relative"
+                    className="flex flex-row p-3 sm:p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors relative pt-2"
                 >
                     <ShoppingCart />
-                    <p>Cart</p>
+                    Cart
                     {cartItemCount > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center font-medium">
                             {cartItemCount > 99 ? "99+" : cartItemCount}
                         </span>
                     )}

@@ -33,9 +33,7 @@ export default function SearchBar() {
         <>
             {/*Search Bar on Desktop (Search Bar on Mobile is in /src/components/UtilMenu.tsx)*/}
             <form onSubmit={handleSearch}>
-                <div
-                    className={`border-2 border-[#BCE3C9] rounded-sm p-2 px-3 ml-3 flex flex-1 flex-row dark:bg-gray-900 [@media(max-width:1370px)]:hidden`}
-                >
+                <div className="border-2 border-[#BCE3C9] rounded-sm p-2 px-2 sm:p-2 sm:px-3 ml-1 sm:ml-3 flex-1 flex-row dark:bg-gray-900 hidden lg:flex lg:flex-1">
                     <CategoryDropDownMenu
                         categories={categories}
                         width={175}
@@ -49,14 +47,14 @@ export default function SearchBar() {
                             id="search"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="px-10 pr-10 text-lg outline-none w-full flex-1 dark:bg-gray-900"
+                            className="px-3 sm:px-6 sm:pr-10 text-sm sm:text-lg outline-none w-full flex-1 dark:bg-gray-900"
                             placeholder="Search for items..."
                         />
-                        <button type="submit" className="pt-2">
+                        <button type="submit" className="p-1 sm:p-2">
                             <Search
-                                className="opacity-75 pt-2 text-lg my-auto mb-3 cursor-pointer hover:opacity-100 transition-opacity"
-                                width={30}
-                                height={30}
+                                className="opacity-75 text-sm sm:text-lg cursor-pointer hover:opacity-100 transition-opacity"
+                                width={20}
+                                height={20}
                             />
                         </button>
                     </div>

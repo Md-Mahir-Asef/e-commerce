@@ -139,12 +139,12 @@ export default function Search() {
     };
 
     const renderLoadingState = () => (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             {Array.from({ length: limit }).map((_, index) => (
-                <div key={index} className="space-y-4">
+                <div key={index} className="space-y-3 sm:space-y-4">
                     <Skeleton className="aspect-square rounded-lg" />
-                    <Skeleton className="h-4 w-3/4" />
-                    <Skeleton className="h-4 w-1/2" />
+                    <Skeleton className="h-3 sm:h-4 w-3/4" />
+                    <Skeleton className="h-3 sm:h-4 w-1/2" />
                 </div>
             ))}
         </div>
@@ -221,15 +221,18 @@ export default function Search() {
     return (
         <>
             <Header />
-            <div className="container mx-auto px-4 py-8 w-full dark:bg-gray-900">
+            <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 w-full dark:bg-gray-900">
                 {/* Search Header */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-foreground mb-6">
+                <div className="mb-6 sm:mb-8">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 sm:mb-6">
                         Search Products
                     </h1>
 
                     {/* Search Form */}
-                    <form onSubmit={handleSearch} className="flex gap-4 mb-6">
+                    <form
+                        onSubmit={handleSearch}
+                        className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-6"
+                    >
                         <CategoryDropDownMenu
                             categories={categories}
                             width={175}
@@ -241,17 +244,21 @@ export default function Search() {
                                 placeholder="Search for products..."
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
-                                className="pl-10"
+                                className="pl-10 text-sm sm:text-base"
                             />
                             <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                         </div>
-                        <Button type="submit" disabled={loading}>
+                        <Button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full sm:w-auto text-sm sm:text-base"
+                        >
                             Search
                         </Button>
                     </form>
 
                     {/* Filters */}
-                    <div className="flex flex-wrap gap-4 items-center">
+                    <div className="flex flex-col sm:flex-wrap gap-3 sm:gap-4 items-start sm:items-center">
                         <div className="flex items-center gap-2">
                             <label
                                 htmlFor="sort"
@@ -264,7 +271,7 @@ export default function Search() {
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        className="w-32 justify-start"
+                                        className="w-32 justify-start text-sm sm:text-base"
                                     >
                                         {sort === "newest"
                                             ? "Newest"
@@ -305,7 +312,7 @@ export default function Search() {
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        className="w-20 justify-start"
+                                        className="w-16 sm:w-20 justify-start text-sm sm:text-base"
                                     >
                                         {limit}
                                     </Button>
@@ -362,7 +369,7 @@ export default function Search() {
 
                     {!loading && !error && products.length > 0 && (
                         <>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6 w-full">
                                 {products.map((product) => (
                                     <ProductCard
                                         key={product.id}

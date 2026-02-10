@@ -54,30 +54,32 @@ export default function ProductCard({ product }: ProductCardProps) {
                         />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
-                            <span className="text-sm">No Image</span>
+                            <span className="text-xs sm:text-sm">No Image</span>
                         </div>
                     )}
                 </div>
 
                 {/* Product Info */}
-                <div className="p-4 flex-1 flex flex-col">
-                    <h3 className="font-medium text-gray-900 dark:text-white text-sm mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors overflow-hidden">
+                <div className="p-2 sm:p-3 md:p-4 flex-1 flex flex-col">
+                    <h3 className="font-medium text-gray-900 dark:text-white text-xs sm:text-sm mb-1 sm:mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors overflow-hidden">
                         {product.name}
                     </h3>
 
                     {/* Rating */}
-                    <div className="mb-2">{renderStars(product.rating)}</div>
+                    <div className="mb-1 sm:mb-2">
+                        {renderStars(product.rating)}
+                    </div>
 
                     {/* Price */}
-                    <div className="flex items-center gap-2">
-                        <span className="text-lg font-bold text-gray-900 dark:text-white">
+                    <div className="flex items-center gap-1 sm:gap-2">
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white">
                             {formatPrice(
                                 product.discountPrice || product.price,
                             )}
                         </span>
                         {product.discountPrice &&
                             product.discountPrice !== product.price && (
-                                <span className="text-sm text-gray-500 line-through">
+                                <span className="text-xs sm:text-sm text-gray-500 line-through">
                                     {formatPrice(product.price)}
                                 </span>
                             )}
