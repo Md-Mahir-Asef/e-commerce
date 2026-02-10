@@ -111,7 +111,7 @@ export default function CategoryRow({
                 <div className="relative">
                     <div
                         ref={scrollContainerRef}
-                        className="flex gap-2 sm:gap-3 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth"
+                        className="w-full flex gap-2 sm:gap-3 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth"
                     >
                         <div className="flex gap-2 sm:gap-3 md:gap-4">
                             {products.map((product) => (
