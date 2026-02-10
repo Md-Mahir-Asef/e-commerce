@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-    Home,
     Users,
     ShoppingCart,
-    Settings,
     LogOut,
     ChevronLeft,
     ChevronRight,
@@ -107,29 +105,10 @@ export default function DashboardSideBar() {
 
     const menuItems: MenuItem[] = [
         {
-            id: 0,
-            label: "Dashboard",
-            icon: <Home size={18} />,
-            path: "/admin/dashboard",
-        },
-        {
             id: 1,
             label: "Users",
             icon: <Users size={18} />,
-            subItems: [
-                {
-                    id: 2,
-                    label: "List Users",
-                    path: "/admin/users/list",
-                    icon: <List size={16} />,
-                },
-                {
-                    id: 3,
-                    label: "Create User",
-                    path: "/admin/users/create",
-                    icon: <Plus size={16} />,
-                },
-            ],
+            path: "/admin/users/list",
         },
         {
             id: 4,
@@ -161,12 +140,6 @@ export default function DashboardSideBar() {
             label: "Orders",
             icon: <ShoppingCart size={18} />,
             path: "/admin/orders",
-        },
-        {
-            id: 6,
-            label: "Settings",
-            icon: <Settings size={18} />,
-            path: "/admin/settings",
         },
         {
             id: 7,

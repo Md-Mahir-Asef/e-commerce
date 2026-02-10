@@ -35,7 +35,7 @@ export default function AdminLogin() {
                     withCredentials: true,
                 },
             );
-            navigate("/admin/dashboard");
+            navigate("/admin/users/list");
             toast.success(
                 `Sir ${response.data.data.user_name}, you are welcome to E-commerce. As an admin`,
             );
