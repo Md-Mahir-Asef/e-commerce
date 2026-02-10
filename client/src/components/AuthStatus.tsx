@@ -59,7 +59,6 @@ export default function AuthStatus() {
             {authenticated ? (
                 <ProfileDropDownMenu
                     name={name}
-                    id={id}
                     logoutHandler={logOutHandler}
                 />
             ) : (

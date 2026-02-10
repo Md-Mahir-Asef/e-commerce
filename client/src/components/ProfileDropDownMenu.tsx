@@ -9,11 +9,9 @@ import { Link } from "react-router-dom";
 
 export default function ProfileDropDownMenu({
     name,
-    id,
     logoutHandler,
 }: {
     name: string;
-    id: string;
     logoutHandler: () => void;
 }) {
     return (
@@ -24,9 +22,6 @@ export default function ProfileDropDownMenu({
                 </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
-                <Link to={`/profile/${id}`}>
-                    <DropdownMenuItem> My Profile </DropdownMenuItem>
-                </Link>
                 <Link to="/orders">
                     <DropdownMenuItem> My Orders </DropdownMenuItem>
                 </Link>
