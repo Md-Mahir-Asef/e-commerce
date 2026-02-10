@@ -31,6 +31,8 @@ model Product {
   images        String[]
   categories    Category[] @relation("ProductCategories")
   cartItems     CartItem[]
+
+  @@index([name])
 }
 
 model Category {

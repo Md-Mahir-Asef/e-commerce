@@ -238,6 +238,87 @@ Admin / Visitor can view all orders.
 
 - Sorted by newest first
 
+### 4.6 Product Search (User-Facing)
+
+#### **Objective:**
+
+Enable users to search products efficiently using a dedicated search page, demonstrating real-world query handling, pagination, and performance-aware backend design.
+
+#### **Scope (MVP – Non-Negotiable):**
+
+**User Experience:**
+
+Dedicated search page: /search
+
+**URL-driven search:**
+
+Example: /search?q=iphone&page=1
+
+**Clear UI states:**
+
+- Loading
+- Empty input
+- No results
+- Results list
+
+#### **Backend Design:**
+
+**API Endpoint:**
+
+```
+GET /api/products/search
+```
+
+**Query Parameters:**
+
+| Param | Type   | Required | Description                   |
+| ----- | ------ | -------- | ----------------------------- |
+| q     | string | optional | Search keyword (product name) |
+| page  | number | optional | Pagination page (default: 1)  |
+| limit | number | optional | Items per page (default: 10)  |
+| sort  | string | optional | price_asc, price_desc, newest |
+
+**Behavior:**
+
+- Case-insensitive partial match on product name
+- Paginated response
+- Deterministic sorting
+- Graceful handling of empty or missing q
+
+**Performance:**
+
+- Add database index on searchable field
+- Avoid full table scans
+- Use contains with mode: insensitive (Prisma)
+
+#### **Frontend Design**
+
+**Page:** /search
+**Components:**
+
+- Search input (controlled, debounced optional)
+- Results list (reuse ProductCard if available)
+- Pagination controls
+
+**State Management:**
+
+- Query synced with URL
+- Fetch triggered on query change
+- Abort stale requests
+
+#### **Error & Edge Cases:**
+
+- Empty q → show “Start typing to search”
+- No results → “No products found”
+- API failure → user-friendly error message
+
+#### **Explicitly Out of Scope:**
+
+- No Advanced filters (brand, rating, category)
+- No Full-text search engines (Meilisearch, Elastic)
+- No Autocomplete / suggestions
+- No AI / semantic search
+
 ---
 
 ## 5. Non-Goals (Explicitly Out of Scope)
