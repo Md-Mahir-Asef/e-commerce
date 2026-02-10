@@ -1,4 +1,4 @@
-import { Heart, ShoppingCart, Search } from "lucide-react";
+import { ShoppingCart, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import AuthStatus from "./AuthStatus";
 import ThemeToggle from "./ThemeToggle";
@@ -17,9 +17,6 @@ export default function UtilMenu() {
                         <Search />
                     </Link>
                     <p>Search</p>
-                </div>
-                <div className="flex flex-row p-3">
-                    <Heart /> <p>Favorites</p>
                 </div>
                 <Link
                     to="/cart"

@@ -192,7 +192,7 @@ export default function Search() {
     return (
         <>
             <Header />
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-8 w-full dark:bg-gray-900">
                 {/* Search Header */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-foreground mb-6">
@@ -307,7 +307,7 @@ export default function Search() {
                 </div>
 
                 {/* Results */}
-                <div>
+                <div className="w-full">
                     {loading && renderLoadingState()}
 
                     {!loading && error && renderErrorState()}
@@ -319,7 +319,7 @@ export default function Search() {
 
                     {!loading && !error && products.length > 0 && (
                         <>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
                                 {products.map((product) => (
                                     <ProductCard
                                         key={product.id}
