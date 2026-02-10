@@ -43,11 +43,13 @@ export default function ProductTable({
                         className={
                             star <= rating
                                 ? "fill-yellow-400 text-yellow-400"
-                                : "text-gray-400"
+                                : "text-muted-foreground"
                         }
                     />
                 ))}
-                <span className="text-xs text-gray-400 ml-1">({rating})</span>
+                <span className="text-xs text-muted-foreground ml-1">
+                    ({rating})
+                </span>
             </div>
         );
     };
@@ -61,20 +63,20 @@ export default function ProductTable({
         <div className="overflow-x-auto">
             <table className="w-full text-sm">
                 <thead>
-                    <tr className="border-b border-gray-700">
-                        <th className="text-left py-3 px-4 font-medium text-gray-300">
+                    <tr className="border-b">
+                        <th className="text-left py-3 px-4 font-medium text-muted-foreground">
                             Product
                         </th>
-                        <th className="text-left py-3 px-4 font-medium text-gray-300">
+                        <th className="text-left py-3 px-4 font-medium text-muted-foreground">
                             Price
                         </th>
-                        <th className="text-left py-3 px-4 font-medium text-gray-300">
+                        <th className="text-left py-3 px-4 font-medium text-muted-foreground">
                             Rating
                         </th>
-                        <th className="text-left py-3 px-4 font-medium text-gray-300">
+                        <th className="text-left py-3 px-4 font-medium text-muted-foreground">
                             Categories
                         </th>
-                        <th className="text-left py-3 px-4 font-medium text-gray-300">
+                        <th className="text-left py-3 px-4 font-medium text-muted-foreground">
                             Actions
                         </th>
                     </tr>
@@ -83,15 +85,15 @@ export default function ProductTable({
                     {products.map((product) => (
                         <tr
                             key={product.id}
-                            className={`border-b border-gray-800 transition-colors ${
-                                hoveredRow === product.id ? "bg-gray-700" : ""
+                            className={`border-b transition-colors ${
+                                hoveredRow === product.id ? "bg-accent" : ""
                             }`}
                             onMouseEnter={() => setHoveredRow(product.id)}
                             onMouseLeave={() => setHoveredRow(null)}
                         >
                             <td className="py-3 px-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 bg-gray-600 rounded-md overflow-hidden shrink-0">
+                                    <div className="w-12 h-12 bg-muted rounded-md overflow-hidden shrink-0">
                                         {product.images.length > 0 ? (
                                             <img
                                                 src={getImageUrl(
@@ -105,7 +107,7 @@ export default function ProductTable({
                                                 }}
                                             />
                                         ) : (
-                                            <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                            <div className="w-full h-full flex items-center justify-center text-muted-foreground">
                                                 <span className="text-xs">
                                                     No Image
                                                 </span>
@@ -114,15 +116,15 @@ export default function ProductTable({
                                     </div>
                                     <div className="min-w-0">
                                         <div className="flex items-center gap-2">
-                                            <h3 className="font-medium text-white truncate">
+                                            <h3 className="font-medium text-foreground truncate">
                                                 {product.name}
                                             </h3>
-                                            <span className="text-xs text-gray-500 opacity-60">
+                                            <span className="text-xs text-muted-foreground opacity-60">
                                                 [#{product.id}]
                                             </span>
                                         </div>
                                         {product.description && (
-                                            <p className="text-xs text-gray-400 truncate">
+                                            <p className="text-xs text-muted-foreground truncate">
                                                 {product.description}
                                             </p>
                                         )}
@@ -131,7 +133,7 @@ export default function ProductTable({
                             </td>
                             <td className="py-3 px-4">
                                 <div>
-                                    <span className="text-white font-medium">
+                                    <span className="text-foreground font-medium">
                                         {formatPrice(
                                             product.discountPrice ||
                                                 product.price,
@@ -140,7 +142,7 @@ export default function ProductTable({
                                     {product.discountPrice &&
                                         product.discountPrice !==
                                             product.price && (
-                                            <span className="text-xs text-gray-400 line-through ml-2">
+                                            <span className="text-xs text-muted-foreground line-through ml-2">
                                                 {formatPrice(product.price)}
                                             </span>
                                         )}
@@ -165,14 +167,14 @@ export default function ProductTable({
                                 <div className="flex items-center gap-2">
                                     <button
                                         onClick={() => onEdit(product)}
-                                        className="p-1 text-blue-400 hover:text-blue-300 transition-colors"
+                                        className="p-1 text-primary hover:text-primary/80 transition-colors"
                                         title="Edit product"
                                     >
                                         <Edit size={16} />
                                     </button>
                                     <button
                                         onClick={() => onDelete(product.id)}
-                                        className="p-1 text-red-400 hover:text-red-300 transition-colors"
+                                        className="p-1 text-destructive hover:text-destructive/80 transition-colors"
                                         title="Delete product"
                                     >
                                         <Trash2 size={16} />
@@ -185,7 +187,7 @@ export default function ProductTable({
             </table>
 
             {products.length === 0 && (
-                <div className="text-center py-8 text-gray-400">
+                <div className="text-center py-8 text-muted-foreground">
                     <p>No products found.</p>
                 </div>
             )}

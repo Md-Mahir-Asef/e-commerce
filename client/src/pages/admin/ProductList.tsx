@@ -39,9 +39,9 @@ export default function ProductList() {
 
     if (loading) {
         return (
-            <div className="p-4 bg-gray-900 min-h-screen text-white">
+            <div className="p-4 bg-background min-h-screen">
                 <div className="flex items-center justify-center h-64">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
                 </div>
             </div>
         );
@@ -49,12 +49,12 @@ export default function ProductList() {
 
     if (error) {
         return (
-            <div className="p-4 bg-gray-900 min-h-screen text-white">
+            <div className="p-4 bg-background min-h-screen">
                 <div className="text-center py-8">
-                    <p className="text-red-400 mb-4">{error}</p>
+                    <p className="text-destructive mb-4">{error}</p>
                     <button
                         onClick={refetch}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                        className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
                     >
                         Try Again
                     </button>
@@ -64,24 +64,26 @@ export default function ProductList() {
     }
 
     return (
-        <div className="p-4 bg-gray-900 min-h-screen text-white">
+        <div className="p-4 bg-background min-h-screen">
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-3xl font-bold">Product List</h1>
+                <h1 className="text-3xl font-bold text-foreground">
+                    Product List
+                </h1>
                 <button
                     onClick={handleAddProduct}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                    className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2 px-4 rounded-md transition-colors"
                 >
                     <Plus size={20} />
                     Add Product
                 </button>
             </div>
 
-            <div className="bg-gray-800 rounded-lg shadow-md">
+            <div className="bg-card rounded-lg shadow-md border">
                 {/* Search Bar */}
-                <div className="p-4 border-b border-gray-700">
+                <div className="p-4 border-b">
                     <div className="relative max-w-md">
                         <Search
-                            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
                             size={20}
                         />
                         <input
@@ -89,7 +91,7 @@ export default function ProductList() {
                             placeholder="Search products..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full pl-10 pr-4 py-2 bg-secondary border rounded-md text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                         />
                     </div>
                 </div>
