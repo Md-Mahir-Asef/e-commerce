@@ -10,7 +10,9 @@ export default function SearchBar() {
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         if (searchQuery.trim()) {
-            navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+            navigate(
+                `/search?q=${encodeURIComponent(searchQuery.trim().toLowerCase())}`,
+            );
         }
     };
 

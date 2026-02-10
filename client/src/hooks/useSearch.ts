@@ -98,7 +98,7 @@ export function useSearch(): UseSearchReturn {
                     `${config.VITE_SERVER_BASE_URL}/product/products/search`,
                     {
                         params: {
-                            q: finalQuery.trim() || undefined,
+                            q: finalQuery.trim().toLowerCase() || undefined,
                             page: finalPage,
                             limit: finalLimit,
                             sort: finalSort,

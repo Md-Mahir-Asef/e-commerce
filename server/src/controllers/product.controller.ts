@@ -385,8 +385,9 @@ export const searchProducts = async (req: Request, res: Response) => {
         // Build where clause for search
         const whereClause: any = {};
         if (query && typeof query === "string" && query.trim()) {
+            const normalizedQuery = query.trim().toLowerCase();
             whereClause.name = {
-                contains: query.trim(),
+                contains: normalizedQuery,
                 mode: "insensitive",
             };
         }
