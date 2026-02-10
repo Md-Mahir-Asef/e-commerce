@@ -2,11 +2,13 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
+import { useCategories } from "@/hooks/useCategories";
 
 export default function SearchBar() {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All Categories");
     const navigate = useNavigate();
+    const { categories } = useCategories();
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -35,17 +37,7 @@ export default function SearchBar() {
                     className={`border-2 border-[#BCE3C9] rounded-sm p-2 px-3 ml-3 flex flex-1 flex-row dark:bg-gray-900 [@media(max-width:1370px)]:hidden`}
                 >
                     <CategoryDropDownMenu
-                        categories={[
-                            "All Categories",
-                            "Grocery",
-                            "Dairy",
-                            "Clothing",
-                            "Toys",
-                            "Pets",
-                            "Electronics",
-                            "Gadgets",
-                            "Trending",
-                        ]}
+                        categories={categories}
                         width={175}
                         onCategoryChange={handleCategoryChange}
                     />

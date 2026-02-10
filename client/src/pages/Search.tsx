@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Search as SearchIcon } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 import { useSearch } from "@/hooks/useSearch";
+import { useCategories } from "@/hooks/useCategories";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -34,6 +35,7 @@ export default function Search() {
         setSort,
     } = useSearch();
 
+    const { categories } = useCategories();
     const [inputValue, setInputValue] = useState(query);
 
     // Update input when URL query changes
@@ -229,17 +231,7 @@ export default function Search() {
                     {/* Search Form */}
                     <form onSubmit={handleSearch} className="flex gap-4 mb-6">
                         <CategoryDropDownMenu
-                            categories={[
-                                "All Categories",
-                                "Grocery",
-                                "Dairy",
-                                "Clothing",
-                                "Toys",
-                                "Pets",
-                                "Electronics",
-                                "Gadgets",
-                                "Trending",
-                            ]}
+                            categories={categories}
                             width={175}
                             onCategoryChange={handleCategoryChange}
                         />
