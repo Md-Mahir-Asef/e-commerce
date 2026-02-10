@@ -15,8 +15,8 @@ export default function UtilMenu() {
                 <div className="flex flex-row p-2 sm:p-3 lg:hidden">
                     <Link to={"/search"}>
                         <Search />
+                        Search
                     </Link>
-                    Search
                 </div>
                 <Link
                     to="/cart"
