@@ -13,6 +13,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import CategoryDropDownMenu from "@/components/CategoryDropDownMenu";
 
 export default function Search() {
     const {
@@ -20,12 +21,14 @@ export default function Search() {
         loading,
         error,
         query,
+        category,
         page,
         limit,
         sort,
         totalPages,
         totalItems,
         setQuery,
+        setCategory,
         setPage,
         setLimit,
         setSort,
@@ -41,6 +44,10 @@ export default function Search() {
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         setQuery(inputValue);
+    };
+
+    const handleCategoryChange = (newCategory: string) => {
+        setCategory(newCategory);
     };
 
     const handlePageChange = (newPage: number) => {
@@ -67,7 +74,6 @@ export default function Search() {
 
         return (
             <>
-                <Header />
                 <div className="flex items-center justify-center gap-2 mt-8">
                     <Button
                         variant="outline"
@@ -126,7 +132,6 @@ export default function Search() {
                         Next
                     </Button>
                 </div>
-                <Footer />
             </>
         );
     };
@@ -144,15 +149,34 @@ export default function Search() {
     );
 
     const renderEmptyState = () => {
-        if (!query.trim()) {
+        if (!query.trim() && category === "All Categories") {
             return (
                 <div className="text-center py-12">
                     <SearchIcon className="mx-auto h-12 w-12 text-gray-400 mb-4" />
                     <h2 className="text-2xl font-semibold text-foreground mb-2">
-                        Start typing to search
+                        All Products
                     </h2>
                     <p className="text-muted-foreground">
-                        Enter a product name to find what you're looking for
+                        Browse all available products or use filters to narrow
+                        your search
+                    </p>
+                </div>
+            );
+        }
+
+        if (!query.trim() && category !== "All Categories") {
+            return (
+                <div className="text-center py-12">
+                    <SearchIcon className="mx-auto h-12 w-12 text-foreground mb-4" />
+                    <h2 className="text-2xl font-semibold text-foreground mb-2">
+                        No products found
+                    </h2>
+                    <p className="text-muted-foreground">
+                        No products found in "{category}" category
+                    </p>
+                    <p className="text-muted-foreground/70 text-sm mt-2">
+                        Try selecting a different category or adding search
+                        keywords
                     </p>
                 </div>
             );
@@ -167,6 +191,9 @@ export default function Search() {
                     </h2>
                     <p className="text-muted-foreground">
                         No products found for "{query}"
+                        {category !== "All Categories" && (
+                            <span> in "{category}" category</span>
+                        )}
                     </p>
                     <p className="text-muted-foreground/70 text-sm mt-2">
                         Try different keywords or browse categories
@@ -201,6 +228,21 @@ export default function Search() {
 
                     {/* Search Form */}
                     <form onSubmit={handleSearch} className="flex gap-4 mb-6">
+                        <CategoryDropDownMenu
+                            categories={[
+                                "All Categories",
+                                "Grocery",
+                                "Dairy",
+                                "Clothing",
+                                "Toys",
+                                "Pets",
+                                "Electronics",
+                                "Gadgets",
+                                "Trending",
+                            ]}
+                            width={175}
+                            onCategoryChange={handleCategoryChange}
+                        />
                         <div className="flex-1 relative">
                             <Input
                                 type="text"
@@ -296,11 +338,20 @@ export default function Search() {
                             </DropdownMenu>
                         </div>
 
-                        {query && (
+                        {(query || category !== "All Categories") && (
                             <div className="text-sm text-muted-foreground">
                                 {totalItems}{" "}
                                 {totalItems === 1 ? "product" : "products"}{" "}
                                 found
+                                {category !== "All Categories" && (
+                                    <span> in "{category}"</span>
+                                )}
+                                {query && category !== "All Categories" && (
+                                    <span> for "{query}"</span>
+                                )}
+                                {query && category === "All Categories" && (
+                                    <span> for "{query}"</span>
+                                )}
                             </div>
                         )}
                     </div>

@@ -5,15 +5,26 @@ import CategoryDropDownMenu from "./CategoryDropDownMenu";
 
 export default function SearchBar() {
     const [searchQuery, setSearchQuery] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("All Categories");
     const navigate = useNavigate();
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
+        const params = new URLSearchParams();
+
         if (searchQuery.trim()) {
-            navigate(
-                `/search?q=${encodeURIComponent(searchQuery.trim().toLowerCase())}`,
-            );
+            params.set("q", searchQuery.trim().toLowerCase());
         }
+        if (selectedCategory.trim() && selectedCategory !== "All Categories") {
+            params.set("category", selectedCategory.trim());
+        }
+
+        const queryString = params.toString();
+        navigate(`/search${queryString ? `?${queryString}` : ""}`);
+    };
+
+    const handleCategoryChange = (category: string) => {
+        setSelectedCategory(category);
     };
 
     return (
@@ -36,6 +47,7 @@ export default function SearchBar() {
                             "Trending",
                         ]}
                         width={175}
+                        onCategoryChange={handleCategoryChange}
                     />
                     <div className="border-2 border-transparent border-l-gray-300" />
                     <div className="flex flex-row flex-1 dark:bg-gray-900">
