@@ -28,7 +28,7 @@ export default function SlideMenu({
                 <div className="flex justify-between items-center p-4">
                     <Link className="flex flex-row" to={"/"}>
                         <img
-                            src="/logo.png"
+                            src="/images/logo.png"
                             alt="logo"
                             width={50}
                             height={50}

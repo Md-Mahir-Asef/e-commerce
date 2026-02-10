@@ -14,9 +14,9 @@ export default function UtilMenu() {
                 {/* Search Bar on Mobile (Search Bar on Desktop is in /src/components/SearchBar.tsx) */}
                 <div className="flex flex-row p-2 sm:p-3 lg:hidden">
                     <Link to={"/search"}>
-                        <Search size={16} />
+                        <Search />
                     </Link>
-                    <p className="ml-1 sm:ml-2 text-xs sm:text-sm">Search</p>
+                    Search
                 </div>
                 <Link
                     to="/cart"
