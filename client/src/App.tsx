@@ -21,6 +21,7 @@ import ProductListAdmin from "./pages/admin/ProductList";
 import Category from "./pages/admin/Category";
 import AdminOrders from "./pages/admin/AdminOrders";
 import Products from "./pages/Products";
+import Search from "./pages/Search";
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/products" element={<Products />} />
+                <Route path="/search" element={<Search />} />
                 <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/orders" element={<Orders />} />

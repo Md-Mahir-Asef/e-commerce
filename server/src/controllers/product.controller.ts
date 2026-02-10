@@ -44,7 +44,7 @@ export const createProduct = async (req: Request, res: Response) => {
             },
         });
         logger.info(
-            `Created product: ${newProduct.name} (id: ${newProduct.id}).`
+            `Created product: ${newProduct.name} (id: ${newProduct.id}).`,
         );
         res.sendApi(newProduct, "Product created successfully.");
     } catch (err) {
@@ -81,7 +81,7 @@ export const updateProduct = async (req: Request, res: Response) => {
             },
         });
         logger.info(
-            `Updated product: ${updatedProduct.name} (id: ${updatedProduct.id}).`
+            `Updated product: ${updatedProduct.name} (id: ${updatedProduct.id}).`,
         );
         res.sendApi(updatedProduct, "Product updated successfully.");
     } catch (err) {
@@ -96,7 +96,7 @@ export const getProductById = async (req: Request, res: Response) => {
         if (!id) {
             return res.sendErr(
                 { message: "Product ID is required" },
-                "Product ID is required."
+                "Product ID is required.",
             );
         }
         const product = await prisma.product.findUnique({
@@ -109,11 +109,11 @@ export const getProductById = async (req: Request, res: Response) => {
             return res.sendErr(
                 { message: "Product not found" },
                 "Product not found.",
-                404
+                404,
             );
         }
         logger.info(
-            `Successfully got product: ${product.name} (id: ${product.id}).`
+            `Successfully got product: ${product.name} (id: ${product.id}).`,
         );
         res.sendApi(product, "Successfully got product by ID");
     } catch (err) {
@@ -128,14 +128,14 @@ export const deleteProduct = async (req: Request, res: Response) => {
         if (!id) {
             return res.sendErr(
                 { message: "Product ID is required" },
-                "Product ID is required."
+                "Product ID is required.",
             );
         }
         const deletedProduct = await prisma.product.delete({
             where: { id: parseInt(id) },
         });
         logger.info(
-            `Deleted product: ${deletedProduct.name} (id: ${deletedProduct.id}).`
+            `Deleted product: ${deletedProduct.name} (id: ${deletedProduct.id}).`,
         );
         res.sendApi(deletedProduct, "Product deleted successfully.");
     } catch (err) {
@@ -159,7 +159,7 @@ export const getProductsByPage = async (req: Request, res: Response) => {
             },
         });
         logger.info(
-            `Successfully got ${products.length} products. page ${page} limit ${limit}`
+            `Successfully got ${products.length} products. page ${page} limit ${limit}`,
         );
         res.sendApi(products, "Successfully got products by page");
     } catch (err) {
@@ -177,7 +177,7 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
         if (!categoryId) {
             return res.sendErr(
                 { message: "Category ID is required" },
-                "Category ID is required."
+                "Category ID is required.",
             );
         }
 
@@ -200,7 +200,7 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
         });
 
         logger.info(
-            `Successfully got ${products.length} products for category ${categoryId}. page ${pageNum} limit ${limitNum}`
+            `Successfully got ${products.length} products for category ${categoryId}. page ${pageNum} limit ${limitNum}`,
         );
         res.sendApi(products, "Successfully got products by category");
     } catch (err) {
@@ -228,7 +228,7 @@ export const createCategory = async (req: Request, res: Response) => {
             return res.sendErr(
                 null,
                 "Category name is required and must be a non-empty string.",
-                400
+                400,
             );
         }
 
@@ -241,7 +241,7 @@ export const createCategory = async (req: Request, res: Response) => {
             return res.sendErr(
                 null,
                 `Category "${name.trim()}" already exists.`,
-                409
+                409,
             );
         }
 
@@ -252,7 +252,7 @@ export const createCategory = async (req: Request, res: Response) => {
         });
 
         logger.info(
-            `Created new category: ${category.name} (id: ${category.id}).`
+            `Created new category: ${category.name} (id: ${category.id}).`,
         );
         res.sendApi(category, "Category created successfully.", 201);
     } catch (err) {
@@ -277,7 +277,7 @@ export const updateCategory = async (req: Request, res: Response) => {
             },
         });
         logger.info(
-            `Updated category name: ${updatedCategory.name} (id: ${updatedCategory.id}).`
+            `Updated category name: ${updatedCategory.name} (id: ${updatedCategory.id}).`,
         );
         res.sendApi(updatedCategory, "Product updated successfully.");
     } catch (err) {
@@ -293,7 +293,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
             return res.sendErr(
                 { message: "Category ID is required" },
                 "Category ID is required.",
-                400
+                400,
             );
         }
         const categoryId = parseInt(idParam, 10);
@@ -301,7 +301,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
             return res.sendErr(
                 { message: "Invalid category ID" },
                 "Invalid category ID.",
-                400
+                400,
             );
         }
 
@@ -312,7 +312,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
             return res.sendErr(
                 { message: "Category not found" },
                 "Category not found.",
-                404
+                404,
             );
         }
 
@@ -334,7 +334,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
                             disconnect: [{ id: categoryId }],
                         },
                     },
-                })
+                }),
             ),
             prisma.category.delete({
                 where: { id: categoryId },
@@ -342,14 +342,101 @@ export const deleteCategory = async (req: Request, res: Response) => {
         ]);
 
         logger.info(
-            `Deleted category: ${category.name} (id: ${categoryId}), removed from ${productsWithCategory.length} product(s).`
+            `Deleted category: ${category.name} (id: ${categoryId}), removed from ${productsWithCategory.length} product(s).`,
         );
         res.sendApi(
             { id: categoryId, name: category.name },
-            "Category deleted successfully."
+            "Category deleted successfully.",
         );
     } catch (err) {
         logger.error(`Failed to delete category. \n${err}`);
         res.sendErr(err, "Failed to delete category.");
+    }
+};
+
+export const searchProducts = async (req: Request, res: Response) => {
+    try {
+        const {
+            q: query,
+            page = "1",
+            limit = "10",
+            sort = "newest",
+        } = req.query;
+
+        const pageNum = parseInt(page as string, 10);
+        const limitNum = parseInt(limit as string, 10);
+
+        if (isNaN(pageNum) || pageNum < 1) {
+            return res.sendErr(
+                { message: "Invalid page number" },
+                "Invalid page number.",
+                400,
+            );
+        }
+
+        if (isNaN(limitNum) || limitNum < 1 || limitNum > 50) {
+            return res.sendErr(
+                { message: "Invalid limit (must be between 1 and 50)" },
+                "Invalid limit.",
+                400,
+            );
+        }
+
+        // Build where clause for search
+        const whereClause: any = {};
+        if (query && typeof query === "string" && query.trim()) {
+            whereClause.name = {
+                contains: query.trim(),
+                mode: "insensitive",
+            };
+        }
+
+        // Build order clause
+        let orderBy: any = { createdAt: "desc" }; // default: newest
+        if (sort === "price_asc") {
+            orderBy = { price: "asc" };
+        } else if (sort === "price_desc") {
+            orderBy = { price: "desc" };
+        } else if (sort === "newest") {
+            orderBy = { createdAt: "desc" };
+        }
+
+        // Get total count for pagination
+        const totalItems = await prisma.product.count({
+            where: whereClause,
+        });
+
+        // Get products with pagination
+        const products = await prisma.product.findMany({
+            where: whereClause,
+            skip: (pageNum - 1) * limitNum,
+            take: limitNum,
+            orderBy,
+            include: {
+                categories: true,
+            },
+        });
+
+        const totalPages = Math.ceil(totalItems / limitNum);
+
+        logger.info(
+            `Search completed: query="${query}", page=${pageNum}, limit=${limitNum}, sort=${sort}, found=${products.length} products`,
+        );
+
+        res.sendApi(
+            {
+                data: products,
+                pagination: {
+                    page: pageNum,
+                    limit: limitNum,
+                    totalPages,
+                    totalItems,
+                },
+            },
+            "Search completed successfully",
+        );
+    } catch (err) {
+        logger.error(`Failed to search products. \n${err}`);
+        res.sendErr(err, "Failed to search products.");
     }
 };
