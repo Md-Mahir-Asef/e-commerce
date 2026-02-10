@@ -43,7 +43,7 @@ export default function ProductList() {
     if (loading) {
         return (
             <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-2 sm:p-3 md:p-4 flex flex-col">
-                <div className="max-w-7xl xl:max-w-7xl 2xl:max-w-screen-2xl mx-auto grow">
+                <div className="max-w-7xl xl:max-w-7xl mx-auto grow">
                     <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 md:mb-8">
                         Products
                     </h1>
@@ -52,7 +52,7 @@ export default function ProductList() {
                     {[...Array(3)].map((_, index) => (
                         <div key={index} className="mb-8">
                             <div className="h-6 sm:h-7 md:h-8 bg-gray-200 dark:bg-gray-700 rounded mb-3 sm:mb-4 w-32 sm:w-40 md:w-48 animate-pulse"></div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
                                 {[...Array(4)].map((_, cardIndex) => (
                                     <div
                                         key={cardIndex}
@@ -74,7 +74,7 @@ export default function ProductList() {
     if (error) {
         return (
             <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-2 sm:p-3 md:p-4 flex flex-col">
-                <div className="max-w-7xl xl:max-w-7xl 2xl:max-w-screen-2xl mx-auto grow">
+                <div className="max-w-7xl xl:max-w-7xl mx-auto grow">
                     <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 md:mb-8">
                         Products
                     </h1>
@@ -98,7 +98,7 @@ export default function ProductList() {
     if (categories.length === 0) {
         return (
             <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-2 sm:p-3 md:p-4 flex flex-col">
-                <div className="max-w-7xl xl:max-w-7xl 2xl:max-w-screen-2xl mx-auto grow">
+                <div className="max-w-7xl xl:max-w-7xl mx-auto grow">
                     <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 md:mb-8">
                         Products
                     </h1>
@@ -115,8 +115,8 @@ export default function ProductList() {
 
     return (
         <>
-            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-2 sm:p-3 md:p-4 flex flex-col">
-                <div className="max-w-7xl xl:max-w-7xl 2xl:max-w-screen-2xl mx-auto grow">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-2 sm:p-3 md:p-4 flex flex-col overflow-x-hidden">
+                <div className="max-w-7xl xl:max-w-7xl mx-auto grow">
                     <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 md:mb-8">
                         Products
                     </h1>
