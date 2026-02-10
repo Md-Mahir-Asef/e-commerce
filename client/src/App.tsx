@@ -12,7 +12,6 @@ import Orders from "./pages/Orders";
 import OrderDetails from "./pages/OrderDetails";
 import AdminLogin from "./pages/admin/AdminLogin";
 import RouteProtector from "./components/RouteProtector";
-import Dashboard from "./pages/admin/Dashboard";
 import AdminLayout from "./components/admin/AdminLayout";
 import Users from "./pages/admin/Users";
 import CreateProduct from "./pages/admin/CreateProduct";
@@ -51,7 +50,6 @@ function App() {
                         </RouteProtector>
                     }
                 >
-                    <Route path="dashboard" element={<Dashboard />}></Route>
                     <Route path="users/list" element={<Users />}></Route>
                     <Route
                         path="products/list"

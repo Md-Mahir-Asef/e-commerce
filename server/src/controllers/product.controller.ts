@@ -358,6 +358,7 @@ export const searchProducts = async (req: Request, res: Response) => {
     try {
         const {
             q: query,
+            category,
             page = "1",
             limit = "10",
             sort = "newest",
@@ -392,6 +393,24 @@ export const searchProducts = async (req: Request, res: Response) => {
             };
         }
 
+        // Add category filter if provided and not "All Categories"
+        if (
+            category &&
+            typeof category === "string" &&
+            category.trim() &&
+            category.trim() !== "All Categories"
+        ) {
+            const normalizedCategory = category.trim().toLowerCase();
+            whereClause.categories = {
+                some: {
+                    name: {
+                        contains: normalizedCategory,
+                        mode: "insensitive",
+                    },
+                },
+            };
+        }
+
         // Build order clause
         let orderBy: any = { createdAt: "desc" }; // default: newest
         if (sort === "price_asc") {
@@ -421,7 +440,7 @@ export const searchProducts = async (req: Request, res: Response) => {
         const totalPages = Math.ceil(totalItems / limitNum);
 
         logger.info(
-            `Search completed: query="${query}", page=${pageNum}, limit=${limitNum}, sort=${sort}, found=${products.length} products`,
+            `Search completed: query="${query}", category="${category}", page=${pageNum}, limit=${limitNum}, sort=${sort}, found=${products.length} products`,
         );
 
         res.sendApi(

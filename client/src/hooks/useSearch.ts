@@ -19,17 +19,20 @@ interface UseSearchReturn {
     loading: boolean;
     error: string | null;
     query: string;
+    category: string;
     page: number;
     limit: number;
     sort: string;
     totalPages: number;
     totalItems: number;
     setQuery: (query: string) => void;
+    setCategory: (category: string) => void;
     setPage: (page: number) => void;
     setLimit: (limit: number) => void;
     setSort: (sort: string) => void;
     search: (
         searchQuery?: string,
+        searchCategory?: string,
         searchPage?: number,
         searchLimit?: number,
         searchSort?: string,
@@ -47,6 +50,7 @@ export function useSearch(): UseSearchReturn {
 
     // Get values from URL or use defaults
     const query = searchParams.get("q") || "";
+    const category = searchParams.get("category") || "All Categories";
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = parseInt(searchParams.get("limit") || "10", 10);
     const sort = searchParams.get("sort") || "newest";
@@ -54,6 +58,7 @@ export function useSearch(): UseSearchReturn {
     const updateUrl = useCallback(
         (
             newQuery: string,
+            newCategory: string,
             newPage: number,
             newLimit: number,
             newSort: string,
@@ -62,6 +67,9 @@ export function useSearch(): UseSearchReturn {
 
             if (newQuery.trim()) {
                 params.set("q", newQuery.trim());
+            }
+            if (newCategory.trim() && newCategory !== "All Categories") {
+                params.set("category", newCategory.trim());
             }
             if (newPage !== 1) {
                 params.set("page", newPage.toString());
@@ -81,11 +89,13 @@ export function useSearch(): UseSearchReturn {
     const search = useCallback(
         async (
             searchQuery?: string,
+            searchCategory?: string,
             searchPage?: number,
             searchLimit?: number,
             searchSort?: string,
         ) => {
             const finalQuery = searchQuery ?? query;
+            const finalCategory = searchCategory ?? category;
             const finalPage = searchPage ?? page;
             const finalLimit = searchLimit ?? limit;
             const finalSort = searchSort ?? sort;
@@ -99,6 +109,10 @@ export function useSearch(): UseSearchReturn {
                     {
                         params: {
                             q: finalQuery.trim().toLowerCase() || undefined,
+                            category:
+                                finalCategory.trim() !== "All Categories"
+                                    ? finalCategory.trim()
+                                    : undefined,
                             page: finalPage,
                             limit: finalLimit,
                             sort: finalSort,
@@ -120,36 +134,43 @@ export function useSearch(): UseSearchReturn {
                 setLoading(false);
             }
         },
-        [query, page, limit, sort],
+        [query, category, page, limit, sort],
     );
 
     // Update URL when search parameters change
     const setQuery = useCallback(
         (newQuery: string) => {
-            updateUrl(newQuery, 1, limit, sort);
+            updateUrl(newQuery, category, 1, limit, sort);
         },
-        [updateUrl, limit, sort],
+        [updateUrl, category, limit, sort],
     );
 
-    const setPage = useCallback(
-        (newPage: number) => {
-            updateUrl(query, newPage, limit, sort);
+    const setCategory = useCallback(
+        (newCategory: string) => {
+            updateUrl(query, newCategory, 1, limit, sort);
         },
         [updateUrl, query, limit, sort],
     );
 
+    const setPage = useCallback(
+        (newPage: number) => {
+            updateUrl(query, category, newPage, limit, sort);
+        },
+        [updateUrl, query, category, limit, sort],
+    );
+
     const setLimit = useCallback(
         (newLimit: number) => {
-            updateUrl(query, 1, newLimit, sort);
+            updateUrl(query, category, 1, newLimit, sort);
         },
-        [updateUrl, query, sort],
+        [updateUrl, query, category, sort],
     );
 
     const setSort = useCallback(
         (newSort: string) => {
-            updateUrl(query, 1, limit, newSort);
+            updateUrl(query, category, 1, limit, newSort);
         },
-        [updateUrl, query, limit],
+        [updateUrl, query, category, limit],
     );
 
     // Perform search when URL parameters change
@@ -162,12 +183,14 @@ export function useSearch(): UseSearchReturn {
         loading,
         error,
         query,
+        category,
         page,
         limit,
         sort,
         totalPages,
         totalItems,
         setQuery,
+        setCategory,
         setPage,
         setLimit,
         setSort,

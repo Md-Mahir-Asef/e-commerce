@@ -42,17 +42,17 @@ export default function ProductList() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 flex flex-col">
-                <div className="max-w-7xl mx-auto grow">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-2 sm:p-3 md:p-4 flex flex-col">
+                <div className="max-w-7xl xl:max-w-7xl mx-auto grow">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 md:mb-8">
                         Products
                     </h1>
 
                     {/* Category Skeletons */}
                     {[...Array(3)].map((_, index) => (
                         <div key={index} className="mb-8">
-                            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded mb-4 w-48 animate-pulse"></div>
-                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                            <div className="h-6 sm:h-7 md:h-8 bg-gray-200 dark:bg-gray-700 rounded mb-3 sm:mb-4 w-32 sm:w-40 md:w-48 animate-pulse"></div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
                                 {[...Array(4)].map((_, cardIndex) => (
                                     <div
                                         key={cardIndex}
@@ -73,19 +73,19 @@ export default function ProductList() {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 flex flex-col">
-                <div className="max-w-7xl mx-auto grow">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-2 sm:p-3 md:p-4 flex flex-col">
+                <div className="max-w-7xl xl:max-w-7xl mx-auto grow">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 md:mb-8">
                         Products
                     </h1>
 
-                    <div className="text-center py-16">
-                        <div className="text-red-600 dark:text-red-400 text-xl mb-4">
+                    <div className="text-center py-8 sm:py-12 md:py-16">
+                        <div className="text-red-600 dark:text-red-400 text-sm sm:text-base md:text-xl mb-4">
                             Error: {error}
                         </div>
                         <button
                             onClick={() => window.location.reload()}
-                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                            className="px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base rounded-lg transition-colors"
                         >
                             Try Again
                         </button>
@@ -97,14 +97,14 @@ export default function ProductList() {
 
     if (categories.length === 0) {
         return (
-            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 flex flex-col">
-                <div className="max-w-7xl mx-auto grow">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-2 sm:p-3 md:p-4 flex flex-col">
+                <div className="max-w-7xl xl:max-w-7xl mx-auto grow">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 md:mb-8">
                         Products
                     </h1>
 
-                    <div className="text-center py-16">
-                        <div className="text-gray-500 dark:text-gray-400 text-xl">
+                    <div className="text-center py-8 sm:py-12 md:py-16">
+                        <div className="text-gray-500 dark:text-gray-400 text-sm sm:text-base md:text-xl">
                             No categories available
                         </div>
                     </div>
@@ -115,14 +115,14 @@ export default function ProductList() {
 
     return (
         <>
-            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 flex flex-col">
-                <div className="max-w-7xl mx-auto grow">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-2 sm:p-3 md:p-4 flex flex-col overflow-x-hidden">
+                <div className="max-w-7xl xl:max-w-7xl mx-auto grow">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 md:mb-8">
                         Products
                     </h1>
 
                     {/* Category Rows */}
-                    <div className="space-y-8">
+                    <div className="space-y-6 sm:space-y-8">
                         {categories.map((category) => (
                             <CategoryRow
                                 key={category.id}
