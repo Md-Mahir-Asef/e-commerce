@@ -21,6 +21,7 @@ Run the following command to setup E-commerce App
 ```bash
 git clone git@github.com:Md-Mahir-Asef/e-commerce.git
 cd e-commerce
+docker compose up
 ```
 
 ---
@@ -97,3 +98,4 @@ Working on this E-commerce project helped me strengthen my **full-stack developm
 - 💼 LinkedIn: [linkedin.com/in/md-mahir-asef-89bb7b3a7/](https://www.linkedin.com/in/md-mahir-asef-89bb7b3a7/)
 - 🧩 LeetCode: [leetcode.com/u/Md-Mahir-Asef/](https://leetcode.com/u/Md-Mahir-Asef/)
 - 📧 Email: [mdmahirasef.dev@gmail.com](mdmahirasef.dev@gmail.com)
+
