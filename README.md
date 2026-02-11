@@ -95,7 +95,8 @@ Working on this E-commerce project helped me strengthen my **full-stack developm
 
 `Backend-Focused Full-Stack Engineer | TypeScript, Node.js, PostgreSQL | Open to Remote Opportunities`
 
-- 💼 LinkedIn: [linkedin.com/in/md-mahir-asef-89bb7b3a7/](https://www.linkedin.com/in/md-mahir-asef-89bb7b3a7/)
+- 💼 LinkedIn: [linkedin.com/in/md-mahir-asef-dev/](https://www.linkedin.com/in/md-mahir-asef-dev/)
 - 🧩 LeetCode: [leetcode.com/u/Md-Mahir-Asef/](https://leetcode.com/u/Md-Mahir-Asef/)
 - 📧 Email: [mdmahirasef.dev@gmail.com](mdmahirasef.dev@gmail.com)
+
 
