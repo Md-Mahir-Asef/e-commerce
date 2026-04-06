@@ -29,6 +29,8 @@ export default function ProductList() {
                         ? response.data.data
                         : [],
                 );
+
+                console.log(response);
             } catch (err) {
                 console.error("Failed to fetch categories:", err);
                 setError("Failed to load categories");
