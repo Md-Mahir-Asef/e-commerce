@@ -15,7 +15,7 @@ export default function AuthStatus() {
             try {
                 const response = await axios.get(
                     `${config.VITE_SERVER_BASE_URL}/auth/me`,
-                    { withCredentials: true }
+                    { withCredentials: true },
                 );
                 if (
                     response.status === 401 ||
@@ -28,6 +28,7 @@ export default function AuthStatus() {
                 setName(userName.slice(0, 10));
                 setId(userId);
                 setAuthenticated(true);
+                console.log(response);
             } catch (err) {
                 console.log(err);
             }
@@ -40,7 +41,7 @@ export default function AuthStatus() {
             const response = await axios.post(
                 `${config.VITE_SERVER_BASE_URL}/auth/logout/${id}`,
                 {},
-                { withCredentials: true }
+                { withCredentials: true },
             );
             if (
                 response.status === 401 ||
