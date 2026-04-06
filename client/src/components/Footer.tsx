@@ -17,7 +17,7 @@ export default function Footer() {
                                 className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10"
                             />
                             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#3BB77E] ml-2">
-                                E-commerce
+                                Robobazar
                             </h3>
                         </div>
                         <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-3 sm:mb-4 max-w-xs sm:max-w-md">
@@ -141,7 +141,7 @@ export default function Footer() {
                 <div className="border-t border-gray-200 dark:border-gray-700 mt-6 sm:mt-8 pt-6 sm:pt-8">
                     <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                         <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
-                            © 2026 E-commerce. All rights reserved.
+                            © 2026 Robobazar. All rights reserved.
                         </p>
                         <div className="flex flex-wrap gap-4 sm:gap-6 text-xs sm:text-sm">
                             <Link

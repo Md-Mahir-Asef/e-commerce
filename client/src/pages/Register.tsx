@@ -43,7 +43,7 @@ export default function Register() {
             console.log(response.data.data);
             navigate("/");
             toast(
-                `Sir ${response.data.data.user.user_name}, you are welcome to E-commerce.`,
+                `Sir ${response.data.data.user.user_name}, you are welcome to Robobazar.`,
             );
         } catch (err) {
             if (err instanceof ZodError) {
@@ -61,7 +61,7 @@ export default function Register() {
                         Register
                     </h1>
                     <h3 className="text-sm sm:text-base">
-                        Hi, Welcome to E-commerce. 👋
+                        Hi, Welcome to Robobazar. 👋
                     </h3>
                     <button
                         title="This feature is not available."

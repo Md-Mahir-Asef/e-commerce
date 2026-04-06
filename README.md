@@ -1,6 +1,6 @@
-# E-Commerce App
+# Robobazar
 
-A simple, full-stack E-commerce application built with **TypeScript, Node.js, PostgreSQL, Prisma, and React (Vite)**.  
+Robobazar is a simple, full-stack E-commerce application built with **TypeScript, Node.js, PostgreSQL, Prisma, and React (Vite)**.  
 This project demonstrates my ability to build end-to-end features, manage a database, and ship working features.
 
 ---
@@ -16,11 +16,11 @@ This project demonstrates my ability to build end-to-end features, manage a data
 
 # Set up
 
-Run the following command to setup E-commerce App
+Run the following command to setup Robobazar
 
 ```bash
-git clone git@github.com:Md-Mahir-Asef/e-commerce.git
-cd e-commerce
+git clone git@github.com:Md-Mahir-Asef/robobazar.git
+cd robobazar
 docker compose up
 ```
 
@@ -75,7 +75,7 @@ This focuses on core functionality that can be delivered quickly while showcasin
 
 ## What I Learned
 
-Working on this E-commerce project helped me strengthen my **full-stack development skills** and gave practical experience in delivering a working MVP:
+Working on the Robobazar helped me strengthen my **full-stack development skills** and gave practical experience in delivering a working MVP:
 
 - **Backend Development:** Built REST APIs using **Node.js, TypeScript, and Express**.
 - **Database Management:** Designed and queried **PostgreSQL** database using **Prisma ORM**.
@@ -98,5 +98,3 @@ Working on this E-commerce project helped me strengthen my **full-stack developm
 - 💼 LinkedIn: [linkedin.com/in/md-mahir-asef-dev/](https://www.linkedin.com/in/md-mahir-asef-dev/)
 - 🧩 LeetCode: [leetcode.com/u/Md-Mahir-Asef/](https://leetcode.com/u/Md-Mahir-Asef/)
 - 📧 Email: [mdmahirasef.dev@gmail.com](mdmahirasef.dev@gmail.com)
-
-

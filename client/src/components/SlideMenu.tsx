@@ -34,7 +34,7 @@ export default function SlideMenu({
                             height={50}
                         />
                         <h2 className="text-2xl pt-3 text-[#3BB77E] font-extrabold">
-                            E-commerce
+                            Robobazar
                         </h2>
                     </Link>
                     <button onClick={onClose}>

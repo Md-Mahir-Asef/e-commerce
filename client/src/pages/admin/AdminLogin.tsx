@@ -37,7 +37,7 @@ export default function AdminLogin() {
             );
             navigate("/admin/users/list");
             toast.success(
-                `Sir ${response.data.data.user_name}, you are welcome to E-commerce. As an admin`,
+                `Sir ${response.data.data.user_name}, you are welcome to Robobazar. As an admin`,
             );
         } catch (err) {
             if (err instanceof ZodError) {

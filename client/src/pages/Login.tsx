@@ -35,7 +35,7 @@ export default function Login() {
             );
             navigate("/");
             toast.success(
-                `Sir ${response.data.data.user_name}, you are welcome to E-commerce.`,
+                `Sir ${response.data.data.user_name}, you are welcome to Robobazar.`,
             );
         } catch (err) {
             if (err instanceof ZodError) {

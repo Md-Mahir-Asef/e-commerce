@@ -26,7 +26,7 @@ export default function Header() {
                     className="sm:w-10 sm:h-10 md:w-12 md:h-12"
                 />
                 <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl pt-2 sm:pt-3 text-[#3BB77E] font-extrabold hidden sm:block">
-                    E-commerce
+                    Robobazar
                 </h2>
             </Link>
             <SearchBar />

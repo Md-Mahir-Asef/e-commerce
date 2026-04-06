@@ -1,12 +1,12 @@
-# E-Commerce Application – Product Requirement & Execution Plan
+# Robobazar Application – Product Requirement & Execution Plan
 
-## 0. E-Commerce App Description
+## 0. Robobazar Description
 
 This e-commerce application is a full-stack platform built with TypeScript, Node.js, PostgreSQL, Prisma, and Vite+React. It enables users to browse products, manage their carts, and complete secure purchases with ease. Admins can efficiently manage products, categories, and orders while maintaining full control over user roles and permissions. The app emphasizes clean code, scalability, and a responsive, user-friendly interface for a seamless shopping experience across all devices.
 
 ## 1. Purpose of This Document
 
-This document defines the **Minimum Viable Product (MVP)** scope for the E-Commerce application. It is written to:
+This document defines the **Minimum Viable Product (MVP)** scope for the Robobazar. It is written to:
 
 - Clearly communicate system behavior and expectations
 - Guide implementation (human or coding agent)
