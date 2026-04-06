@@ -49,6 +49,7 @@ export default function AuthStatus() {
             ) {
                 throw new Error("Unauthenticated.");
             }
+            console.log(response);
             window.location.reload();
         } catch (err) {
             console.log(err);
