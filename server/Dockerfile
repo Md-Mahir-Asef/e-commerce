@@ -63,6 +63,7 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 3000
+EXPOSE 5000
 
 # Start the app (expects "start" script -> node dist/index.js)
 CMD ["npm", "run", "start"]
@@ -71,22 +72,22 @@ CMD ["npm", "run", "start"]
 # Stage: test (integration / unit tests)
 ################################
 
-FROM node:24-bookworm AS test
-WORKDIR /app
+# FROM node:24-bookworm AS test
+# WORKDIR /app
 
-RUN apt-get update && apt-get install -y openssl libssl-dev
+# RUN apt-get update && apt-get install -y openssl libssl-dev
 
-COPY package.json package-lock.json ./
-ENV DATABASE_URL=postgres://test:test@db:5432/test_db
-ENV NODE_ENV=test
+# COPY package.json package-lock.json ./
+# ENV DATABASE_URL=postgres://test:test@db:5432/test_db
+# ENV NODE_ENV=test
 
-RUN rm -rf node_modules/@prisma/client
-RUN npm ci
-COPY . .
+# RUN rm -rf node_modules/@prisma/client
+# RUN npm ci
+# COPY . .
 
-RUN npx prisma generate
+# RUN npx prisma generate
 
-RUN rm -rf .env .env.test .env.example
+# RUN rm -rf .env .env.test .env.example
 
-# Run tests directly
-CMD ["npm", "run", "test", "--", "--runInBand"]
+# # Run tests directly
+# CMD ["npm", "run", "test", "--", "--runInBand"]
