@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import prisma from "../utils/prisma";
 import logger from "../utils/logger";
+import { convertSec2DayHourMin } from "../utils/time";
 
 // Endpoint: /api/v1/health
 export const healthCheck = async (req: Request, res: Response) => {
     const base = {
-        uptime: process.uptime(),
+        uptime: convertSec2DayHourMin(process.uptime()),
         timeStamp: new Date().toISOString(),
     };
     try {
@@ -15,7 +16,7 @@ export const healthCheck = async (req: Request, res: Response) => {
         >`SELECT pg_size_pretty(pg_database_size(current_database())) as size, current_database() as name`;
 
         logger.info(
-            `Health check successful. Prisma DB size: ${result[0]?.size}, name: ${result[0]?.name}`
+            `Health check successful. Prisma DB size: ${result[0]?.size}, name: ${result[0]?.name}`,
         );
 
         res.sendApi(
@@ -23,14 +24,14 @@ export const healthCheck = async (req: Request, res: Response) => {
                 ...base,
                 availability: { database: { ...result[0], available: true } },
             },
-            "Everything is Ok."
+            "Everything is Ok.",
         );
     } catch (err) {
         logger.error("Health check failed.");
 
         res.sendErr(
             { ...base, availability: { database: false } },
-            "Dependency failure."
+            "Dependency failure.",
         );
     }
 };
