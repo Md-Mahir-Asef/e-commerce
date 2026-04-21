@@ -6,6 +6,7 @@ import {
     UpdateProductDataSchema,
     UpdateCategorySchema,
 } from "../utils/zodSchemas";
+import { string } from "zod";
 
 export const getAllProducts = async (req: Request, res: Response) => {
     try {
@@ -92,19 +93,22 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 export const getProductById = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
+        const id = req.params["id"] as string;
+
         if (!id) {
             return res.sendErr(
                 { message: "Product ID is required" },
                 "Product ID is required.",
             );
         }
+
         const product = await prisma.product.findUnique({
-            where: { id: parseInt(id) },
+            where: { id: parseInt(id, 10) },
             include: {
                 categories: true,
             },
         });
+
         if (!product) {
             return res.sendErr(
                 { message: "Product not found" },
@@ -124,7 +128,7 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
+        const id = req.params["id"] as string;
         if (!id) {
             return res.sendErr(
                 { message: "Product ID is required" },
@@ -170,7 +174,8 @@ export const getProductsByPage = async (req: Request, res: Response) => {
 
 export const getProductsByCategory = async (req: Request, res: Response) => {
     try {
-        const { categoryId, page, limit } = req.params;
+        const { page, limit } = req.params;
+        const categoryId = req.params["categoryId"] as string;
         const pageNum = Number(page);
         const limitNum = Number(limit);
 
@@ -288,7 +293,7 @@ export const updateCategory = async (req: Request, res: Response) => {
 
 export const deleteCategory = async (req: Request, res: Response) => {
     try {
-        const idParam = req.params["id"];
+        const idParam = req.params["id"] as string;
         if (!idParam) {
             return res.sendErr(
                 { message: "Category ID is required" },

@@ -6,7 +6,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model user {
@@ -49,11 +49,11 @@ enum Roles {
 }
 
 model Cart {
-  id        Int       @id @default(autoincrement())
-  userId    Int       @unique
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  user      user      @relation(fields: [userId], references: [id])
+  id        Int        @id @default(autoincrement())
+  userId    Int        @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  user      user       @relation(fields: [userId], references: [id])
   items     CartItem[]
 }
 
@@ -66,7 +66,7 @@ model CartItem {
   updatedAt DateTime @updatedAt
   cart      Cart     @relation(fields: [cartId], references: [id])
   product   Product  @relation(fields: [productId], references: [id])
-  
+
   @@unique([cartId, productId])
 }
 
@@ -90,14 +90,14 @@ model Order {
 }
 
 model OrderItem {
-  id             Int     @id @unique @default(autoincrement())
-  orderId        Int
-  productId      Int
-  quantity       Int
-  priceAtOrder   Int
-  productSnapshot Json   // Store product details snapshot
-  createdAt      DateTime @default(now())
-  order          Order   @relation(fields: [orderId], references: [id])
-  
+  id              Int      @id @unique @default(autoincrement())
+  orderId         Int
+  productId       Int
+  quantity        Int
+  priceAtOrder    Int
+  productSnapshot Json // Store product details snapshot
+  createdAt       DateTime @default(now())
+  order           Order    @relation(fields: [orderId], references: [id])
+
   @@unique([orderId, productId])
 }

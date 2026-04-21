@@ -199,7 +199,7 @@ export const getOrderById = async (
     res: Response,
 ) => {
     try {
-        const { id } = req.params;
+        const id = req.params["id"] as string;
         const userId = req.user?.["id"];
         const userRole = req.user?.["role"];
 
@@ -264,7 +264,7 @@ export const updateOrderStatus = async (
     res: Response,
 ) => {
     try {
-        const { id } = req.params;
+        const id = req.params["id"] as string;
         const { status } = UpdateOrderStatusSchema.parse(req.body);
         const userRole = req.user?.["role"];
 

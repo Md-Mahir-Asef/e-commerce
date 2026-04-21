@@ -61,6 +61,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 # If your app uses prisma/runtime or migration files at runtime, copy prisma folder
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/src/generated ./dist/generated
 
 EXPOSE 3000
 EXPOSE 5000

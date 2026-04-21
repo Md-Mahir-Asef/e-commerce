@@ -250,7 +250,7 @@ export const removeFromCart = async (
             return res.sendErr({}, "User not authenticated", 401);
         }
 
-        const { productId } = req.params;
+        const productId = req.params["productId"] as string;
 
         // Find user's cart
         const cart = await (prisma as any).cart.findUnique({
