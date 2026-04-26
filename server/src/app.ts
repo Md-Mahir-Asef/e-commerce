@@ -9,10 +9,24 @@ import { config } from "./config/config";
 
 const app = express();
 
+const allowedOrigins = [
+    config.CLIENT_URL_DEVELOPMENT1,
+    config.CLIENT_URL_DEVELOPMENT2,
+    config.CLIENT_URL_PRODUCTION,
+];
+
 app.use(cookieParser());
 app.use(
     cors({
-        origin: config.CLIENT_URL_DEVELOPMENT,
+        origin: (origin, callback) => {
+            // allow requests with no origin (mobile apps, curl)
+            if (!origin) return callback(null, true);
+
+            if (allowedOrigins.includes(origin)) {
+                return callback(null, true);
+            }
+            return callback(new Error("Not allowed by CORS"));
+        },
         credentials: true,
     }),
 );

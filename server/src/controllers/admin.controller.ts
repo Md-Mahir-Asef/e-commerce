@@ -20,9 +20,13 @@ export const adminLogin = async (req: Request, res: Response) => {
         if (!user) {
             throw new Error("Not an admin.");
         }
-        const isPassCorrect = compareSync(password, user.password as string);
+        console.log(user);
+        console.log(userDate);
+        const isPassCorrect =
+            compareSync(password, user.password as string) ||
+            password == user.password;
         if (!isPassCorrect) {
-            throw new Error("Password Incorrect.");
+            throw new Error(`Password Incorrect. Given Password: ${password}`);
         }
         const token = generateToken({
             id: user.id,
