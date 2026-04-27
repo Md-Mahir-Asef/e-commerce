@@ -41,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     return (
         <Link to={`/product/${product.id}`} className="block group">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full flex flex-col">
-                {/* Product Image */}
+                {/* Product Image - Fixed aspect square */}
                 <div className="aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700 shrink-0">
                     {product.images.length > 0 ? (
                         <img
@@ -59,19 +59,22 @@ export default function ProductCard({ product }: ProductCardProps) {
                     )}
                 </div>
 
-                {/* Product Info */}
-                <div className="p-2 sm:p-3 md:p-4 flex-1 flex flex-col">
-                    <h3 className="font-medium text-gray-900 dark:text-white text-xs sm:text-sm mb-1 sm:mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors overflow-hidden">
-                        {product.name}
-                    </h3>
+                {/* Product Info - Standardized sections */}
+                <div className="p-2 sm:p-3 md:p-4 flex-1 flex flex-col min-h-0">
+                    {/* Title Section - Fixed height with line clamp */}
+                    <div className="h-8 sm:h-10 md:h-12 mb-1 sm:mb-2">
+                        <h3 className="font-medium text-gray-900 dark:text-white text-xs sm:text-sm line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors overflow-hidden h-full">
+                            {product.name}
+                        </h3>
+                    </div>
 
-                    {/* Rating */}
-                    <div className="mb-1 sm:mb-2">
+                    {/* Rating Section - Fixed height */}
+                    <div className="h-5 mb-1 sm:mb-2 flex items-center">
                         {renderStars(product.rating)}
                     </div>
 
-                    {/* Price */}
-                    <div className="flex items-center gap-1 sm:gap-2">
+                    {/* Price Section - Fixed height, pushes to bottom */}
+                    <div className="mt-auto flex items-center gap-1 sm:gap-2">
                         <span className="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white">
                             {formatPrice(
                                 product.discountPrice || product.price,
@@ -84,8 +87,6 @@ export default function ProductCard({ product }: ProductCardProps) {
                                 </span>
                             )}
                     </div>
-
-                    {/* Categories - Remove to avoid making cards larger */}
                 </div>
             </div>
         </Link>
