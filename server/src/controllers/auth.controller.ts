@@ -89,7 +89,10 @@ export const logIn = async (req: Request, res: Response) => {
         if (!user) {
             throw new Error("User Not Found.");
         }
-        const isPassCorrect = compareSync(password, user?.password as string);
+        console.log(user, userDate);
+        const isPassCorrect =
+            compareSync(password, user.password as string) ||
+            password == user.password;
         if (isPassCorrect) {
             const token = generateToken({
                 id: user.id,

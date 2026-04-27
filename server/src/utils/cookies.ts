@@ -15,6 +15,7 @@ export function setTokenCookie(
         path: "/",
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     };
+    console.log({ ...defaultOptions, ...options });
     res.cookie("token", token, { ...defaultOptions, ...options });
 }
 

@@ -31,7 +31,9 @@ export default function Login() {
                         email: data.email,
                         password: data.password,
                     },
-                },
+                },{
+                    withCredentials: true
+                }
             );
             navigate("/");
             toast.success(

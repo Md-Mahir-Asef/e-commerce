@@ -12,7 +12,7 @@ export const authUserMiddleware = (
     try {
         const token = req.cookies["token"];
         if (!token) {
-            throw new Error("Invalid Token");
+            throw new Error(`Invalid Token. Token: ${token}`);
         }
         const user = verify(
             token,
