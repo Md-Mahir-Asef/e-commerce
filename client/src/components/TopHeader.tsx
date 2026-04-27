@@ -14,8 +14,8 @@ export default function TopHeader() {
             <p className="text-xs sm:text-sm opacity-75 text-green-950 mx-auto pr-8 sm:pr-12 dark:text-white text-center px-2">
                 This is website not for commercial use, all the products are
                 fake and the payment gateway is made for testing purposes. You
-                can access the admin dashboard with the username: admin and
-                password: pass@123 on{" "}
+                can access the admin dashboard with the email:
+                admin@robobazar.com and password: pass@123 on{" "}
                 <Link
                     to={"/admin/login"}
                     className="text-blue-800 underline dark:text-blue-300 font-bold"

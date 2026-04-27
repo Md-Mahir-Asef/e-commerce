@@ -116,7 +116,7 @@ export default function ProductTable({
                                     </div>
                                     <div className="min-w-0">
                                         <div className="flex items-center gap-2">
-                                            <h3 className="font-medium text-foreground truncate">
+                                            <h3 className="font-medium text-foreground w-[480px] truncate">
                                                 {product.name}
                                             </h3>
                                             <span className="text-xs text-muted-foreground opacity-60">
