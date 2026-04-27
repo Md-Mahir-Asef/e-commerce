@@ -6,7 +6,6 @@ import {
     UpdateProductDataSchema,
     UpdateCategorySchema,
 } from "../utils/zodSchemas";
-import { string } from "zod";
 
 export const getAllProducts = async (req: Request, res: Response) => {
     try {
@@ -77,12 +76,13 @@ export const updateProduct = async (req: Request, res: Response) => {
                 discountPrice,
                 images,
                 categories: {
-                    connect: categoryNames.map((name) => ({ name })),
+                    set: categoryNames.map((name) => ({ name })),
                 },
             },
         });
+        console.log(id);
         logger.info(
-            `Updated product: ${updatedProduct.name} (id: ${updatedProduct.id}).`,
+            `Updated product: ${updatedProduct.name} (id: ${updatedProduct.id}). Previous Product Categories: ${productData.categoryNames}`,
         );
         res.sendApi(updatedProduct, "Product updated successfully.");
     } catch (err) {
