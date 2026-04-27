@@ -1,11 +1,15 @@
 import multer from "multer";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
+import fs from "fs";
 
 // Configure multer for image uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, "../../uploads"));
+        const uploadPath = path.join(__dirname, "../uploads");
+        // Create folder if it doesn't exist
+        fs.mkdirSync(uploadPath, { recursive: true });
+        cb(null, uploadPath);
     },
     filename: (req, file, cb) => {
         const uuid = uuidv4();

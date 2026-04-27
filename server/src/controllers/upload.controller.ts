@@ -4,12 +4,12 @@ import logger from "../utils/logger";
 // Endpoint: /api/v1/upload
 export const uploadImage = async (req: Request, res: Response) => {
     try {
+        console.log("Hit uploadImage Controller Function.");
         if (!req.file) {
             logger.warn("Upload attempt without file");
             res.sendErr({ filename: null }, "No file provided.");
             return;
         }
-
         const fileUrl = `/uploads/${req.file.filename}`;
 
         logger.info(`Image uploaded successfully: ${req.file.filename}`);
