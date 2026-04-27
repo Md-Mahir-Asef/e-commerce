@@ -124,7 +124,7 @@ export default function ProductTable({
                                             </span>
                                         </div>
                                         {product.description && (
-                                            <p className="text-xs text-muted-foreground truncate">
+                                            <p className="text-xs text-muted-foreground w-[520px] truncate">
                                                 {product.description}
                                             </p>
                                         )}

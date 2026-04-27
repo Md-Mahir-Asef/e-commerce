@@ -16,10 +16,14 @@ export default defineConfig(({ mode }): UserConfig => {
             ? {
                   host: true, // 0.0.0.0
                   port: Number(process.env.VITE_DEV_SERVER_PORT || 5173),
-                  hmr: {
-                      protocol: "ws",
-                      host: process.env.VITE_HMR_HOST || "localhost",
-                      port: Number(process.env.VITE_DEV_SERVER_PORT || 5173),
+                  //   hmr: {
+                  //       protocol: "ws",
+                  //       host: process.env.VITE_HMR_HOST || "localhost",
+                  //       port: Number(process.env.VITE_DEV_SERVER_PORT || 5173),
+                  //   },
+                  watch: {
+                      usePolling: true,
+                      interval: 100,
                   },
               }
             : undefined,
