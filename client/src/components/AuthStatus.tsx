@@ -30,6 +30,7 @@ export default function AuthStatus() {
                 setAuthenticated(true);
                 console.log(response);
             } catch (err) {
+                console.log("Unauthorized user.");
                 console.log(err);
             }
         };

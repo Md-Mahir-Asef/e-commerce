@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import { useCart } from "@/hooks/useCart";
 import { useOrders } from "@/hooks/useOrders";
-import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft } from "lucide-react";
+import {
+    Minus,
+    Plus,
+    Trash2,
+    ShoppingBag,
+    ArrowLeft,
+    LogIn,
+} from "lucide-react";
 import TopHeader from "../components/TopHeader";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -112,15 +119,24 @@ export default function Cart() {
                 <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
                     <div className="max-w-6xl mx-auto">
                         <div className="text-center py-16">
-                            <div className="text-red-600 dark:text-red-400 text-xl mb-4">
-                                Error: {error}
-                            </div>
-                            <button
-                                onClick={() => window.location.reload()}
-                                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                            <LogIn
+                                className="mx-auto text-gray-400 dark:text-gray-500 mb-4"
+                                size={64}
+                            />
+                            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                                Please log in to view your cart
+                            </h2>
+                            <p className="text-gray-600 dark:text-gray-400 mb-6">
+                                You need to be logged in to have a personal
+                                shopping cart.
+                            </p>
+                            <Link
+                                to="/login"
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
                             >
-                                Try Again
-                            </button>
+                                <LogIn size={20} />
+                                Log In to Your Account
+                            </Link>
                         </div>
                     </div>
                 </div>
