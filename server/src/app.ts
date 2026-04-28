@@ -12,7 +12,8 @@ const app = express();
 const allowedOrigins = [
     config.CLIENT_URL_DEVELOPMENT1,
     config.CLIENT_URL_DEVELOPMENT2,
-    config.CLIENT_URL_PRODUCTION,
+    config.CLIENT_URL_PRODUCTION1,
+    config.CLIENT_URL_PRODUCTION2,
 ];
 
 app.use(cookieParser());
