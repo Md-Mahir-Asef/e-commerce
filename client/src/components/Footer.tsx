@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, Github, Linkedin, X } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Linkedin, X, Laptop } from "lucide-react";
 
 export default function Footer() {
     return (
@@ -95,6 +95,18 @@ export default function Footer() {
                             Contact Info
                         </h4>
                         <div className="space-y-2 sm:space-y-3">
+                            <div className="flex items-center text-gray-600 dark:text-gray-300">
+                                <Laptop
+                                    size={14}
+                                    className="mr-2 text-[#3BB77E]"
+                                />
+                                <a
+                                    href="https://mdmahirasef.vercel.app/"
+                                    className="hover:text-[#3BB77E] transition-colors text-xs sm:text-sm"
+                                >
+                                    https://mdmahirasef.vercel.app/
+                                </a>
+                            </div>
                             <div className="flex items-center text-gray-600 dark:text-gray-300">
                                 <Mail
                                     size={14}
