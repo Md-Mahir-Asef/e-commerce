@@ -84,10 +84,6 @@ export default function ProductDetails() {
         );
     };
 
-    const getImageUrl = (imageName: string) => {
-        return `${config.VITE_SERVER_BASE_URL}/uploads/${imageName}`;
-    };
-
     const handleQuantityChange = (change: number) => {
         const newQuantity = quantity + change;
         if (newQuantity >= 1 && newQuantity <= 10) {
@@ -183,9 +179,7 @@ export default function ProductDetails() {
                             <div className="aspect-square overflow-hidden rounded-lg bg-white dark:bg-gray-800">
                                 {product.images.length > 0 ? (
                                     <img
-                                        src={getImageUrl(
-                                            product.images[selectedImage],
-                                        )}
+                                        src={product.images[selectedImage]}
                                         alt={product.name}
                                         className="w-full h-full object-cover"
                                         onError={(e) => {
@@ -218,7 +212,7 @@ export default function ProductDetails() {
                                             }`}
                                         >
                                             <img
-                                                src={getImageUrl(image)}
+                                                src={image}
                                                 alt={`${product.name} ${index + 1}`}
                                                 className="w-full h-full object-cover"
                                                 onError={(e) => {

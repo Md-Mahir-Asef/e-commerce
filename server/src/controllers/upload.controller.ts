@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import logger from "../utils/logger";
+import cloudinary from "../utils/cloudinary";
+import { UploadApiResponse } from "cloudinary";
 
 // Endpoint: /api/v1/upload
 export const uploadImage = async (req: Request, res: Response) => {
@@ -10,16 +12,26 @@ export const uploadImage = async (req: Request, res: Response) => {
             res.sendErr({ filename: null }, "No file provided.");
             return;
         }
-        const fileUrl = `/uploads/${req.file.filename}`;
 
-        logger.info(`Image uploaded successfully: ${req.file.filename}`);
+        const uploadResult: UploadApiResponse = await new Promise(
+            (resolve, reject) => {
+                cloudinary.uploader
+                    .upload_stream({ folder: "robobazar" }, (error, result) => {
+                        if (error) reject(error);
+                        else resolve(result as UploadApiResponse);
+                    })
+                    .end(req.file!.buffer);
+            },
+        );
+
+        logger.info(
+            `Image uploaded successfully to Cloudinary: ${uploadResult.secure_url}`,
+        );
 
         res.sendApi(
             {
-                filename: req.file.filename,
-                path: fileUrl,
-                size: req.file.size,
-                mimetype: req.file.mimetype,
+                url: uploadResult.secure_url,
+                public_id: uploadResult.public_id,
             },
             "Image uploaded successfully.",
         );

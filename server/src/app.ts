@@ -32,7 +32,6 @@ app.use(
     }),
 );
 app.use(express.json());
-app.use("/api/v1/uploads", express.static(path.join(__dirname, "./uploads")));
 app.use(responseWrapper);
 app.use(requestLogger);
 app.use("/api/v1", routes);

@@ -1,6 +1,20 @@
 import { config as dotenvConfig } from "dotenv";
 dotenvConfig({ override: false });
 
+// Validate Cloudinary credentials
+const cloudinaryName = process.env["CLOUDINARY_NAME"];
+const cloudinaryKey = process.env["CLOUDINARY_KEY"];
+const cloudinarySecret = process.env["CLOUDINARY_SECRET"];
+
+if (
+    process.env["NODE_ENV"] !== "test" &&
+    (!cloudinaryName || !cloudinaryKey || !cloudinarySecret)
+) {
+    console.warn(
+        "Warning: Cloudinary credentials not properly configured. File uploads will fail.",
+    );
+}
+
 export const config = {
     PORT: Number(process.env["PORT"]) || 3000,
     NODE_ENV: process.env["NODE_ENV"] || "development",
@@ -14,7 +28,7 @@ export const config = {
     CLIENT_URL_PRODUCTION1: process.env["CLIENT_URL_PRODUCTION1"],
     CLIENT_URL_PRODUCTION2: process.env["CLIENT_URL_PRODUCTION2"],
     CLOUDINARY_URL: process.env["CLOUDINARY_URL"],
-    CLOUDINARY_NAME: process.env["CLOUDINARY_NAME"],
-    CLOUDINARY_KEY: process.env["CLOUDINARY_KEY"],
-    CLOUDINARY_SECRET: process.env["CLOUDINARY_SECRET"],
+    CLOUDINARY_NAME: cloudinaryName,
+    CLOUDINARY_KEY: cloudinaryKey,
+    CLOUDINARY_SECRET: cloudinarySecret,
 };

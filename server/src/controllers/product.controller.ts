@@ -6,6 +6,11 @@ import {
     UpdateProductDataSchema,
     UpdateCategorySchema,
 } from "../utils/zodSchemas";
+import {
+    validateImageArray,
+    cleanupUnusedImages,
+    deleteAllProductImages,
+} from "../utils/imageManager";
 
 export const getAllProducts = async (req: Request, res: Response) => {
     try {
@@ -30,6 +35,15 @@ export const createProduct = async (req: Request, res: Response) => {
             images,
             categoryNames,
         } = productData;
+
+        // Validate images (additional layer of validation)
+        const imageValidation = validateImageArray(images);
+        if (imageValidation.invalid.length > 0) {
+            logger.warn(
+                `Product creation attempted with invalid images: ${imageValidation.invalid.join(", ")}`,
+            );
+        }
+
         const newProduct = await prisma.product.create({
             data: {
                 name,
@@ -37,15 +51,23 @@ export const createProduct = async (req: Request, res: Response) => {
                 price,
                 rating,
                 discountPrice: discountPrice ?? price,
-                images,
+                images: imageValidation.valid, // Only store valid Cloudinary URLs
                 categories: {
                     connect: categoryNames.map((name) => ({ name })),
                 },
             },
         });
+
         logger.info(
-            `Created product: ${newProduct.name} (id: ${newProduct.id}).`,
+            `Created product: ${newProduct.name} (id: ${newProduct.id}) with ${imageValidation.valid.length} valid images.`,
         );
+
+        if (imageValidation.invalid.length > 0) {
+            logger.info(
+                `Rejected ${imageValidation.invalid.length} invalid images during product creation.`,
+            );
+        }
+
         res.sendApi(newProduct, "Product created successfully.");
     } catch (err) {
         logger.error(`Failed to create product. \n${err}`);
@@ -66,6 +88,47 @@ export const updateProduct = async (req: Request, res: Response) => {
             images,
             categoryNames,
         } = productData;
+
+        // Get current product to compare images
+        const currentProduct = await prisma.product.findUnique({
+            where: { id },
+            select: { images: true },
+        });
+
+        if (!currentProduct) {
+            return res.sendErr(
+                { message: "Product not found" },
+                "Product not found.",
+                404,
+            );
+        }
+
+        // Validate new images
+        const imageValidation = validateImageArray(images);
+        if (imageValidation.invalid.length > 0) {
+            logger.warn(
+                `Product update attempted with invalid images: ${imageValidation.invalid.join(", ")}`,
+            );
+        }
+
+        // Clean up unused Cloudinary images
+        const cleanupResult = await cleanupUnusedImages(
+            currentProduct.images,
+            imageValidation.valid,
+        );
+
+        if (cleanupResult.deleted.length > 0) {
+            logger.info(
+                `Deleted ${cleanupResult.deleted.length} unused Cloudinary images for product ${id}`,
+            );
+        }
+
+        if (cleanupResult.failed.length > 0) {
+            logger.warn(
+                `Failed to delete ${cleanupResult.failed.length} Cloudinary images for product ${id}`,
+            );
+        }
+
         const updatedProduct = await prisma.product.update({
             where: { id },
             data: {
@@ -74,16 +137,17 @@ export const updateProduct = async (req: Request, res: Response) => {
                 price,
                 rating,
                 discountPrice,
-                images,
+                images: imageValidation.valid, // Only store valid Cloudinary URLs
                 categories: {
                     set: categoryNames.map((name) => ({ name })),
                 },
             },
         });
-        console.log(id);
+
         logger.info(
-            `Updated product: ${updatedProduct.name} (id: ${updatedProduct.id}). Previous Product Categories: ${productData.categoryNames}`,
+            `Updated product: ${updatedProduct.name} (id: ${updatedProduct.id}) with ${imageValidation.valid.length} images.`,
         );
+
         res.sendApi(updatedProduct, "Product updated successfully.");
     } catch (err) {
         logger.error(`Failed to update product. \n${err}`);
@@ -135,12 +199,47 @@ export const deleteProduct = async (req: Request, res: Response) => {
                 "Product ID is required.",
             );
         }
+
+        // Get product before deletion to clean up images
+        const productToDelete = await prisma.product.findUnique({
+            where: { id: parseInt(id) },
+            select: { images: true, name: true },
+        });
+
+        if (!productToDelete) {
+            return res.sendErr(
+                { message: "Product not found" },
+                "Product not found.",
+                404,
+            );
+        }
+
+        // Delete all associated Cloudinary images
+        const cleanupResult = await deleteAllProductImages(
+            productToDelete.images,
+        );
+
+        if (cleanupResult.deleted.length > 0) {
+            logger.info(
+                `Deleted ${cleanupResult.deleted.length} Cloudinary images for product ${productToDelete.name} (id: ${id})`,
+            );
+        }
+
+        if (cleanupResult.failed.length > 0) {
+            logger.warn(
+                `Failed to delete ${cleanupResult.failed.length} Cloudinary images for product ${productToDelete.name} (id: ${id})`,
+            );
+        }
+
+        // Delete the product from database
         const deletedProduct = await prisma.product.delete({
             where: { id: parseInt(id) },
         });
+
         logger.info(
             `Deleted product: ${deletedProduct.name} (id: ${deletedProduct.id}).`,
         );
+
         res.sendApi(deletedProduct, "Product deleted successfully.");
     } catch (err) {
         logger.error(`Failed to delete product. \n${err}`);

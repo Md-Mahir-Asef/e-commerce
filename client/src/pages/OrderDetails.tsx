@@ -12,7 +12,6 @@ import {
 import TopHeader from "../components/TopHeader";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { config } from "@/config/config";
 import type { Order } from "@/types/order";
 
 export default function OrderDetails() {
@@ -90,10 +89,6 @@ export default function OrderDetails() {
             default:
                 return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
         }
-    };
-
-    const getImageUrl = (imageName: string) => {
-        return `${config.VITE_SERVER_BASE_URL}/uploads/${imageName}`;
     };
 
     if (loading) {
@@ -206,10 +201,10 @@ export default function OrderDetails() {
                                                 {item.product.images.length >
                                                 0 ? (
                                                     <img
-                                                        src={getImageUrl(
+                                                        src={
                                                             item.product
-                                                                .images[0],
-                                                        )}
+                                                                .images[0]
+                                                        }
                                                         alt={item.product.name}
                                                         className="w-full h-full object-cover"
                                                         onError={(e) => {

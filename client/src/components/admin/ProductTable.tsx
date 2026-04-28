@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Edit, Trash2, Star } from "lucide-react";
-import { config } from "@/config/config";
 
 interface Product {
     id: number;
@@ -54,11 +53,6 @@ export default function ProductTable({
         );
     };
 
-    const getImageUrl = (imageName: string) => {
-        console.log(`${config.VITE_SERVER_BASE_URL}/uploads/${imageName}`);
-        return `${config.VITE_SERVER_BASE_URL}/uploads/${imageName}`;
-    };
-
     return (
         <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -96,9 +90,7 @@ export default function ProductTable({
                                     <div className="w-12 h-12 bg-muted rounded-md overflow-hidden shrink-0">
                                         {product.images.length > 0 ? (
                                             <img
-                                                src={getImageUrl(
-                                                    product.images[0],
-                                                )}
+                                                src={product.images[0]}
                                                 alt={product.name}
                                                 className="w-full h-full object-cover"
                                                 onError={(e) => {

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
-import { config } from "@/config/config";
 import type { Product } from "@/hooks/useProductsByCategory";
 
 interface ProductCardProps {
@@ -34,10 +33,6 @@ export default function ProductCard({ product }: ProductCardProps) {
         );
     };
 
-    const getImageUrl = (imageName: string) => {
-        return `${config.VITE_SERVER_BASE_URL}/uploads/${imageName}`;
-    };
-
     return (
         <Link to={`/product/${product.id}`} className="block group">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full flex flex-col">
@@ -45,7 +40,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <div className="aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700 shrink-0">
                     {product.images.length > 0 ? (
                         <img
-                            src={getImageUrl(product.images[0])}
+                            src={product.images[0]}
                             alt={product.name}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                             onError={(e) => {

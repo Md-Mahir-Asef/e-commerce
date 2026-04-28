@@ -1,5 +1,28 @@
 import { z } from "zod/v4";
 
+// Cloudinary URL validation schema
+const CloudinaryUrlSchema = z
+    .string()
+    .url()
+    .refine(
+        (url) => {
+            try {
+                const urlObj = new URL(url);
+                return (
+                    urlObj.protocol === "https:" &&
+                    urlObj.hostname.startsWith("res.cloudinary.com") &&
+                    urlObj.pathname.includes("/image/upload/")
+                );
+            } catch {
+                return false;
+            }
+        },
+        {
+            message:
+                "Image must be a valid Cloudinary URL (HTTPS and res.cloudinary.com domain required)",
+        },
+    );
+
 export const UserDataSchema = z.object({
     user_name: z
         .string({ message: "Not a valid user name." })
@@ -54,7 +77,7 @@ export const ProductDataSchema = z
             .positive({ message: "Price must be a positive integer." }),
         rating: z.number().min(0).max(5).default(5),
         discountPrice: z.number().int().positive().optional().nullable(),
-        images: z.array(z.string()).default([]),
+        images: z.array(CloudinaryUrlSchema).default([]),
         categoryNames: z.array(z.string()).default([]),
     })
     .refine(
@@ -79,7 +102,7 @@ export const UpdateProductDataSchema = z
             .positive({ message: "Price must be a positive integer." }),
         rating: z.number().min(0).max(5).default(5),
         discountPrice: z.number().int().positive().optional().nullable(),
-        images: z.array(z.string()).default([]),
+        images: z.array(CloudinaryUrlSchema).default([]),
         categoryNames: z.array(z.string()).default([]),
     })
     .refine(

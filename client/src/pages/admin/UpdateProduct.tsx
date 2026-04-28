@@ -144,8 +144,9 @@ export default function UpdateProduct() {
                     },
                 );
 
-                if (response.data?.data?.filename) {
-                    newImages.push(response.data.data.filename);
+                console.log("Found Image URL: ", response.data.data.url);
+                if (response.data.data.url) {
+                    newImages.push(response.data.data.url);
                 }
             }
 
@@ -322,7 +323,7 @@ export default function UpdateProduct() {
                                             <GripVertical size={12} />
                                         </div>
                                         <img
-                                            src={`${config.VITE_SERVER_BASE_URL}/uploads/${imageName}`}
+                                            src={imageName}
                                             alt={imageName}
                                             className="w-full h-24 object-cover"
                                             onError={(e) => {

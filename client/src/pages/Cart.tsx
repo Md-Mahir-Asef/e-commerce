@@ -12,7 +12,6 @@ import {
 import TopHeader from "../components/TopHeader";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { config } from "@/config/config";
 
 export default function Cart() {
     const { cart, loading, error, updateCartItem, removeFromCart, clearCart } =
@@ -73,10 +72,6 @@ export default function Cart() {
         } catch (err) {
             // Error is handled in the hook
         }
-    };
-
-    const getImageUrl = (imageName: string) => {
-        return `${config.VITE_SERVER_BASE_URL}/uploads/${imageName}`;
     };
 
     if (loading) {
@@ -209,9 +204,7 @@ export default function Cart() {
                                         <div className="w-20 h-20 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700 shrink-0">
                                             {item.product.images.length > 0 ? (
                                                 <img
-                                                    src={getImageUrl(
-                                                        item.product.images[0],
-                                                    )}
+                                                    src={item.product.images[0]}
                                                     alt={item.product.name}
                                                     className="w-full h-full object-cover"
                                                     onError={(e) => {
