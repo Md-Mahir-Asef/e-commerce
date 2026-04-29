@@ -143,7 +143,7 @@ export default function UpdateProduct() {
                         },
                     },
                 );
-
+                console.log("Update Image Upload Return: ", response);
                 console.log("Found Image URL: ", response.data.data.url);
                 if (response.data.data.url) {
                     newImages.push(response.data.data.url);
