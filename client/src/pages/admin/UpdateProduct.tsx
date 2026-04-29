@@ -104,7 +104,7 @@ export default function UpdateProduct() {
                 }
             } catch (err) {
                 console.error(err);
-                toast.error("Failed to load product");
+                toast.error("Failed to load products");
                 navigate("/admin/products/list");
             } finally {
                 setLoading(false);
