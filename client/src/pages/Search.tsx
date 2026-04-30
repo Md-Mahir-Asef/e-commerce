@@ -374,7 +374,6 @@ export default function Search() {
                                     <ProductCard
                                         key={product.id}
                                         product={product}
-                                        context={{ searchGrid: true }}
                                     />
                                 ))}
                             </div>
