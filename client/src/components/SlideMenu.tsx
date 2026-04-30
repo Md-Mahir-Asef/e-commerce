@@ -1,4 +1,4 @@
-import { X, Heart, Search, ShoppingCart } from "lucide-react";
+import { X, Search, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 
@@ -53,10 +53,9 @@ export default function SlideMenu({
                         </Link>
                     </div>
                     <div className="flex flex-row p-3">
-                        <Heart /> <p>Favorites</p>
-                    </div>
-                    <div className="flex flex-row p-3">
-                        <ShoppingCart /> <p>Cart</p>
+                        <Link to={"/cart"} className="flex flex-row">
+                            <ShoppingCart /> <p>Cart</p>
+                        </Link>
                     </div>
                 </div>
             </div>

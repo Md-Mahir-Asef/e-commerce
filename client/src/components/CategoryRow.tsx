@@ -14,7 +14,7 @@ export default function CategoryRow({
 }: CategoryRowProps) {
     const { products, loading, hasMore, loadMore } =
         useProductsByCategory(categoryId);
-    const scrollContainerRef = useRef<HTMLDivElement | HTMLUListElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showLeftArrow, setShowLeftArrow] = useState(false);
     const [showRightArrow, setShowRightArrow] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -90,11 +90,11 @@ export default function CategoryRow({
                 {categoryName}
             </h2>
 
-            <div className="mx-auto flex flex-col w-full">
+            <div className="mx-auto flex flex-col w-full relative">
                 {/* Mobile Swiper Implementation */}
                 {isMobile ? (
                     <>
-                        <ul className="flex flex-row gap-5 overflow-y-auto w-full mr-3">
+                        <ul className="flex flex-row gap-5 overflow-y-auto w-[98vw] mr-3">
                             {products.map((product) => (
                                 <li
                                     className="w-[35vw] shrink-0 my-6"
@@ -167,7 +167,10 @@ export default function CategoryRow({
                         )}
 
                         {/* Horizontal Scroll Container with CSS Grid for consistent heights */}
-                        <div className="w-full overflow-x-auto scrollbar-hide scroll-smooth pb-2">
+                        <div
+                            ref={scrollContainerRef}
+                            className="w-full overflow-x-auto scrollbar-hide scroll-smooth pb-2"
+                        >
                             <div className="grid grid-flow-col auto-cols-max gap-2 sm:gap-3 md:gap-4">
                                 {products.map((product) => (
                                     <div
