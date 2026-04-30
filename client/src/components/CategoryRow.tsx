@@ -14,9 +14,10 @@ export default function CategoryRow({
 }: CategoryRowProps) {
     const { products, loading, hasMore, loadMore } =
         useProductsByCategory(categoryId);
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement | HTMLUListElement>(null);
     const [showLeftArrow, setShowLeftArrow] = useState(false);
     const [showRightArrow, setShowRightArrow] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     const checkScrollButtons = () => {
         const container = scrollContainerRef.current;
@@ -34,10 +35,21 @@ export default function CategoryRow({
         if (container) {
             checkScrollButtons();
             container.addEventListener("scroll", checkScrollButtons);
+            console.log("Scroll Button Needed");
             return () =>
                 container.removeEventListener("scroll", checkScrollButtons);
         }
     }, [products]);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 640);
+        };
+
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
 
     const scrollLeft = () => {
         const container = scrollContainerRef.current;
@@ -73,83 +85,130 @@ export default function CategoryRow({
     }
 
     return (
-        <div className="mb-6 sm:mb-8">
+        <div className="mb-6 sm:mb-8 w-full">
             <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
                 {categoryName}
             </h2>
 
-            <div className="relative">
-                {/* Left Arrow */}
-                {showLeftArrow && (
-                    <button
-                        onClick={scrollLeft}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 rounded-full shadow-lg p-2 sm:p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center"
-                        aria-label="Scroll left"
-                    >
-                        <ChevronLeft
-                            size={16}
-                            className="text-gray-600 dark:text-gray-400 sm:w-4 sm:h-4"
-                        />
-                    </button>
-                )}
-
-                {/* Right Arrow */}
-                {showRightArrow && (
-                    <button
-                        onClick={scrollRight}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 rounded-full shadow-lg p-2 sm:p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center"
-                        aria-label="Scroll right"
-                    >
-                        <ChevronRight
-                            size={16}
-                            className="text-gray-600 dark:text-gray-400 sm:w-4 sm:h-4"
-                        />
-                    </button>
-                )}
-
-                {/* Horizontal Scroll Container with CSS Grid for consistent heights */}
-                <div
-                    ref={scrollContainerRef}
-                    className="w-full overflow-x-auto scrollbar-hide scroll-smooth pb-2"
-                >
-                    <div className="grid grid-flow-col auto-cols-max gap-2 sm:gap-3 md:gap-4 h-72 sm:h-80 md:h-96 lg:h-[400px] xl:h-[440px] 2xl:h-[480px]">
-                        {products.map((product) => (
-                            <div
-                                key={product.id}
-                                className="w-32 sm:w-36 md:w-40 lg:w-44 xl:w-52 2xl:w-60 h-full"
-                            >
-                                <ProductCard product={product} />
-                            </div>
-                        ))}
-                        {/* Load More Button as Card */}
-                        {hasMore && (
+            <div className="mx-auto flex flex-col w-full">
+                {/* Mobile Swiper Implementation */}
+                {isMobile ? (
+                    <>
+                        <ul className="flex flex-row gap-5 overflow-y-auto w-full mr-3">
+                            {products.map((product) => (
+                                <li
+                                    className="w-[35vw] shrink-0 my-6"
+                                    key={product.id}
+                                >
+                                    <ProductCard product={product} />
+                                </li>
+                            ))}
+                            {/* Load More Button as Slide */}
+                            {hasMore && (
+                                <li className="w-[35vw] shrink-0 mt-6 mr-3 flex justify-center items-center text-center">
+                                    <button
+                                        onClick={loadMore}
+                                        disabled={loading}
+                                        className="w-full bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden flex flex-col items-center justify-center group border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500"
+                                        style={{ height: "30vh" }}
+                                    >
+                                        {loading ? (
+                                            <div className="flex flex-col items-center gap-2">
+                                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                                                <span className="text-xs text-gray-600 dark:text-gray-400">
+                                                    Loading...
+                                                </span>
+                                            </div>
+                                        ) : (
+                                            <div className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                <span className="text-xs font-medium">
+                                                    Load More
+                                                </span>
+                                                <ChevronRight
+                                                    size={16}
+                                                    className="w-4 h-4"
+                                                />
+                                            </div>
+                                        )}
+                                    </button>
+                                </li>
+                            )}
+                        </ul>
+                    </>
+                ) : (
+                    /* Desktop Original Implementation */
+                    <>
+                        {/* Left Arrow */}
+                        {showLeftArrow && (
                             <button
-                                onClick={loadMore}
-                                disabled={loading}
-                                className="w-32 sm:w-36 md:w-40 lg:w-44 xl:w-52 2xl:w-60 h-full bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden flex flex-col items-center justify-center group border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500"
+                                onClick={scrollLeft}
+                                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 rounded-full shadow-lg p-2 sm:p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center"
+                                aria-label="Scroll left"
                             >
-                                {loading ? (
-                                    <div className="flex flex-col items-center gap-2">
-                                        <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-blue-600"></div>
-                                        <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                                            Loading...
-                                        </span>
-                                    </div>
-                                ) : (
-                                    <div className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                        <span className="text-xs sm:text-sm font-medium">
-                                            Load More
-                                        </span>
-                                        <ChevronRight
-                                            size={16}
-                                            className="w-4 h-4"
-                                        />
-                                    </div>
-                                )}
+                                <ChevronLeft
+                                    size={16}
+                                    className="text-gray-600 dark:text-gray-400 sm:w-4 sm:h-4"
+                                />
                             </button>
                         )}
-                    </div>
-                </div>
+
+                        {/* Right Arrow */}
+                        {showRightArrow && (
+                            <button
+                                onClick={scrollRight}
+                                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 rounded-full shadow-lg p-2 sm:p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center"
+                                aria-label="Scroll right"
+                            >
+                                <ChevronRight
+                                    size={16}
+                                    className="text-gray-600 dark:text-gray-400 sm:w-4 sm:h-4"
+                                />
+                            </button>
+                        )}
+
+                        {/* Horizontal Scroll Container with CSS Grid for consistent heights */}
+                        <div className="w-full overflow-x-auto scrollbar-hide scroll-smooth pb-2">
+                            <div className="grid grid-flow-col auto-cols-max gap-2 sm:gap-3 md:gap-4">
+                                {products.map((product) => (
+                                    <div
+                                        key={product.id}
+                                        className="w-32 sm:w-36 md:w-40 lg:w-44 xl:w-52 2xl:w-60"
+                                    >
+                                        <ProductCard product={product} />
+                                    </div>
+                                ))}
+                                {/* Load More Button as Card */}
+                                {hasMore && (
+                                    <button
+                                        onClick={loadMore}
+                                        disabled={loading}
+                                        className="w-32 sm:w-36 md:w-40 lg:w-44 xl:w-52 2xl:w-60 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden flex flex-col items-center justify-center text-center group border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500"
+                                        style={{ minHeight: "300px" }}
+                                    >
+                                        {loading ? (
+                                            <div className="flex flex-col items-center gap-2">
+                                                <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-blue-600"></div>
+                                                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                                                    Loading...
+                                                </span>
+                                            </div>
+                                        ) : (
+                                            <div className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                <span className="text-xs sm:text-sm font-medium">
+                                                    Load More
+                                                </span>
+                                                <ChevronRight
+                                                    size={16}
+                                                    className="w-4 h-4"
+                                                />
+                                            </div>
+                                        )}
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );

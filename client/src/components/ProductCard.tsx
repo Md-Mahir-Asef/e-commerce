@@ -58,7 +58,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <div className="p-2 sm:p-3 md:p-4 flex-1 flex flex-col min-h-0">
                     {/* Title Section - Fixed height with line clamp */}
                     <div className="h-8 sm:h-10 md:h-12 mb-1 sm:mb-2">
-                        <h3 className="font-medium text-gray-900 dark:text-white text-xs sm:text-sm line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors overflow-hidden h-full">
+                        <h3 className="font-medium text-gray-900 dark:text-white text-xs sm:text-sm line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors overflow-hidden h-full truncate">
                             {product.name}
                         </h3>
                     </div>

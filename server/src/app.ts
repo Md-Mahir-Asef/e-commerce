@@ -12,6 +12,7 @@ const app = express();
 const allowedOrigins = [
     config.CLIENT_URL_DEVELOPMENT1,
     config.CLIENT_URL_DEVELOPMENT2,
+    config.CLIENT_URL_DEVELOPMENT3,
     config.CLIENT_URL_PRODUCTION1,
     config.CLIENT_URL_PRODUCTION2,
 ];
